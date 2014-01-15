@@ -2,7 +2,7 @@
   "manifest_version": 2,
 
   "name": "ZeeGuu",
-  "description": "Fast and unobstructive translation of web content.",
+  "description": "Fast and unobtrusive translation of web content.",
   "version": "1.0",
 
   "permissions": [

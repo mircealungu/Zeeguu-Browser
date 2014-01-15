@@ -1,4 +1,5 @@
 var PERSITENT_STATE_KEYS = ["dict", "from", "to", "links", "fast", "session"];
+//var API_URL = "http://localhost:9000/";  // This is also stored in lib/zeeguu.js
 var API_URL = "http://zeeguu.unibe.ch/";  // This is also stored in lib/zeeguu.js
 
 var zeeguu_window = null,
@@ -94,11 +95,14 @@ chrome.extension.onMessage.addListener(function(message, sender) {
     }
 });
 
+// N.B. callback will be called with info and the tab in which the menu has been activated
+// the translate message is sent to the content script...
 browser.contextMenu("translate", "Translate %s", "selection", function(info, tab) {
     chrome.tabs.sendMessage(tab.id, {
         name: "translate",
         term: info.selectionText,
-        context: ""
+        url: tab.url,
+        context: "" //this is if we want to save the url of the page as context
     });
 });
 

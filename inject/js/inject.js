@@ -28,7 +28,9 @@ loadState(function() {
 
     // Any frame
     } else {
+
         var translate_selection = function() {
+            console.log("logging from inject.js:translate_selection...")
             var selection = browser.getSelection();
             var message = selected_term(selection);
             if (message === null) {
@@ -36,10 +38,12 @@ loadState(function() {
             }
             highlight_when_unhighlighting = true;
             browser.sendMessage("translate", message);
+            console.log("sent message translate...")
         };
 
         $(document).mouseup(function() {
             if (state.selectionMode) {
+                console.log("logging from inject.js:mouseUp...")
                 translate_selection();
             }
         }).click(function() {
@@ -59,8 +63,13 @@ loadState(function() {
         });
 
         browser.addMessageListener("translate", function(data) {
+
             zeeguu_active = true;
-            if (selected_term(browser.getSelection()) !== null) {
+            var selection = selected_term(browser.getSelection());
+            console.log("selection is... selection");
+            if (selection !== null) {
+                // this is the magic regex for splitting in sentences which often works for english.
+                data.context = $.trim(selection.context.match(/\(?[^\.!\?]+[\.!\?]\)?/g).filter(function(each){return each.indexOf(data.term)>=0;})[0])
                 highlight_when_unhighlighting = true;
             }
         });
@@ -81,8 +90,11 @@ loadState(function() {
             var zeeguu_open = false;
 
             browser.addMessageListener("translate", function(data) {
+                console.log("logging from inject.js:translate...")
+
                 dont_close = true;  // Abort the closing timer if it was started before this interaction
-                var url = browser.zeeguuUrl(data.term, data.context);
+                console.log("make sure we have url here...")
+                var url = browser.zeeguuUrl(data.term, data.url, data.context);
                 if (!is_frameset()) {
                     if ($("#zeeguu").size()) {
                         $("#zeeguu").attr("src", url);

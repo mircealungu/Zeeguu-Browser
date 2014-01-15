@@ -2,18 +2,24 @@
 
 var term;
 var context;
+var url;
 var contributed = false;
 
 loadState(function() {
-    if(is_logged_in()) {
+    if (!is_logged_in()) {
+        window.location = "login.html" + window.location.search;
+    } else {
+        console.log("now here... are we unpacking this thing right?")
         var query = decodeURIComponent(window.location.search);
-        var space_pos = query.indexOf(" ");
-        if (space_pos < 0) {
+        var first_space_pos = query.indexOf(" ");
+        if (first_space_pos < 0) {
             window.location = "error.html";
             return;
         }
-        term = query.substr(1, space_pos - 1);
-        context = query.substr(space_pos + 1);
+        term = query.substr(1, first_space_pos - 1);
+        var second_space_pos = query.indexOf(" ", first_space_pos+1);
+        url = query.substr(first_space_pos+1, second_space_pos - first_space_pos - 1);
+        context = query.substr(second_space_pos + 1);
         console.log("Term: '" + term + "'");
         console.log("Context: '" + context + "'");
         $("#zeeguu").append('<iframe src="' + translationURL(term) + '" name="zeeguu" />');
@@ -21,8 +27,9 @@ loadState(function() {
         if (!state.links) {
             $("#toggle-links").addClass("enabled");
         }
-    } else {
-        window.location = "login.html" + window.location.search;
+        $("#contribute-from").val(term);
+        $("#contribute-url").text(url);
+        $("#contribute-context").text(context);
     }
 });
 
@@ -42,10 +49,12 @@ function contributeAction() {
         return;
     }
     var translation = $("#contribute-text").val();
+    var term_in_window = $("#contribute-from").val();
     if (translation.length === 0) {
         return;
     }
-    contribute(term, translation);
+    contribute_with_context(term_in_window, url, context, translation);
+    //contribute(term, translation);
     $("#contribute-text").val("Thanks for contributing!").prop("disabled", true).addClass("success");
     $("#contribute-btn").addClass("disabled");
     contributed = true;
