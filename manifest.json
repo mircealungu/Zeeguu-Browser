@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
 
-  "name": "ZeeGuu",
-  "description": "Fast and unobtrusive translation of web content.",
-  "version": "1.0",
+  "name": "Zeeguu",
+  "description": "The web as your language textbook",
+  "version": "1.108",
 
   "permissions": [
     "storage",
