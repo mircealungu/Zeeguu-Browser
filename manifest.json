@@ -1,68 +1,72 @@
 {
-  "manifest_version": 2,
-
-  "name": "Zeeguu",
-  "description": "The web as your language textbook",
-  "version": "1.108",
-
-  "permissions": [
-    "storage",
-    "tabs",
-    "contextMenus"
-  ],
-
-  "options_page": "gui/html/options.html",
-
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["lib/jquery/jquery.js", "lib/browser.js", "lib/zeeguu.js", "inject/js/inject.js"],
-      "css": ["inject/css/inject.css"],
-      "all_frames": true
-    }
-  ],
-
-  "background": {
-    "scripts": ["lib/jquery/jquery.js", "lib/browser.js", "bg/js/bg.js"]
-  },
-
-  "browser_action": {
-    "default_title": "Zeeguu",
-    "default_popup": "gui/html/popup.html",
-    "default_icon": {
-      "19": "logo/19x19.png",
-      "38": "logo/38x38.png"
-    }
-  },
-
-  "commands": {
-    "translate": {
-      "suggested_key": {
-        "default": "Alt+Z"
-      },
-      "description": "Translate selected word"
-    }
-  },
-
-  "web_accessible_resources": [
-    "gui/html/zeeguu.html",
-    "gui/html/login.html",
-    "gui/html/error.html",
-    "gui/html/popup.html",
-    "gui/css/gui.css",
-    "gui/js/gui.js",
-    "gui/js/login.js",
-    "gui/js/popup.js",
-    "gui/img/loading.gif",
-    "lib/jquery/jquery.validate.js",
-    "lib/jquery/jquery.js",
-    "lib/bootstrap/bootstrap.js",
-    "lib/bootstrap/bootstrap.css"
-  ],
-
-  "icons": {
-    "16": "logo/16x16.png",
-    "48": "logo/48x48.png",
-    "128": "logo/128x128.png"
-  }
+    "web_accessible_resources": [
+        "gui/html/zeeguu.html", 
+        "gui/html/login.html", 
+        "gui/html/error.html", 
+        "gui/html/popup.html", 
+        "gui/css/gui.css", 
+        "gui/js/gui.js", 
+        "gui/js/login.js", 
+        "gui/js/popup.js", 
+        "gui/img/loading.gif", 
+        "lib/jquery/jquery.validate.js", 
+        "lib/jquery/jquery.js", 
+        "lib/bootstrap/bootstrap.js", 
+        "lib/bootstrap/bootstrap.css"
+    ], 
+    "commands": {
+        "translate": {
+            "suggested_key": {
+                "default": "Alt+Z"
+            }, 
+            "description": "Translate selected word"
+        }
+    }, 
+    "description": "The web as your language textbook", 
+    "icons": {
+        "128": "logo/128x128.png", 
+        "48": "logo/48x48.png", 
+        "16": "logo/16x16.png"
+    }, 
+    "manifest_version": 2, 
+    "version": 1.173, 
+    "options_page": "gui/html/options.html", 
+    "background": {
+        "scripts": [
+            "lib/jquery/jquery.js", 
+            "lib/browser.js", 
+            "bg/js/bg.js"
+        ]
+    }, 
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ], 
+            "all_frames": true, 
+            "css": [
+                "inject/css/inject.css"
+            ], 
+            "js": [
+                "lib/jquery/jquery.js", 
+                "lib/browser.js", 
+                "lib/zeeguu.js", 
+                "inject/js/inject.js"
+            ]
+        }
+    ], 
+    "permissions": [
+        "storage", 
+        "tabs", 
+        "contextMenus"
+    ], 
+    "browser_action": {
+        "default_popup": "gui/html/popup.html", 
+        "default_icon": {
+            "19": "logo/19x19.png", 
+            "38": "logo/38x38.png"
+        }, 
+        "default_title": "Zeeguu"
+    }, 
+    "name": "Zeeguu"
 }
