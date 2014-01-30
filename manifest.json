@@ -29,7 +29,7 @@
         "16": "logo/16x16.png"
     }, 
     "manifest_version": 2, 
-    "version": 1.173, 
+    "version": 1.207, 
     "options_page": "gui/html/options.html", 
     "background": {
         "scripts": [
@@ -61,12 +61,12 @@
         "contextMenus"
     ], 
     "browser_action": {
+        "default_title": "Zeeguu", 
         "default_popup": "gui/html/popup.html", 
         "default_icon": {
             "19": "logo/19x19.png", 
             "38": "logo/38x38.png"
-        }, 
-        "default_title": "Zeeguu"
+        }
     }, 
     "name": "Zeeguu"
 }

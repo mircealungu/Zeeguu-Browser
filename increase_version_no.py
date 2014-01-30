@@ -3,7 +3,7 @@ import json
 
 f = codecs.open('manifest.json',encoding='utf-8')
 d = json.load(f)
-new_version = float(d['version'])+0.01
+new_version = round (float(d['version'])+0.001, 3)
 d ['version'] = new_version
 print "new version: " + str(new_version)
 
