@@ -19,6 +19,7 @@ $(function() {
 
     setHelp("#fast-mode", "Translate by double-clicking");
     setHelp("#selection-mode", "Disable links for easier selection");
+    setHelp("#to-the-gym", "Practice at the Language Gym");
     setHelp("#options-btn", "Open options");
 
     loadState(function() {
@@ -29,6 +30,7 @@ $(function() {
             });
             $(this).toggleClass("enabled", state.fast);
         });
+
 
         $("#selection-mode").toggleClass("enabled", state.selectionMode).click(function() {
             state.selectionMode = !state.selectionMode;
@@ -50,6 +52,10 @@ $(function() {
 
         $("#options-btn").click(function() {
             browser.newTab("/gui/html/options.html");
+        });
+
+        $("#to-the-gym").click(function() {
+            browser.newTab("http://zeeguu.unibe.ch/contributions");
         });
     });
 });
