@@ -89,11 +89,20 @@ browser.addMessageListener("reset_state", function(message) {
     storeState();
 });
 
+browser.addMessageListener("get_tab_url",
+    function(message, sender, response) {
+        console.log("+++++ gimme message received" + sender.tab.url)
+        response(sender.tab.url)
+    });
+
+
 chrome.extension.onMessage.addListener(function(message, sender) {
     if (message.name != "window" && message.name != "update_state" && message.name != "get_state") {
         chrome.tabs.sendMessage(sender.tab.id, message);
     }
 });
+
+
 
 // N.B. callback will be called with info and the tab in which the menu has been activated
 // the translate message is sent to the content script...

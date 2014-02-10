@@ -6,6 +6,14 @@ var highlight_when_unhighlighting = false,
     zeeguu_active = false,
     selection_mode = false;
 
+var this_url = "unknown"
+
+browser.sendMessage("get_tab_url",function(tab_url) {
+    this_url = tab_url;
+    console.log("+++++++ got my url!!" + tab_url);
+})
+
+
 
 loadState(function() {
     // The dictionary frame
@@ -155,7 +163,8 @@ function selected_term(selection) {
     var context = $(selection.baseNode.parentNode).text();
     return {
         term: term,
-        context: context
+        context: context,
+        url:this_url
     };
 }
 
