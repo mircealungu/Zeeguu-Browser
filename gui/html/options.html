@@ -11,34 +11,55 @@
         <script src="/lib/zeeguu.js"></script>
         <script src="/gui/js/options.js"></script>
     </head>
+
     <body id="options">
         <div class="container">
             <h2>Zeeguu Preferences</h2>
             <form class="form-horizontal">
                 <fielsdset>
+
                     <div class="control-group">
-                      <label class="control-label">Choose a Dictionary</label>
+                        <label class="control-label">Select the language you are learning</label>
+
+                        <div class="controls">
+                            <select autofocus id="from_lang" required name="from_lang">
+                                <option value="de">German</option>
+                                <option value="fr">French</option>
+                                <option value="it">Italian</option>
+                            </select>
+
+
+
+
+
+                            <!--<input id="from_lang" name="from_lang" type="text" placeholder="de" class="input-xlarge">-->
+
+                        </div>
+                    </div>
+
+                    <!--<div class="control-group">-->
+                        <!--<label class="control-label">Your Language</label>-->
+                        <!--<div class="controls">-->
+                            <!--<input id="to_lang" name="to_lang" type="text" placeholder="en" class="input-xlarge">-->
+                            <!--<p class="help-block">Use ISO language codes like "en" or "de" here.</p>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <div class="control-group" id="dict_group" >
+                      <label class="control-label">Choose a dictionary</label>
                       <div class="controls">
-                        <input id="dict" name="dict" type="text" placeholder="http://{from}-{to}.syn.dict.cc/?s={query}" class="input-xlarge">
-                        <p class="help-block">Use the placeholder {query} where the search term should go.<br />Optionally you can also use {from} and {to} for the languages.</p>
+                         <!--<input id="dict" name="dict" type="text" placeholder="http://{from}-{to}.syn.dict.cc/?s={query}" class="input-xlarge">-->
+                          <select id="dict" name="dict">
+                          </select>
                       </div>
                     </div>
 
-                    <div class="control-group">
-                      <label class="control-label">Your Language</label>
-                      <div class="controls">
-                        <input id="to_lang" name="to_lang" type="text" placeholder="en" class="input-xlarge">
-                        <p class="help-block">Use ISO language codes like "en" or "de" here.</p>
-                      </div>
+                    <div class="control-group" id="dict_group" >
+                        <div class="controls">
+                            <div disabled id="dict_url" > ... </div>
+                        </div>
                     </div>
 
-                    <div class="control-group">
-                      <label class="control-label">Source Language</label>
-                      <div class="controls">
-                        <input id="from_lang" name="from_lang" type="text" placeholder="de" class="input-xlarge">
-                        <p class="help-block">That's the language you want to learn.</p>
-                      </div>
-                    </div>
 
                     <div class="alert alert-success hide" id="success">
                           Your preferences have been saved.
@@ -54,7 +75,7 @@
                 </fieldset>
             </form>
             <div class="alert alert-warning">
-              Report bugs on <a href="https://github.com/ZeeGuu/browser/issues">GitHub</a>
+              Report bugs or suggest features on <a href="https://github.com/mircealungu/Zeeguu-Browser/">GitHub</a>
             </div>
         </div>
     </body>

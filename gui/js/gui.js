@@ -55,7 +55,7 @@ function contributeAction() {
     }
     contribute_with_context(term_in_window, url, context, translation);
     //contribute(term, translation);
-    $("#contribute-text").val("Thanks for contributing!").prop("disabled", true).addClass("success");
+    $("#contribute-text").val("Word & example uploaded!").prop("disabled", true).addClass("success");
     $("#contribute-btn").addClass("disabled");
     contributed = true;
 }
