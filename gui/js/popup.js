@@ -55,7 +55,7 @@ $(function() {
         });
 
         $("#to-the-gym").click(function() {
-            browser.newTab("http://zeeguu.unibe.ch/contributions");
+            browser.newTab("http://zeeguu.unibe.ch/flash_cards");
         });
     });
 });
