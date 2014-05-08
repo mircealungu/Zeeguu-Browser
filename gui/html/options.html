@@ -18,8 +18,16 @@
             <form class="form-horizontal">
                 <fielsdset>
 
+                    <div class="control-group" id="logged-in-user">
+                        <label class="control-label">Logged in as: </label>
+                        <div class="controls">
+                            <input disabled id="user_email" name="user_email" type="text" placeholder="..." class="input-xlarge">
+                        </div>
+                    </div>
+
+
                     <div class="control-group">
-                        <label class="control-label">Select the language you are learning</label>
+                        <label class="control-label">The language you are learning</label>
 
                         <div class="controls">
                             <select autofocus id="from_lang" required name="from_lang">
@@ -28,22 +36,8 @@
                                 <option value="it">Italian</option>
                             </select>
 
-
-
-
-
-                            <!--<input id="from_lang" name="from_lang" type="text" placeholder="de" class="input-xlarge">-->
-
                         </div>
                     </div>
-
-                    <!--<div class="control-group">-->
-                        <!--<label class="control-label">Your Language</label>-->
-                        <!--<div class="controls">-->
-                            <!--<input id="to_lang" name="to_lang" type="text" placeholder="en" class="input-xlarge">-->
-                            <!--<p class="help-block">Use ISO language codes like "en" or "de" here.</p>-->
-                        <!--</div>-->
-                    <!--</div>-->
 
                     <div class="control-group" id="dict_group" >
                       <label class="control-label">Choose a dictionary</label>
@@ -54,13 +48,6 @@
                       </div>
                     </div>
 
-                    <div class="control-group" id="dict_group" >
-                        <div class="controls">
-                            <div disabled id="dict_url" > ... </div>
-                        </div>
-                    </div>
-
-
                     <div class="alert alert-success hide" id="success">
                           Your preferences have been saved.
                     </div>
@@ -70,6 +57,7 @@
                       <div class="controls">
                         <button id="save" name="save" class="btn btn-success">Save</button>
                         <button id="reset" name="reset" class="btn btn-danger">Reset</button>
+                        <button id="logout" name="logout" class="btn btn-info">Logout</button>
                       </div>
                     </div>
                 </fieldset>

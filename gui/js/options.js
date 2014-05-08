@@ -24,6 +24,17 @@ dicts ["de"] = [
     }
 ];
 
+var url = 'http://zeeguu.unibe.ch/static/json/dict.json';
+//var url = 'http://localhost:9000/static/json/dict.json';
+$.getJSON( url, function( data ) {
+    var items = [];
+    $.each( data, function( key, val ) {
+        alert(val.length);
+        alert(key);
+        console.log(key + " " + val);
+    });
+});
+
 
 function load_dictionaries_select(language) {
     var dict = $("#dict");
@@ -44,8 +55,7 @@ $(function() {
             load_dictionaries_select(state.from);
         $("#dict").val(state.dict);
            load_dict_url($("#dict").val());
-//        $("#dict_url").val(state.dict_url);
-
+        $("#user_email").val(state.email);
     });
 
     $("#save").click(function() {
@@ -59,6 +69,17 @@ $(function() {
 
     $("#reset").click(function() {
         browser.sendMessage("reset_state");
+        $("#success").show();
+        return false;
+    });
+
+    $("#logout").click(function() {
+        browser.sendMessage("update_state", {
+            session : null,
+            email: '',
+            from: '',
+            dict: ''
+        });
         $("#success").show();
         return false;
     });
