@@ -9,7 +9,6 @@ loadState(function() {
     if (!is_logged_in()) {
         window.location = "login.html" + window.location.search;
     } else {
-        console.log("now here... are we unpacking this thing right?")
         var query = decodeURIComponent(window.location.search);
         var first_space_pos = query.indexOf(" ");
         if (first_space_pos < 0) {

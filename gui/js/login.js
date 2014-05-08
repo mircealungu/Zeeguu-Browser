@@ -40,6 +40,10 @@ $(function() {
                     $("#login-error").show();
                 } else {
                     window.location = "zeeguu.html" + window.location.search;
+                    browser.sendMessage("update_state", {
+                        email: $("#email").val(),
+                    });
+
                 }
             });
         }
