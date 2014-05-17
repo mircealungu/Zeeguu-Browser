@@ -1,4 +1,6 @@
 $(function() {
+    $("#account_creation_link").href=API_URL+"create_account";
+
     $('input').focus(function() {
         $(this).popover('show');
     });
@@ -41,9 +43,8 @@ $(function() {
                 } else {
                     window.location = "zeeguu.html" + window.location.search;
                     browser.sendMessage("update_state", {
-                        email: $("#email").val(),
+                        email: $("#email").val()
                     });
-
                 }
             });
         }

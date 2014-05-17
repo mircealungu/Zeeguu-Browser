@@ -1,39 +1,13 @@
-dicts = [];
-dicts ["fr"] = [
-    {   name:"WordReference",
-        url:"http://www.wordreference.com/fren/{query}"}
-];
 
-dicts ["it"] = [
-    {   name:"WordReference",
-        url:"http://www.wordreference.com/iten/{query}"}
-];
-
-dicts ["de"] = [
-    {
-        name:"dict.cc",
-        url:"http://de-en.syn.dict.cc/?s={query}"},
-
-    {
-        name:"Leo",
-        url:"http://dict.leo.org/ende/index_de.html#/search={query}"},
-
-    {
-        name: "WordReference",
-        url: "http://www.wordreference.com/deen/{query}"
-    }
-];
-
-var url = 'http://zeeguu.unibe.ch/static/json/dict.json';
-//var url = 'http://localhost:9000/static/json/dict.json';
-$.getJSON( url, function( data ) {
-    var items = [];
-    $.each( data, function( key, val ) {
-        alert(val.length);
-        alert(key);
-        console.log(key + " " + val);
-    });
-});
+//var url = API_URL + 'static/json/dict.json';
+//$.getJSON( url, function( data ) {
+//    var items = [];
+//    $.each( data, function( key, val ) {
+//        alert(val.length);
+//        alert(key);
+//        console.log(key + " " + val);
+//    });
+//});
 
 
 function load_dictionaries_select(language) {
@@ -50,6 +24,10 @@ function load_dict_url(url) {
 
 $(function() {
     loadState(function() {
+
+        if (!state.email) {
+            $("#top-search-box").hide()
+        }
 
         $("#from_lang").val(state.from);
             load_dictionaries_select(state.from);

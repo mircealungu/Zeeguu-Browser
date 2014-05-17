@@ -61,7 +61,7 @@ browser.addMessageListener("window", function(message, sender) {
     chrome.windows.create({
         url: message.url,
         width: 734,
-        height: 500,
+        height: 300,
         focused: true,
         type: "popup"
     }, function(window) {

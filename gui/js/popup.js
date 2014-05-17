@@ -23,6 +23,16 @@ $(function() {
     setHelp("#options-btn", "Open options");
 
     loadState(function() {
+
+        /*
+         if the popup is called by a user who is not logged in,
+         we trigger the translate function, which asks him to login
+         */
+        if (!state.session) {
+            translate("welcome");
+        }
+
+
         $("#fast-mode").toggleClass("enabled", state.fast).click(function() {
             state.fast = !state.fast;
             browser.sendMessage("update_state", {
@@ -55,7 +65,7 @@ $(function() {
         });
 
         $("#to-the-gym").click(function() {
-            browser.newTab("http://zeeguu.unibe.ch/flash_cards");
+            browser.newTab(API_URL+"contributions");
         });
     });
 });

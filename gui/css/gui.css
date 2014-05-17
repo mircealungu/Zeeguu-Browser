@@ -11,10 +11,10 @@ a:hover, a:active, a:focus {
 /* Zeeguu frame */
 
 #zeeguu {
-    width: 730px;
+    width: 736px;
     background: #eee;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif!important;
-    height: 530px;
+    height: 330px;
 }
 
     #zeeguu.loading {
@@ -22,10 +22,24 @@ a:hover, a:active, a:focus {
     }
 
     #contribute {
-        height: 29px;
+        /*height: 72px;*/
         margin: 0;
         padding: 4px;
-    }    
+        float: left;
+    }
+
+    #contribute-context {
+        width: 530px;
+    }
+
+    .contribute-data {
+        display: inline;
+    }
+
+    .contribute-label {
+        padding: 4px;
+        text-align: right;
+    }
 
         #contribute i {
             color: #333;
@@ -49,7 +63,7 @@ a:hover, a:active, a:focus {
 
     iframe {
         width: 736px;
-        height: 500px;
+        height: 300px;
         border: none;
     }
 

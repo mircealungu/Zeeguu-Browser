@@ -28,7 +28,7 @@ loadState(function() {
         }
         $("#contribute-from").val(term);
         $("#contribute-url").text(url);
-        $("#contribute-context").text(context);
+        $("#contribute-context").val(context);
     }
 });
 
@@ -47,12 +47,14 @@ function contributeAction() {
     if (contributed) {
         return;
     }
-    var translation = $("#contribute-text").val();
+    var translation_in_window = $("#contribute-text").val();
     var term_in_window = $("#contribute-from").val();
-    if (translation.length === 0) {
+    var context_in_window = $("#contribute-context").val();
+
+    if (translation_in_window.length === 0) {
         return;
     }
-    contribute_with_context(term_in_window, url, context, translation);
+    contribute_with_context(term_in_window, url, context_in_window, translation_in_window);
     //contribute(term, translation);
     $("#contribute-text").val("Word & example uploaded!").prop("disabled", true).addClass("success");
     $("#contribute-btn").addClass("disabled");
