@@ -19,8 +19,6 @@ loadState(function() {
         var second_space_pos = query.indexOf(" ", first_space_pos+1);
         url = query.substr(first_space_pos+1, second_space_pos - first_space_pos - 1);
         context = query.substr(second_space_pos + 1);
-        console.log("Term: '" + term + "'");
-        console.log("Context: '" + context + "'");
         $("#zeeguu").append('<iframe src="' + translationURL(term) + '" name="zeeguu" />');
         log_search(term);
         if (!state.links) {
@@ -59,6 +57,9 @@ function contributeAction() {
     $("#contribute-text").val("Word & example uploaded!").prop("disabled", true).addClass("success");
     $("#contribute-btn").addClass("disabled");
     contributed = true;
+
+    browser.sendMessage("close");
+
 }
 
 $(function() {
