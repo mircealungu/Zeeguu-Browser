@@ -98,10 +98,9 @@ loadState(function() {
             var zeeguu_open = false;
 
             browser.addMessageListener("translate", function(data) {
-                console.log("logging from inject.js:translate...")
 
                 dont_close = true;  // Abort the closing timer if it was started before this interaction
-                console.log("make sure we have url here...")
+//                console.log("make sure we have url here...")
                 var url = browser.zeeguuUrl(data.term, data.url, data.context);
                 if (!is_frameset()) {
                     if ($("#zeeguu").size()) {
