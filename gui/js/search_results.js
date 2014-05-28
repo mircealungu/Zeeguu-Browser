@@ -8,19 +8,21 @@ var contributed = false;
 function reloadDictionaries() {
     $("#dictionaries").html("| ");
 
+    id = 0;
     allDictsForLanguage(state.from).forEach(function(dict) {
-        console.log(state.dictUrl);
-        console.log(dict.url);
+        id = id + 1;
         if (state.dictUrl == dict.url) {
-            $("#dictionaries").append('<a class="selected_dict" id="'+dict.name +'" href="#">' + dict.name + '</b></span> | ')
+            $("#dictionaries").append('<a class="selected_dict" id="dict'+id +'" href="#">' + dict.name + '</b></span> | ')
         } else {
-            $("#dictionaries").append('<a class="nonselected_dict" id="'+dict.name +'" href="#">' + dict.name + '</a> | ');
-            $("#"+dict.name).click(function () {
+            $("#dictionaries").append('<a class="nonselected_dict" id="dict'+id +'" href="#">' + dict.name + '</a> | ');
+            $("#dict"+id).click(function () {
 
                 browser.sendMessage("update_state", {
                     dictUrl: dict.url
                 });
-                redisplaySearchResults();
+                setTimeout(function() {redisplaySearchResults()}, 300);
+
+
             })
         }
     });
@@ -28,6 +30,22 @@ function reloadDictionaries() {
 function redisplaySearchResults() {
     log_search($("#contribute-from").val())
     $("#dictframe").attr("src",translationURL($("#contribute-from").val()));
+
+//    $(document).ready(function(){
+//        var myIFrame = document.getElementById("#dictframe");
+//        $(myIFrame.contentWindow.document).ready(function(){
+//            $(this).find("a").attr("href", '#');
+//        });
+//
+//    })
+
+//    setTimeout(function() {
+//        $('#dictframe').contents().find('a').click(function(event) {
+//            alert("demo only");
+//            event.preventDefault();
+//        });
+//    }, 1000);
+
     reloadDictionaries();
 }
 

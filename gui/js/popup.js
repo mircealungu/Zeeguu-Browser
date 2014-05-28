@@ -18,9 +18,10 @@ $(function() {
     }
 
     setHelp("#fast-mode", "Translate by double-clicking");
-    setHelp("#selection-mode", "Disable links for easier selection");
+    setHelp("#selection-mode", "Disable page links for easier selection");
     setHelp("#to-the-gym", "Practice at the Language Gym");
-    setHelp("#options-btn", "Open options");
+    setHelp("#to-the-word-list", "To your words list");
+    setHelp("#options-btn", "Edit plugin options");
 
     loadState(function() {
 

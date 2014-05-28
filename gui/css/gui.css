@@ -121,13 +121,13 @@ a:hover, a:active, a:focus {
         padding: 4px 11px;
     }
 
-        #selection-mode {
-            width: 116px;
-        }
+        /*#selection-mode {*/
+            /*width: 116px;*/
+        /*}*/
 
-        #fast-mode {
-            width: 79px;
-        }
+        /*#fast-mode {*/
+            /*width: 79px;*/
+        /*}*/
 
         #popup .btn:hover i, #popup .btn.enabled i {
             color: #08c;
@@ -137,15 +137,15 @@ a:hover, a:active, a:focus {
         margin: 2px 1px;
     }
 
-    #options-btn {
-        position: absolute;
-        right: 6px;
-        bottom: 0px;
-    }
+    /*#options-btn {*/
+        /*position: absolute;*/
+        /*right: 6px;*/
+        /*bottom: 0px;*/
+    /*}*/
 
-        #options-btn:link, #options-btn:visited {
-            color: #ddd
-        }
+    /*#options-btn:link, #options-btn:visited {*/
+        /*color: #ddd*/
+    /*}*/
 
 .selected_dict {
     font-weight: 700;

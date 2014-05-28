@@ -58,7 +58,7 @@ $(function() {
             from: '',
             dictUrl: ''
         });
-        $("#success").show();
+        browser.closeOptionsPage();
         return false;
     });
 

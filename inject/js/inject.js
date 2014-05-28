@@ -10,7 +10,7 @@ var this_url = "unknown"
 
 browser.sendMessage("get_tab_url",function(tab_url) {
     this_url = tab_url;
-    console.log("+++++++ got my url!!" + tab_url);
+//    console.log("+++++++ got my url!!" + tab_url);
 })
 
 
