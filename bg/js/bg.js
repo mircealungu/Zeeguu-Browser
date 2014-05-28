@@ -1,4 +1,4 @@
-var PERSITENT_STATE_KEYS = ["dict", "from", "to", "links", "fast", "session"];
+var PERSITENT_STATE_KEYS = ["dictUrl", "from", "to", "links", "fast", "session", "email"];
 //var API_URL = "http://localhost:9000/";  // This is also stored in lib/zeeguu.js
 var API_URL = "http://zeeguu.unibe.ch/";  // This is also stored in lib/zeeguu.js
 
@@ -36,7 +36,7 @@ function storeState() {
 
 function fillStateWithDefaults(state) {
     return $.extend({
-            dict: "http://{from}-{to}.syn.dict.cc/?s={query}",
+            dictUrl: "http://{from}-{to}.syn.dict.cc/?s={query}",
             from: "de",
             to: "en",
             session: null,

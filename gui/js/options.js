@@ -31,14 +31,14 @@ $(function() {
 
         $("#from_lang").val(state.from);
             load_dictionaries_select(state.from);
-        $("#dict").val(state.dict);
+        $("#dict").val(state.dictUrl);
            load_dict_url($("#dict").val());
         $("#user_email").val(state.email);
     });
 
     $("#save").click(function() {
         browser.sendMessage("update_state", {
-            dict: $("#dict").val(),
+            dictUrl: $("#dict").val(),
             from: $("#from_lang").val()
         });
         $("#success").show();
@@ -56,7 +56,7 @@ $(function() {
             session : null,
             email: '',
             from: '',
-            dict: ''
+            dictUrl: ''
         });
         $("#success").show();
         return false;

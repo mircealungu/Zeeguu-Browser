@@ -1,11 +1,11 @@
 {
     "web_accessible_resources": [
-        "gui/html/zeeguu.html", 
+        "gui/html/search_results.html",
         "gui/html/login.html", 
         "gui/html/error.html", 
         "gui/html/popup.html", 
         "gui/css/gui.css", 
-        "gui/js/gui.js", 
+        "gui/js/search_results.js",
         "gui/js/login.js", 
         "gui/js/popup.js", 
         "gui/img/loading.gif", 
@@ -28,9 +28,7 @@
         "48": "logo/48x48.png", 
         "16": "logo/16x16.png"
     }, 
-    "manifest_version": 2, 
-    "version": "1.246", 
-    "options_page": "gui/html/options.html", 
+    "description": "The web as your language textbook", 
     "background": {
         "scripts": [
             "lib/jquery/jquery.js", 
@@ -38,6 +36,9 @@
             "bg/js/bg.js"
         ]
     }, 
+    "version": "1.247", 
+    "options_page": "gui/html/options.html", 
+    "manifest_version": 2, 
     "content_scripts": [
         {
             "matches": [
@@ -55,19 +56,18 @@
             ]
         }
     ], 
+    "browser_action": {
+        "default_title": "Zeeguu", 
+        "default_popup": "gui/html/popup.html", 
+        "default_icon": {
+            "19": "logo/19x19.png", 
+            "38": "logo/38x38.png"
+        }
+    }, 
     "permissions": [
         "storage", 
         "tabs", 
         "contextMenus", 
         "http://zeeguu.unibe.ch/"
-    ], 
-    "browser_action": {
-        "default_popup": "gui/html/popup.html", 
-        "default_icon": {
-            "19": "logo/19x19.png", 
-            "38": "logo/38x38.png"
-        }, 
-        "default_title": "Zeeguu"
-    }, 
-    "description": "The web as your language textbook"
+    ]
 }

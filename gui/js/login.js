@@ -41,7 +41,7 @@ $(function() {
                 if(!result) {
                     $("#login-error").show();
                 } else {
-                    window.location = "zeeguu.html" + window.location.search;
+                    window.location = "search_results.html" + window.location.search;
                     browser.sendMessage("update_state", {
                         email: $("#email").val()
                     });
@@ -58,7 +58,7 @@ $(function() {
                 if(!result) {
                     $("#register-error").show();
                 } else {
-                    window.location = "zeeguu.html" + window.location.search;
+                    window.location = "search_results.html" + window.location.search;
                 }
             });
         }
