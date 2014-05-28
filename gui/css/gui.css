@@ -147,3 +147,10 @@ a:hover, a:active, a:focus {
             color: #ddd
         }
 
+.selected_dict {
+    font-weight: 700;
+}
+
+.nonselected_dict {
+    font-weight: 300;
+}

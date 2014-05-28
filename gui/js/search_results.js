@@ -5,9 +5,32 @@ var context;
 var url;
 var contributed = false;
 
-function displaySearchResults() {
+function reloadDictionaries() {
+    $("#dictionaries").html("| ");
 
+    allDictsForLanguage(state.from).forEach(function(dict) {
+        console.log(state.dictUrl);
+        console.log(dict.url);
+        if (state.dictUrl == dict.url) {
+            $("#dictionaries").append('<a class="selected_dict" id="'+dict.name +'" href="#">' + dict.name + '</b></span> | ')
+        } else {
+            $("#dictionaries").append('<a class="nonselected_dict" id="'+dict.name +'" href="#">' + dict.name + '</a> | ');
+            $("#"+dict.name).click(function () {
+
+                browser.sendMessage("update_state", {
+                    dictUrl: dict.url
+                });
+                redisplaySearchResults();
+            })
+        }
+    });
 }
+function redisplaySearchResults() {
+    log_search($("#contribute-from").val())
+    $("#dictframe").attr("src",translationURL($("#contribute-from").val()));
+    reloadDictionaries();
+}
+
 loadState(function() {
     if (!is_logged_in()) {
         window.location = "login.html" + window.location.search;
@@ -22,7 +45,7 @@ loadState(function() {
         var second_space_pos = query.indexOf(" ", first_space_pos+1);
         url = query.substr(first_space_pos+1, second_space_pos - first_space_pos - 1);
         context = query.substr(second_space_pos + 1);
-        $("#zeeguu").append('<iframe src="' + translationURL(term) + '" name="zeeguu" />');
+        $("#zeeguu").append('<iframe id="dictframe" src="' + translationURL(term) + '" name="zeeguu" />');
         log_search(term);
         if (!state.links) {
             $("#toggle-links").addClass("enabled");
@@ -31,17 +54,7 @@ loadState(function() {
         $("#contribute-url").text(url);
         $("#contribute-context").val(context);
 
-        $("#dictionaries").html("| ");
-        allDictsForLanguage(state.from).forEach(function(dict) {
-            console.log(state.dictUrl);
-            console.log(dict.url);
-            if (state.dictUrl == dict.url) {
-                $("#dictionaries").append('<span><b>' + dict.name + '</b></span> | ')
-            } else {
-                $("#dictionaries").append('<a href="#">' + dict.name + '</a> | ')
-            }
-        });
-
+        reloadDictionaries();
     }
 });
 
@@ -80,10 +93,18 @@ function contributeAction() {
 $(function() {
     $("#contribute-btn").click(contributeAction);
 
+
     $("#contribute-text").keypress(function (e) {
       if (e.which == 13) {  // The return key
         contributeAction();
       }
+    });
+
+    $("#search-btn").click(redisplaySearchResults);
+    $("#contribute-from").keypress(function (e) {
+        if (e.which == 13) {  // The return key
+            redisplaySearchResults();
+        }
     });
 
     $("#toggle-links").click(function() {
