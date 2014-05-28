@@ -5,6 +5,9 @@ var context;
 var url;
 var contributed = false;
 
+function displaySearchResults() {
+
+}
 loadState(function() {
     if (!is_logged_in()) {
         window.location = "login.html" + window.location.search;
@@ -27,6 +30,18 @@ loadState(function() {
         $("#contribute-from").val(term);
         $("#contribute-url").text(url);
         $("#contribute-context").val(context);
+
+        $("#dictionaries").html("| ");
+        allDictsForLanguage(state.from).forEach(function(dict) {
+            console.log(state.dictUrl);
+            console.log(dict.url);
+            if (state.dictUrl == dict.url) {
+                $("#dictionaries").append('<span><b>' + dict.name + '</b></span> | ')
+            } else {
+                $("#dictionaries").append('<a href="#">' + dict.name + '</a> | ')
+            }
+        });
+
     }
 });
 
@@ -64,6 +79,7 @@ function contributeAction() {
 
 $(function() {
     $("#contribute-btn").click(contributeAction);
+
     $("#contribute-text").keypress(function (e) {
       if (e.which == 13) {  // The return key
         contributeAction();
