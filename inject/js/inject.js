@@ -10,10 +10,29 @@ var this_url = "unknown"
 
 browser.sendMessage("get_tab_url",function(tab_url) {
     this_url = tab_url;
-//    console.log("+++++++ got my url!!" + tab_url);
 })
 
+function highlight_words(words) {
 
+    var all = document.querySelectorAll('p');
+
+    for (var i=0, max=all.length; i < max; i++) {
+        var parent = all[i];
+
+        var textNode = parent.firstChild;
+        if (textNode != null)
+        if (textNode.nodeType == 3) {
+            if (textNode.data.length == 0) {
+                return;
+            }
+            for (j = 0; j < words.length; j++) {
+                var rgxp = new RegExp(" " + words[j]+" ", 'g');
+                var repl = ' <span class="zeeguu-visited">' + words[j] + '</span> ';
+                parent.innerHTML = parent.innerHTML.replace(rgxp, repl);
+            }
+        }
+    }
+}
 
 loadState(function() {
     // The dictionary frame
@@ -32,6 +51,10 @@ loadState(function() {
         });
 
         toggle_selection_mode(!state.links);
+
+//        is this a good point to mess with the text?
+
+
 
 
     // Any frame
@@ -77,7 +100,9 @@ loadState(function() {
             console.log("selection is... selection");
             if (selection !== null) {
                 // this is the magic regex for splitting in sentences which often works for english.
+                console.log(selection.context)
                 data.context = $.trim(selection.context.match(/\(?[^\.!\?]+[\.!\?]\)?/g).filter(function(each){return each.indexOf(data.term)>=0;})[0])
+                console.log("CONTEXT::::::: " + data.context)
                 highlight_when_unhighlighting = true;
             }
         });
@@ -198,40 +223,37 @@ function scroll_to(element) {
 }
 
 function highlight() {
+    console.log("trying to highlight the current word!")
     highlight_when_unhighlighting = false;
     var span = document.createElement("span");
     span.className = "zeeguu-highlight";
-    /*
-    var wordNode = element.splitText(start);
-    wordNode.splitText(end - start);
-    span.appendChild(wordNode.cloneNode(true));
-    parent.replaceChild(span, wordNode);
-    */
+
     try {
         browser.getSelection().getRangeAt(0).surroundContents(span);
-        scroll_to(span);
+//        scroll_to(span);
     } catch (e) {
 
     }
 }
 
 function unhighlight() {
-    $(".zeeguu-highlight").addClass("zeeguu-remove");
+//    $(".zeeguu-highlight").addClass("zeeguu-remove");
+    $(".zeeguu-highlight").addClass("zeeguu-visited");
     if (highlight_when_unhighlighting) {
         highlight();
     }
-    $(".zeeguu-remove").each(function() {
-        var parent = this.parentNode,
-            lastChild = this.lastChild,
-            nextlastChild;
-        parent.replaceChild(lastChild, this);
-        while(this.lastChild) {
-            nextlastChild = this.lastChild;
-            parent.insertBefore(nextlastChild, lastChild);
-            lastChild = nextlastChild;
-        }
-        parent.normalize();
-    });
+//    $(".zeeguu-remove").each(function() {
+//        var parent = this.parentNode,
+//            lastChild = this.lastChild,
+//            nextlastChild;
+//        parent.replaceChild(lastChild, this);
+//        while(this.lastChild) {
+//            nextlastChild = this.lastChild;
+//            parent.insertBefore(nextlastChild, lastChild);
+//            lastChild = nextlastChild;
+//        }
+//        parent.normalize();
+//    });
 }
 
 function toggle_selection_mode(new_selection_mode) {
@@ -253,3 +275,8 @@ function toggle_selection_mode(new_selection_mode) {
     }
     selection_mode = new_selection_mode;
 }
+
+browser.sendMessage("get_user_words",function(user_words) {
+    highlight_words(user_words)
+})
+

@@ -95,6 +95,23 @@ browser.addMessageListener("get_tab_url",
         response(sender.tab.url)
     });
 
+browser.addMessageListener("get_user_words",
+    function(message, sender, response) {
+//        response(["der"]);
+        console.log(API_URL + "user_words?session=" + state.session);
+        $.get(API_URL + "user_words?session=" + state.session).done(function(data) {
+            console.log("!!!!!!*****")
+            response(data);
+        }).fail(function() {
+            callback(false);
+        });
+
+    }
+//        getUserWords(state.session, function (user_words) {
+//            console.log("something works somewhere...")
+//        }
+    )
+
 
 chrome.extension.onMessage.addListener(function(message, sender) {
     if (message.name != "window" && message.name != "update_state" && message.name != "get_state") {
