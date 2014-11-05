@@ -22,13 +22,12 @@
             "description": "Translate selected word"
         }
     }, 
-    "name": "Zeeguu", 
+    "description": "The web as your language textbook", 
     "icons": {
         "128": "logo/128x128.png", 
         "48": "logo/48x48.png", 
         "16": "logo/16x16.png"
     }, 
-    "description": "The web as your language textbook", 
     "background": {
         "scripts": [
             "lib/jquery/jquery.js", 
@@ -36,7 +35,8 @@
             "bg/js/bg.js"
         ]
     }, 
-    "version": "1.255", 
+    "name": "Zeeguu", 
+    "version": "1.257", 
     "options_page": "gui/html/options.html", 
     "manifest_version": 2, 
     "content_scripts": [
@@ -57,12 +57,12 @@
         }
     ], 
     "browser_action": {
-        "default_popup": "gui/html/popup.html", 
         "default_icon": {
             "19": "logo/19x19.png", 
             "38": "logo/38x38.png"
         }, 
-        "default_title": "Zeeguu"
+        "default_title": "Zeeguu", 
+        "default_popup": "gui/html/popup.html"
     }, 
     "permissions": [
         "storage", 

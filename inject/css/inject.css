@@ -21,6 +21,20 @@
     margin: 0;
 }
 
+.zeeguu-visited,
+.zeeguu-visited a:link,
+.zeeguu-visited a:visited,
+.zeeguu-visited a:hover {
+    background-color: rgba(255, 222, 116, 0.14);
+    border-radius: 1px;
+    padding: 0 2px;
+    margin: 0;
+    /*text-decoration: underline;*/
+    /* everything the same as the .zeeguu-highlight , only that
+    in this case we have no border */
+    border: 0px solid rgba(21, 21, 21, 0.48);
+}
+
 a[data-zeeguu-href] {
     cursor: text !important;
 }
