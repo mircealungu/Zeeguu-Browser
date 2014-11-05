@@ -32,8 +32,6 @@ function highlight_words(words) {
                 parent.innerHTML = parent.innerHTML.replace(rgxp, repl);
         }
     }
-
-    console.log(words)
 }
 
 loadState(function() {
@@ -208,31 +206,13 @@ function hide_zeeguu(callback) {
     }
 }
 
-function scroll_to(element) {
-    var offset = $(element).offset().top + $(element).height();
-    var scroll = $(document).scrollTop();
-    var height = $(window).height();
-    var left_offset = $(element).offset().left;
-    var body_height = $(document).height();
-    if (offset - scroll > height - HEIGHT && left_offset < WIDTH) {
-        var target_scroll = offset - height + HEIGHT;
-        if (target_scroll > body_height - height) {
-            var missing = target_scroll - body_height + height + 100;
-            $("body").append('<div style="height:' + missing + 'px;"></div>');
-        }
-        $('html, body').animate({scrollTop: target_scroll}, ANIMATION_SPEED * 4);
-    }
-}
-
 function highlight() {
-    console.log("trying to highlight the current word!")
     highlight_when_unhighlighting = false;
     var span = document.createElement("span");
     span.className = "zeeguu-highlight";
 
     try {
         browser.getSelection().getRangeAt(0).surroundContents(span);
-//        scroll_to(span);
     } catch (e) {
 
     }
