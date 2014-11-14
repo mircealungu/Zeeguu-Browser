@@ -27,8 +27,8 @@ function highlight_words(words) {
             It seems to work for now.
              */
             for (j = 0; j < words.length; j++) {
-                var rgxp = new RegExp(" " + words[j]+"", 'gi');
-                var repl = ' <span class="zeeguu-visited">' + words[j] + '</span>';
+                var rgxp = new RegExp(" " + words[j]+" ", 'gi');
+                var repl = ' <span class="zeeguu-visited">' + words[j] + '</span> ';
                 parent.innerHTML = parent.innerHTML.replace(rgxp, repl);
         }
     }

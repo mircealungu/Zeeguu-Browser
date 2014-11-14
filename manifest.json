@@ -31,6 +31,7 @@
     "manifest_version": 2, 
     "version": "1.262", 
     "options_page": "gui/html/options.html", 
+    "description": "The web as your language textbook", 
     "background": {
         "scripts": [
             "lib/jquery/jquery.js", 
