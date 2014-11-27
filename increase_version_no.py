@@ -1,4 +1,4 @@
-#!/opt/local/bin/python
+#!/usr/bin/python#!/opt/local/bin/python
 import codecs
 import json
 
