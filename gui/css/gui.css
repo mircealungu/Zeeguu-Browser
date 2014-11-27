@@ -52,6 +52,13 @@ a:hover, a:active, a:focus {
             cursor: pointer;
         }
 
+        #close-popup-button {
+            position: absolute;
+            right: 5px;
+            top: 4px;
+            cursor: pointer;
+        }
+
             #contribute a.enabled i, #contribute a:hover i, #contribute a:active i, #contribute a:focus i {
                 color: #08c;
             }

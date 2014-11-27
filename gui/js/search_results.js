@@ -131,5 +131,9 @@ $(function() {
         });
     });
 
+    $("#close-popup-button").click(function() {
+        browser.sendMessage("close");
+    });
+
     $("#contribute-text").focus();
 });
