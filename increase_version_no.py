@@ -1,3 +1,4 @@
+#!/opt/local/bin/python
 import codecs
 import json
 
