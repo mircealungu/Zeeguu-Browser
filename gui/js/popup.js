@@ -66,7 +66,7 @@ $(function() {
         });
 
         $("#to-the-gym").click(function() {
-            browser.newTab(API_URL+"identify_the_word");
+            browser.newTab(API_URL+"recognize");
         });
 
         $("#to-the-word-list").click(function() {

@@ -1,14 +1,4 @@
 
-//var url = API_URL + 'static/json/dict.json';
-//$.getJSON( url, function( data ) {
-//    var items = [];
-//    $.each( data, function( key, val ) {
-//        alert(val.length);
-//        alert(key);
-//        console.log(key + " " + val);
-//    });
-//});
-
 
 function load_dictionaries_select(language) {
     var dict = $("#dict");
