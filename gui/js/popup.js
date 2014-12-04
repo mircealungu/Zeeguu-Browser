@@ -22,17 +22,18 @@ $(function() {
     setHelp("#to-the-gym", "Practice at the Language Gym");
     setHelp("#to-the-word-list", "To your words list");
     setHelp("#options-btn", "Edit plugin options");
+    setHelp("#to-the-help-page", "Email us a question about Zeeguu");
 
     loadState(function() {
 
         /*
          if the popup is called by a user who is not logged in,
-         we trigger the translate function, which asks him to login
+         we forward to the login.html which will be loaded in this
+         very popup
          */
         if (!state.session) {
-            translate("welcome");
+            window.location = "login.html";
         }
-
 
         $("#fast-mode").toggleClass("enabled", state.fast).click(function() {
             state.fast = !state.fast;
@@ -71,6 +72,14 @@ $(function() {
 
         $("#to-the-word-list").click(function() {
             browser.newTab(API_URL+"contributions");
+        });
+
+        $("#to-the-help-page").click(function() {
+//            var mailto_link = 'mailto:mircea.lungu@gmail.com?subject=Zeeguu%20Question';
+//            var win = window.open(mailto_link, 'emailWindow');
+//            browser.newTab(API_URL+"plugin_help");
+            browser.newTab("/gui/html/plugin_help.html");
+
         });
     });
 });

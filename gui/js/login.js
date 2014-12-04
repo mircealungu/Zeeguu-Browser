@@ -41,7 +41,10 @@ $(function() {
                 if(!result) {
                     $("#login-error").show();
                 } else {
-                    window.location = "search_results.html" + window.location.search;
+                    if (window.location.search)
+                        window.location = "search_results.html" + window.location.search;
+                    else
+                        window.location = "popup.html";
                     browser.sendMessage("update_state", {
                         email: $("#email").val()
                     });
