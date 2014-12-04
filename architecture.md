@@ -41,7 +41,7 @@ A:
 Popup
 ===
 the popup created by the toolbar button
-gui/js/popup.js
+gui/js/toolbar-popup.js
 gui/html/popup.html
 
 gui/html/error.html
@@ -85,12 +85,12 @@ Q: Where do you extract the highlighted word from the page?
 A: in bg.js:97 creating the context menu, and setting a callback function which
  sends a "translate" message through chrome.tabs.sendMessage??
   Q: where is the translate message dispatched?
-  A: there seems to be a translate(term) in popup.js:15
+  A: there seems to be a translate(term) in toolbar-popup.js:15
 
   A: what is sendMessage doing?
   Q: takes an id and a dictionary...
 
-  Q: in  bg.js i use chrome.tabs.sendMessage while in popup.js i use browser.sendMessage
+  Q: in  bg.js i use chrome.tabs.sendMessage while in toolbar-popup.js i use browser.sendMessage
   A:
 
 Q: What is loadState? Seems to be called from many places.

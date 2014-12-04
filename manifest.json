@@ -3,11 +3,11 @@
         "gui/html/search_results.html", 
         "gui/html/login.html", 
         "gui/html/error.html", 
-        "gui/html/popup.html", 
+        "gui/html/toolbar-popup.html",
         "gui/css/gui.css", 
         "gui/js/search_results.js", 
         "gui/js/login.js", 
-        "gui/js/popup.js", 
+        "gui/js/toolbar-popup.js",
         "gui/img/loading.gif", 
         "lib/jquery/jquery.validate.js", 
         "lib/jquery/jquery.js", 
@@ -63,7 +63,7 @@
     ], 
     "browser_action": {
         "default_title": "Zeeguu", 
-        "default_popup": "gui/html/popup.html", 
+        "default_popup": "gui/html/toolbar-popup.html",
         "default_icon": {
             "19": "logo/19x19.png", 
             "38": "logo/38x38.png"

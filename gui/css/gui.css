@@ -82,6 +82,10 @@ a:hover, a:active, a:focus {
 
 
 /* Login form */
+#login {
+    width: 464px;
+}
+
 #login form {
     margin-top: 20px;
 }

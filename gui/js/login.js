@@ -44,7 +44,7 @@ $(function() {
                     if (window.location.search)
                         window.location = "search_results.html" + window.location.search;
                     else
-                        window.location = "popup.html";
+                        window.location = "toolbar-popup.html";
                     browser.sendMessage("update_state", {
                         email: $("#email").val()
                     });
