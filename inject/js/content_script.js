@@ -185,16 +185,18 @@ loadState(function() {
                 var selection = window.getSelection().toString();
 
                 if (selection.length > 0) {
-                    if (bubbleDOM.style.visibility != 'visible') {
+//                    if (bubbleDOM.style.visibility != 'visible') {
                         renderBubble(e.pageX, e.pageY, selection);
                         get_translation_from_db(selection, update_bubble_with_translation);
-                    } else {
-                    }
+//                    } else {
+//                    }
+                } else {
+                    bubbleDOM.style.visibility = 'hidden';
                 }
             }, false);
 
 
-            // Close the bubble when we click on the screen.
+//            Close the bubble when we click on the screen.
 //            document.addEventListener('mousedown', function (e) {
 //                bubbleDOM.style.visibility = 'hidden';
 //            }, false);
@@ -221,6 +223,19 @@ loadState(function() {
                     bubbleDOM.innerHTML += "<br/>"+ translation;
                     bubbleDOM.innerHTML += "<hr/>";
 
+                    var more = document.createElement('span');
+                    more.innerHTML = "more ";
+                    more.addEventListener('mouseup', function (e) {
+                        /*
+                         I guess here we must send a message from
+                         the page that will be intercepted by the
+                         plugin...
+                         */
+                        alert("should show more translations...");
+
+                    });
+                    bubbleDOM.appendChild(more);
+
                     var close = document.createElement('span');
                     close.innerHTML = "close ";
                     close.addEventListener('mousedown', function (e) {
@@ -228,12 +243,6 @@ loadState(function() {
                     });
                     bubbleDOM.appendChild(close);
 
-                    var more = document.createElement('span');
-                    more.innerHTML = "more";
-                    more.addEventListener('mouseup', function (e) {
-
-                    });
-                    bubbleDOM.appendChild(more);
                 }
             }
 
