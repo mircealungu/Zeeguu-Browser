@@ -12,6 +12,8 @@ browser.sendMessage("get_tab_url",function(tab_url) {
     this_url = tab_url;
 })
 
+tooltipVisible = false;
+
 function highlight_words(words) {
 
     var all = document.querySelectorAll('p');
@@ -158,6 +160,87 @@ loadState(function() {
 
         if (window.top == window.self) {
 
+            var translate_selection = function(eventData) {
+                var selection = browser.getSelection();
+                var message = selected_term(selection);
+                if (message === null) {
+                    return;
+                }
+                highlight_when_unhighlighting = true;
+                browser.sendMessage("translate", message);
+                console.log("sent message translate...")
+            };
+
+
+
+            // Add bubble to the top of the page.
+
+            var bubbleDOM = document.createElement('div');
+            bubbleDOM.setAttribute('class', 'selection_bubble');
+            document.body.appendChild(bubbleDOM);
+
+
+            // Let's listen to mouseup DOM events.
+            document.addEventListener('mouseup', function (e) {
+                var selection = window.getSelection().toString();
+
+                if (selection.length > 0) {
+                    if (bubbleDOM.style.visibility != 'visible') {
+                        renderBubble(e.pageX, e.pageY, selection);
+                        get_translation_from_db(selection, update_bubble_with_translation);
+                    } else {
+                    }
+                }
+            }, false);
+
+
+            // Close the bubble when we click on the screen.
+//            document.addEventListener('mousedown', function (e) {
+//                bubbleDOM.style.visibility = 'hidden';
+//            }, false);
+
+//            $(bubbleDOM).mousedown(function (ev) {
+//                bubbleDOM.style.visibility = 'hidden';
+//                return false;
+//            });
+
+
+            // Move that bubble to the appropriate location.
+            function renderBubble(mouseX, mouseY, selection) {
+                bubbleDOM.innerHTML = "Translating...";
+                bubbleDOM.style.top = mouseY + 16 +  'px';
+                bubbleDOM.style.left = mouseX + 16 + 'px';
+                bubbleDOM.style.visibility = 'visible';
+            }
+
+
+            // Move that bubble to the appropriate location.
+            function update_bubble_with_translation(translation) {
+                if (translation) {
+                    bubbleDOM.innerHTML = window.getSelection().toString();
+                    bubbleDOM.innerHTML += "<br/>"+ translation;
+                    bubbleDOM.innerHTML += "<hr/>";
+
+                    var close = document.createElement('span');
+                    close.innerHTML = "close ";
+                    close.addEventListener('mousedown', function (e) {
+                        bubbleDOM.style.visibility = 'hidden';
+                    });
+                    bubbleDOM.appendChild(close);
+
+                    var more = document.createElement('span');
+                    more.innerHTML = "more";
+                    more.addEventListener('mouseup', function (e) {
+
+                    });
+                    bubbleDOM.appendChild(more);
+                }
+            }
+
+
+
+
+
 //            $(document).bind("contextmenu",function(e) {
 //                    var selection = browser.getSelection();
 //
@@ -166,40 +249,58 @@ loadState(function() {
 //                        return;
 //                    }
 //
-//                    return false;
+//                // Chrome specific
+//                s = window.getSelection();
+//                oRange = s.getRangeAt(0); //get the text range
+//                oRect = oRange.getBoundingClientRect();
+//
+//                $(ev.target).qtip(
+//                    {
+//                        content: 'Some basic content for the tooltip',
+//                        position: {
+//                            target: 'mouse',
+//                            adjust: { mouse: false}
+//                        },
+//                        show: {
+//                            when: 'click',
+//                            ready: true
+//                        }
+//                    });
+//
+//                return false;
 //            });
+//
 
 
 
-
-            $(document).mouseup(function(ev) {
-                var selection = browser.getSelection();
-                var message = selected_term(selection);
-                if (message === null) {
-                    return;
-                }
-//                alert(ev.target);
-
-                // Chrome specific
-                s = window.getSelection();
-                oRange = s.getRangeAt(0); //get the text range
-                oRect = oRange.getBoundingClientRect();
-
-                $(ev.target).qtip(
-                    {
-                        content: 'Some basic content for the tooltip',
-                        position: {
-                            target: 'mouse',
-                            adjust: { mouse: false}
-                        },
-                        show: {
-                            when: 'click',
-                            ready: true
-                        }
-                    });
-
-
-            });
+//            $(document).mouseup(function(ev) {
+//                var selection = browser.getSelection();
+//                var message = selected_term(selection);
+//                if (message === null) {
+//                    return;
+//                }
+////                alert(ev.target);
+//
+//                // Chrome specific
+//                s = window.getSelection();
+//                oRange = s.getRangeAt(0); //get the text range
+//                oRect = oRange.getBoundingClientRect();
+//
+//                $(ev.target).qtip(
+//                    {
+//                        content: 'Some basic content for the tooltip',
+//                        position: {
+//                            target: 'mouse',
+//                            adjust: { mouse: false}
+//                        },
+//                        show: {
+//                            when: 'click',
+//                            ready: true
+//                        }
+//                    });
+//
+//
+//            });
 
 
 
