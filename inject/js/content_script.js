@@ -35,6 +35,10 @@ function highlight_words(words) {
 }
 
 loadState(function() {
+
+
+
+
     // The dictionary frame
     if (window.name == "zeeguu") {
         $(document).mouseup(function() {
@@ -60,8 +64,7 @@ loadState(function() {
     // Any frame
     } else {
 
-        var translate_selection = function() {
-            console.log("logging from inject.js:translate_selection...")
+        var translate_selection = function(eventData) {
             var selection = browser.getSelection();
             var message = selected_term(selection);
             if (message === null) {
@@ -72,18 +75,18 @@ loadState(function() {
             console.log("sent message translate...")
         };
 
-        $(document).mouseup(function() {
+        $(document).mouseup(function(eventData) {
             if (state.selectionMode) {
-                console.log("logging from inject.js:mouseUp...")
-                translate_selection();
+                console.log("logging from content_script.js:mouseUp...")
+                translate_selection(eventData);
             }
         }).click(function() {
             if (zeeguu_active) {
                 browser.sendMessage("close");
             }
-        }).dblclick(function() {
+        }).dblclick(function(eventData) {
             if (state.fast) {
-                translate_selection();
+                translate_selection(eventData);
             }
         });
 
@@ -97,12 +100,11 @@ loadState(function() {
 
             zeeguu_active = true;
             var selection = selected_term(browser.getSelection());
-            console.log("selection is... selection");
+
             if (selection !== null) {
                 // this is the magic regex for splitting in sentences which often works for english.
                 console.log(selection.context)
                 data.context = $.trim(selection.context.match(/\(?[^\.!\?]+[\.!\?]\)?/g).filter(function(each){return each.indexOf(data.term)>=0;})[0])
-                console.log("CONTEXT::::::: " + data.context)
                 highlight_when_unhighlighting = true;
             }
         });
@@ -115,39 +117,97 @@ loadState(function() {
             unhighlight();
         });
 
+        function translate_word_action(data) {
+            console.log(browser.getSelectionElement());
+        }
 
-    // The top frame
+        function translate_word_action_old(data) {
+
+            dont_close = true;  // Abort the closing timer if it was started before this interaction
+//                console.log("make sure we have url here...")
+            var url = browser.zeeguuUrl(data.term, data.url, data.context);
+            if (!is_frameset()) {
+                if ($("#zeeguu").size()) {
+                    $("#zeeguu").attr("src", url);
+                } else {
+                    $("body").append('<iframe src="' + url + '" id="zeeguu" scrolling="no" />');
+                    $("#zeeguu").animate({bottom: "0px"}, ANIMATION_SPEED);
+                }
+            } else {
+                browser.sendMessage("window", {
+                    url: url
+                });
+            }
+            zeeguu_open = true;
+            browser.sendMessage("unhighlight");
+            browser.sendMessage("update_state", {
+                selectionMode: false
+            });
+            window.setTimeout(function() {
+                dont_close = true;  // Abort the closing timer if it was started after this interaction
+            }, 200);
+        };
+
+
+        /************************************
+
+         This is the  context of the
+         original page.
+
+        *************************************/
+
         if (window.top == window.self) {
+
+//            $(document).bind("contextmenu",function(e) {
+//                    var selection = browser.getSelection();
+//
+//                    var message = selected_term(selection);
+//                    if (message === null) {
+//                        return;
+//                    }
+//
+//                    return false;
+//            });
+
+
+
+
+            $(document).mouseup(function(ev) {
+                var selection = browser.getSelection();
+                var message = selected_term(selection);
+                if (message === null) {
+                    return;
+                }
+//                alert(ev.target);
+
+                // Chrome specific
+                s = window.getSelection();
+                oRange = s.getRangeAt(0); //get the text range
+                oRect = oRange.getBoundingClientRect();
+
+                $(ev.target).qtip(
+                    {
+                        content: 'Some basic content for the tooltip',
+                        position: {
+                            target: 'mouse',
+                            adjust: { mouse: false}
+                        },
+                        show: {
+                            when: 'click',
+                            ready: true
+                        }
+                    });
+
+
+            });
+
+
+
             var closingTimer;
             var dont_close = false;
             var zeeguu_open = false;
 
-            browser.addMessageListener("translate", function(data) {
-
-                dont_close = true;  // Abort the closing timer if it was started before this interaction
-//                console.log("make sure we have url here...")
-                var url = browser.zeeguuUrl(data.term, data.url, data.context);
-                if (!is_frameset()) {
-                    if ($("#zeeguu").size()) {
-                        $("#zeeguu").attr("src", url);
-                    } else {
-                        $("body").append('<iframe src="' + url + '" id="zeeguu" scrolling="no" />');
-                        $("#zeeguu").animate({bottom: "0px"}, ANIMATION_SPEED);
-                    }
-                } else {
-                    browser.sendMessage("window", {
-                        url: url
-                    });
-                }
-                zeeguu_open = true;
-                browser.sendMessage("unhighlight");
-                browser.sendMessage("update_state", {
-                    selectionMode: false
-                });
-                window.setTimeout(function() {
-                    dont_close = true;  // Abort the closing timer if it was started after this interaction
-                }, 200);
-            });
+            browser.addMessageListener("translate", translate_word_action);
 
             browser.addMessageListener("close", function(data) {
                 if (zeeguu_open && !closingTimer) {

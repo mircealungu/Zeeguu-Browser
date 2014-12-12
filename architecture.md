@@ -7,7 +7,7 @@ bg/js/bg.js
     - e.g. contextMenu for translate.
      - at the moment of calling this function, we have the selection as tet
      but no dom element, so we can't get the full context yet. so we set the
-     url and let the context to be filled later in the listener from inject.js
+     url and let the context to be filled later in the listener from content_script.js
     - e.g. addMessageListener which delegates in case of chrome to
     addListener, message,...
 
@@ -20,7 +20,7 @@ GUI
 ===
 gui/js/gui.js
 - defines loadState()
-- defines contributeAction() -- calls contribute() from zeeguu.js.
+- defines contributeAction() -- calls contribute() from zeeguu_api_interface.js.
 - defines the mapping between contributeAction() and the conribute-btn
 - gets the search term via window.location.search
 
@@ -49,21 +49,21 @@ gui/html/zeeguu.html
 
 Inject
 ======
-inject/js/inject.js
+inject/js/content_script.js
 
 loadState prepares two situations. when in zeeguu dictionary frame then
  there is a message send of "contribute"
   when in any other frame the message send is "translate"...
   this seems to prepare a global state elsewhere
 
-Inside inject.js there is a browser.addMessageListener for "translate"
+Inside content_script.js there is a browser.addMessageListener for "translate"
 
-while debugging inject.js stepper entered extensions::messaging
+while debugging content_script.js stepper entered extensions::messaging
 ports -- a way through which scripts can send messages to each other
 
 
 
-Q: Who uses inject.js?
+Q: Who uses content_script.js?
 A: manifest.json -- specifies it as content_script as opposed to bg.js which is specified as background script...
 
 
@@ -77,7 +77,7 @@ lib/browser.js
 lib/jquery/jquery.js
 lib/jquery/jquery.validate.js
 
-lib/zeeguu.js -- implements translationUrl(), logSearch(), is_logged_in(), contribute(from,to), login(), register()
+lib/zeeguu_api_interface.js -- implements translationUrl(), logSearch(), is_logged_in(), contribute(from,to), login(), register()
 
 Questions
 ===
@@ -94,7 +94,7 @@ A: in bg.js:97 creating the context menu, and setting a callback function which
   A:
 
 Q: What is loadState? Seems to be called from many places.
-A: seems to be defined in zeeguu.js.
+A: seems to be defined in zeeguu_api_interface.js.
   -- gui.js: initializes the info in the dict gui:
    -- the info seems to be transferred through window.location.search
    Q: what the hell is that?

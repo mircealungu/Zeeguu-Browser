@@ -3,17 +3,17 @@
         "gui/html/search_results.html", 
         "gui/html/login.html", 
         "gui/html/error.html", 
-        "gui/html/toolbar-popup.html",
+        "gui/html/toolbar-popup.html", 
         "gui/css/gui.css", 
         "gui/js/search_results.js", 
         "gui/js/login.js", 
-        "gui/js/toolbar-popup.js",
+        "gui/js/toolbar-popup.js", 
         "gui/img/loading.gif", 
         "lib/jquery/jquery.validate.js", 
         "lib/jquery/jquery.js", 
-        "lib/bootstrap/bootstrap.js", 
+        "lib/bootstrap/bootstrap.js",
         "lib/bootstrap/bootstrap.css"
-    ], 
+    ],
     "commands": {
         "translate": {
             "suggested_key": {
@@ -28,16 +28,22 @@
         "48": "logo/48x48.png", 
         "16": "logo/16x16.png"
     }, 
+    "manifest_version": 2, 
+    "description": "The web as your language textbook", 
+    "version": "1.272", 
+    "options_page": "gui/html/options.html",
+
+    // background
     "background": {
         "scripts": [
+
             "lib/jquery/jquery.js", 
             "lib/browser.js", 
             "bg/js/bg.js"
         ]
-    }, 
-    "version": "1.271", 
-    "options_page": "gui/html/options.html", 
-    "manifest_version": 2, 
+    },
+
+    // content scripts
     "content_scripts": [
         {
             "matches": [
@@ -45,29 +51,32 @@
             ], 
             "all_frames": true, 
             "css": [
-                "inject/css/inject.css"
+                "inject/css/inject.css",
+                "lib/qtip/jquery.qtip.css"
             ], 
             "js": [
-                "lib/jquery/jquery.js", 
+                "lib/jquery/jquery.js",
+                "lib/qtip/jquery.qtip.js",
                 "lib/browser.js", 
-                "lib/zeeguu.js", 
-                "inject/js/inject.js"
+                "lib/zeeguu_api_interface.js",
+                "inject/js/content_script.js"
             ]
         }
-    ], 
+    ],
+    // popup page
+    "browser_action": {
+        "default_icon": {
+            "19": "logo/19x19.png", 
+            "38": "logo/38x38.png"
+        }, 
+        "default_title": "Zeeguu", 
+        "default_popup": "gui/html/toolbar-popup.html"
+    },
+
     "permissions": [
         "storage", 
         "tabs", 
         "contextMenus", 
         "https://www.zeeguu.unibe.ch/"
-    ], 
-    "browser_action": {
-        "default_title": "Zeeguu", 
-        "default_popup": "gui/html/toolbar-popup.html",
-        "default_icon": {
-            "19": "logo/19x19.png", 
-            "38": "logo/38x38.png"
-        }
-    }, 
-    "description": "The web as your language textbook"
+    ]
 }

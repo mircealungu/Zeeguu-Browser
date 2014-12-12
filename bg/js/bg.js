@@ -1,6 +1,6 @@
 var PERSITENT_STATE_KEYS = ["dictUrl", "from", "to", "links", "fast", "session", "email"];
-//var API_URL = "http://localhost:9000/";  // This is also stored in lib/zeeguu.js
-var API_URL = "https://www.zeeguu.unibe.ch/";  // This is also stored in lib/zeeguu.js
+//var API_URL = "http://localhost:9000/";  // This is also stored in lib/zeeguu_api_interface.js
+var API_URL = "https://www.zeeguu.unibe.ch/";  // This is also stored in lib/zeeguu_api_interface.js
 
 var zeeguu_window = null,
     state;
