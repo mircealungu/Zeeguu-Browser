@@ -6,12 +6,6 @@ var highlight_when_unhighlighting = false,
     zeeguu_active = false,
     selection_mode = false;
 
-var this_url = "unknown"
-
-browser.sendMessage("get_tab_url",function(tab_url) {
-    this_url = tab_url;
-})
-
 tooltipVisible = false;
 
 

@@ -89,12 +89,6 @@ browser.addMessageListener("reset_state", function(message) {
     storeState();
 });
 
-browser.addMessageListener("get_tab_url",
-    function(message, sender, response) {
-        console.log("+++++ gimme message received" + sender.tab.url)
-        response(sender.tab.url)
-    });
-
 browser.addMessageListener("get_user_words",
     function(message, sender, response) {
 //        response(["der"]);
