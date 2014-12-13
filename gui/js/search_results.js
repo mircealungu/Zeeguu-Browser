@@ -98,7 +98,7 @@ function contributeAction() {
     if (translation_in_window.length === 0) {
         return;
     }
-    contribute_with_context(term_in_window, url, context_in_window, translation_in_window);
+    contribute_with_context(term_in_window, url, context_in_window, translation_in_window, document.title);
     //contribute(term, translation);
     $("#contribute-text").val("Word & example uploaded!").prop("disabled", true).addClass("success");
     $("#contribute-btn").addClass("disabled");

@@ -24,6 +24,7 @@ function highlight_words(words) {
 
     var all = document.querySelectorAll('p');
 
+
     for (var i=0, max=all.length; i < max; i++) {
         var parent = all[i];
 
@@ -35,8 +36,8 @@ function highlight_words(words) {
             It seems to work for now.
              */
             for (j = 0; j < words.length; j++) {
-                var rgxp = new RegExp(" (" + words[j]+") ", 'gi');
-                var repl = ' <span class="zeeguu-visited">$1</span> ';
+                var rgxp = new RegExp(' (' + words[j]+')( |,|[.])', 'gi');
+                var repl = ' <span class="zeeguu-visited" other="$1">$1$2</span> ';
                 parent.innerHTML = parent.innerHTML.replace(rgxp, repl);
             }
     }
@@ -51,6 +52,7 @@ function term_context_url_triple(selection) {
     if (!selection.baseNode || selection.baseNode.nodeType != 3) {
         return null;
     }
+
     var term = selection.toString();
     if (term.length < 1) {
         return null;
@@ -63,11 +65,13 @@ function term_context_url_triple(selection) {
     } catch (e) {
         context = "";
     }
+    var title = document.getElementsByTagName("title")[0].innerHTML;
 
     return {
-        term: term,
-        context: context,
-        url:this_url
+        "term": term,
+        "context": context,
+        "url": document.URL,
+        "title": title
     };
 }
 
@@ -79,6 +83,9 @@ of the type PAGE_NEEDS_WORD_TRANSLATION. This will be sent
 sometimes from the page, and must trigger the
 plugin to show up with the translation.
 
+This event listener is run in the context of the
+Content Script.
+
  */
     var port = chrome.runtime.connect();
     window.addEventListener("message", function(event) {
@@ -86,18 +93,27 @@ plugin to show up with the translation.
         if (event.source != window)
             return;
 
-        if (event.data.type && (event.data.type == "PAGE_NEEDS_WORD_TRANSLATION")) {
-            message = {
-                url: event.data.url,
-                context: event.data.context,
-                term: event.data.term
+        if (event.data.type) {
+            if (event.data.type == "PAGE_NEEDS_WORD_TRANSLATION") {
+                message = {
+                    url: event.data.url,
+                    context: event.data.context,
+                    term: event.data.term
+                };
+                browser.sendMessage("ZM_SHOW_TRANSLATION", message);
             }
-
-            browser.sendMessage("ZM_SHOW_TRANSLATION", message);
+            if (event.data.type == "PAGE_NEEDS_WORD_TO_BE_UPLOADED") {
+                contribute_with_context(
+                        event.data.term,
+                        event.data.url,
+                        event.data.context,
+                        event.data.translation,
+                        event.data.title);
+                highlight_words([event.data.term]);
+            }
         }
+
     }, false);
-
-
 
 
 loadState(function() {
@@ -131,12 +147,10 @@ loadState(function() {
             }
             highlight_when_unhighlighting = true;
             browser.sendMessage("ZM_SHOW_TRANSLATION", message);
-            console.log("sent message translate...")
         };
 
         $(document).mouseup(function(eventData) {
             if (state.selectionMode) {
-                console.log("logging from content_script.js:mouseUp...")
                 translate_selection(eventData);
             }
         }).click(function() {
@@ -162,7 +176,6 @@ loadState(function() {
 
             if (selection !== null) {
                 // this is the magic regex for splitting in sentences which often works for english.
-                console.log(selection.context)
                 data.context = $.trim(selection.context.match(/\(?[^\.!\?]+[\.!\?]\)?/g).filter(function(each){return each.indexOf(data.term)>=0;})[0])
                 highlight_when_unhighlighting = true;
             }
@@ -176,13 +189,8 @@ loadState(function() {
             unhighlight();
         });
 
-        function translate_word_action_new(data) {
-            console.log(browser.getSelectionElement());
-        }
-
         function translate_word_action(data) {
             dont_close = true;  // Abort the closing timer if it was started before this interaction
-//                console.log("make sure we have url here...")
             var url = browser.zeeguuUrl(data.term, data.url, data.context);
             if (!is_frameset()) {
                 if ($("#zeeguu").size()) {
@@ -224,7 +232,6 @@ loadState(function() {
                 }
                 highlight_when_unhighlighting = true;
                 browser.sendMessage("ZM_SHOW_TRANSLATION", message);
-                console.log("sent message translate...")
             };
 
 
@@ -235,13 +242,13 @@ loadState(function() {
             bubbleDOM.setAttribute('class', 'selection_bubble');
             document.body.appendChild(bubbleDOM);
 
-
             // Let's listen to mouseup DOM events.
             document.addEventListener('mouseup', function (e) {
                 var word_to_lookup = window.getSelection().toString();
 
 
                 if (word_to_lookup.length > 0) {
+
                     var message = term_context_url_triple(browser.getSelection());
                     renderBubble(e.pageX, e.pageY);
 
@@ -251,12 +258,9 @@ loadState(function() {
                      */
                     function update_bubble_with_translation(translation) {
                         if (translation) {
-                            bubbleDOM.innerHTML = word_to_lookup;
-                            bubbleDOM.innerHTML += "<br/>=</br>"+ translation;
-                            bubbleDOM.innerHTML += "<br/><br/><hr/>";
 
                             var more = document.createElement('span');
-                            more.innerHTML = "more ";
+                            more.innerHTML = ' (<a href="javascript:void(0)">more</a>) ';
                             more.addEventListener('mouseup', function (e) {
                                 /*
                                  I guess here we must send a message from
@@ -271,14 +275,51 @@ loadState(function() {
                                 script.innerHTML = 'window.postMessage('+JSON.stringify(message)+', "*");';
                                 document.body.appendChild(script);
                             });
-                            bubbleDOM.appendChild(more);
+
+                            var save = document.createElement('span');
+                            save.innerHTML = ' (<a href="javascript:void(0)">save</a>) ';
+                            save.addEventListener('mouseup', function (e) {
+                                /*
+                                 I guess here we must send a message from
+                                 the page that will be intercepted by the
+                                 plugin to open the full dictionary if one
+                                 exists...
+                                 */
+                                bubbleDOM.style.visibility = 'hidden';
+
+                                var script = document.createElement("script");
+                                message.type = "PAGE_NEEDS_WORD_TO_BE_UPLOADED";
+                                message.translation = translation;
+
+                                script.innerHTML =
+                                    'window.getSelection().empty();' +
+                                    'window.postMessage('+JSON.stringify(message)+', "*");';
+                                document.body.appendChild(script);
+                            });
+
 
                             var close = document.createElement('span');
-                            close.innerHTML = "close ";
+                            close.innerHTML = " (close)";
                             close.addEventListener('mousedown', function (e) {
                                 bubbleDOM.style.visibility = 'hidden';
                             });
-                            bubbleDOM.appendChild(close);
+
+                            var ok = document.createElement('span');
+                            ok.innerHTML = ' (<a href="javascript:void(0)" onclick="">ok</a>)';
+
+                            /*
+
+                                Until here, we've prepared our buttons...
+                                Now create the bubble.
+                             */
+
+                            bubbleDOM.innerHTML = word_to_lookup;
+                            bubbleDOM.innerHTML += "<br/>=</br>"+ translation;
+                            bubbleDOM.innerHTML += "<br/><br/>";
+
+                            bubbleDOM.appendChild(save);
+                            bubbleDOM.appendChild(more);
+
 
                         }
                     }
