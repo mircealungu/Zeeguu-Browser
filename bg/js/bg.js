@@ -91,10 +91,7 @@ browser.addMessageListener("reset_state", function(message) {
 
 browser.addMessageListener("get_user_words",
     function(message, sender, response) {
-//        response(["der"]);
-        console.log(API_URL + "user_words?session=" + state.session);
         $.get(API_URL + "user_words?session=" + state.session).done(function(data) {
-            console.log("!!!!!!*****")
             response(data);
         }).fail(function() {
             callback(false);

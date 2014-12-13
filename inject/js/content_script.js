@@ -18,7 +18,6 @@ function highlight_words(words) {
 
     var all = document.querySelectorAll('p');
 
-
     for (var i=0, max=all.length; i < max; i++) {
         var parent = all[i];
 
