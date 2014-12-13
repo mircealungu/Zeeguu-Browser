@@ -51,12 +51,10 @@
             ], 
             "all_frames": true, 
             "css": [
-                "inject/css/inject.css",
-                "lib/qtip/jquery.qtip.css"
+                "inject/css/inject.css"
             ], 
             "js": [
                 "lib/jquery/jquery.js",
-                "lib/qtip/jquery.qtip.js",
                 "lib/browser.js", 
                 "lib/zeeguu_api_interface.js",
                 "inject/js/content_script.js"
