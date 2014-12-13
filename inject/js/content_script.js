@@ -14,6 +14,12 @@ browser.sendMessage("get_tab_url",function(tab_url) {
 
 tooltipVisible = false;
 
+
+
+/*
+ This is the function in charge with highlighting the user's words
+ we put them between the zeeguu-visited links...
+ */
 function highlight_words(words) {
 
     var all = document.querySelectorAll('p');
@@ -36,16 +42,71 @@ function highlight_words(words) {
     }
 }
 
+
+
+/*
+  This is required to populate the popup window
+ */
+function term_context_url_triple(selection) {
+    if (!selection.baseNode || selection.baseNode.nodeType != 3) {
+        return null;
+    }
+    var term = selection.toString();
+    if (term.length < 1) {
+        return null;
+    }
+    var context = $(selection.baseNode.parentNode).text();
+    try {
+        context = $.trim(context.match(/\(?[^\.!\?]+[\.!\?]\)?/g).filter(function (each) {
+            return each.indexOf(term) >= 0;
+        })[0])
+    } catch (e) {
+        context = "";
+    }
+
+    return {
+        term: term,
+        context: context,
+        url:this_url
+    };
+}
+
+
+/*
+
+This sets an event listener for a message
+of the type PAGE_NEEDS_WORD_TRANSLATION. This will be sent
+sometimes from the page, and must trigger the
+plugin to show up with the translation.
+
+ */
+    var port = chrome.runtime.connect();
+    window.addEventListener("message", function(event) {
+        // We only accept messages from ourselves
+        if (event.source != window)
+            return;
+
+        if (event.data.type && (event.data.type == "PAGE_NEEDS_WORD_TRANSLATION")) {
+            message = {
+                url: event.data.url,
+                context: event.data.context,
+                term: event.data.term
+            }
+
+            browser.sendMessage("ZM_SHOW_TRANSLATION", message);
+        }
+    }, false);
+
+
+
+
 loadState(function() {
-
-
-
 
     // The dictionary frame
     if (window.name == "zeeguu") {
         $(document).mouseup(function() {
             var selection = browser.getSelection();
-            var message = selected_term(selection);
+            var message = term_context_url_triple(selection);
             if (message === null) {
                 return;
             }
@@ -58,22 +119,18 @@ loadState(function() {
 
         toggle_selection_mode(!state.links);
 
-//        is this a good point to mess with the text?
-
-
-
 
     // Any frame
     } else {
 
         var translate_selection = function(eventData) {
             var selection = browser.getSelection();
-            var message = selected_term(selection);
+            var message = term_context_url_triple(selection);
             if (message === null) {
                 return;
             }
             highlight_when_unhighlighting = true;
-            browser.sendMessage("translate", message);
+            browser.sendMessage("ZM_SHOW_TRANSLATION", message);
             console.log("sent message translate...")
         };
 
@@ -98,10 +155,10 @@ loadState(function() {
             }
         });
 
-        browser.addMessageListener("translate", function(data) {
+        browser.addMessageListener("ZM_SHOW_TRANSLATION", function(data) {
 
             zeeguu_active = true;
-            var selection = selected_term(browser.getSelection());
+            var selection = term_context_url_triple(browser.getSelection());
 
             if (selection !== null) {
                 // this is the magic regex for splitting in sentences which often works for english.
@@ -119,12 +176,11 @@ loadState(function() {
             unhighlight();
         });
 
-        function translate_word_action(data) {
+        function translate_word_action_new(data) {
             console.log(browser.getSelectionElement());
         }
 
-        function translate_word_action_old(data) {
-
+        function translate_word_action(data) {
             dont_close = true;  // Abort the closing timer if it was started before this interaction
 //                console.log("make sure we have url here...")
             var url = browser.zeeguuUrl(data.term, data.url, data.context);
@@ -162,12 +218,12 @@ loadState(function() {
 
             var translate_selection = function(eventData) {
                 var selection = browser.getSelection();
-                var message = selected_term(selection);
+                var message = term_context_url_triple(selection);
                 if (message === null) {
                     return;
                 }
                 highlight_when_unhighlighting = true;
-                browser.sendMessage("translate", message);
+                browser.sendMessage("ZM_SHOW_TRANSLATION", message);
                 console.log("sent message translate...")
             };
 
@@ -182,33 +238,64 @@ loadState(function() {
 
             // Let's listen to mouseup DOM events.
             document.addEventListener('mouseup', function (e) {
-                var selection = window.getSelection().toString();
+                var word_to_lookup = window.getSelection().toString();
 
-                if (selection.length > 0) {
-//                    if (bubbleDOM.style.visibility != 'visible') {
-                        renderBubble(e.pageX, e.pageY, selection);
-                        get_translation_from_db(selection, update_bubble_with_translation);
-//                    } else {
-//                    }
+
+                if (word_to_lookup.length > 0) {
+                    var message = term_context_url_triple(browser.getSelection());
+                    renderBubble(e.pageX, e.pageY);
+
+                    /*
+                     This function is called after and if we get
+                     a translation from the DB
+                     */
+                    function update_bubble_with_translation(translation) {
+                        if (translation) {
+                            bubbleDOM.innerHTML = word_to_lookup;
+                            bubbleDOM.innerHTML += "<br/>=</br>"+ translation;
+                            bubbleDOM.innerHTML += "<br/><br/><hr/>";
+
+                            var more = document.createElement('span');
+                            more.innerHTML = "more ";
+                            more.addEventListener('mouseup', function (e) {
+                                /*
+                                 I guess here we must send a message from
+                                 the page that will be intercepted by the
+                                 plugin to open the full dictionary if one
+                                 exists...
+                                 */
+
+                                var script = document.createElement("script");
+                                message.type = "PAGE_NEEDS_WORD_TRANSLATION";
+
+                                script.innerHTML = 'window.postMessage('+JSON.stringify(message)+', "*");';
+                                document.body.appendChild(script);
+                            });
+                            bubbleDOM.appendChild(more);
+
+                            var close = document.createElement('span');
+                            close.innerHTML = "close ";
+                            close.addEventListener('mousedown', function (e) {
+                                bubbleDOM.style.visibility = 'hidden';
+                            });
+                            bubbleDOM.appendChild(close);
+
+                        }
+                    }
+                    get_translation_from_db(word_to_lookup, update_bubble_with_translation);
+
                 } else {
+                    /*
+                    We have clicked somewhere and deselected the
+                    text. No reason for the translation to still
+                    be on.
+                     */
                     bubbleDOM.style.visibility = 'hidden';
                 }
             }, false);
 
-
-//            Close the bubble when we click on the screen.
-//            document.addEventListener('mousedown', function (e) {
-//                bubbleDOM.style.visibility = 'hidden';
-//            }, false);
-
-//            $(bubbleDOM).mousedown(function (ev) {
-//                bubbleDOM.style.visibility = 'hidden';
-//                return false;
-//            });
-
-
             // Move that bubble to the appropriate location.
-            function renderBubble(mouseX, mouseY, selection) {
+            function renderBubble(mouseX, mouseY) {
                 bubbleDOM.innerHTML = "Translating...";
                 bubbleDOM.style.top = mouseY + 16 +  'px';
                 bubbleDOM.style.left = mouseX + 16 + 'px';
@@ -216,100 +303,7 @@ loadState(function() {
             }
 
 
-            // Move that bubble to the appropriate location.
-            function update_bubble_with_translation(translation) {
-                if (translation) {
-                    bubbleDOM.innerHTML = window.getSelection().toString();
-                    bubbleDOM.innerHTML += "<br/>"+ translation;
-                    bubbleDOM.innerHTML += "<hr/>";
 
-                    var more = document.createElement('span');
-                    more.innerHTML = "more ";
-                    more.addEventListener('mouseup', function (e) {
-                        /*
-                         I guess here we must send a message from
-                         the page that will be intercepted by the
-                         plugin...
-                         */
-                        alert("should show more translations...");
-
-                    });
-                    bubbleDOM.appendChild(more);
-
-                    var close = document.createElement('span');
-                    close.innerHTML = "close ";
-                    close.addEventListener('mousedown', function (e) {
-                        bubbleDOM.style.visibility = 'hidden';
-                    });
-                    bubbleDOM.appendChild(close);
-
-                }
-            }
-
-
-
-
-
-//            $(document).bind("contextmenu",function(e) {
-//                    var selection = browser.getSelection();
-//
-//                    var message = selected_term(selection);
-//                    if (message === null) {
-//                        return;
-//                    }
-//
-//                // Chrome specific
-//                s = window.getSelection();
-//                oRange = s.getRangeAt(0); //get the text range
-//                oRect = oRange.getBoundingClientRect();
-//
-//                $(ev.target).qtip(
-//                    {
-//                        content: 'Some basic content for the tooltip',
-//                        position: {
-//                            target: 'mouse',
-//                            adjust: { mouse: false}
-//                        },
-//                        show: {
-//                            when: 'click',
-//                            ready: true
-//                        }
-//                    });
-//
-//                return false;
-//            });
-//
-
-
-
-//            $(document).mouseup(function(ev) {
-//                var selection = browser.getSelection();
-//                var message = selected_term(selection);
-//                if (message === null) {
-//                    return;
-//                }
-////                alert(ev.target);
-//
-//                // Chrome specific
-//                s = window.getSelection();
-//                oRange = s.getRangeAt(0); //get the text range
-//                oRect = oRange.getBoundingClientRect();
-//
-//                $(ev.target).qtip(
-//                    {
-//                        content: 'Some basic content for the tooltip',
-//                        position: {
-//                            target: 'mouse',
-//                            adjust: { mouse: false}
-//                        },
-//                        show: {
-//                            when: 'click',
-//                            ready: true
-//                        }
-//                    });
-//
-//
-//            });
 
 
 
@@ -317,7 +311,7 @@ loadState(function() {
             var dont_close = false;
             var zeeguu_open = false;
 
-            browser.addMessageListener("translate", translate_word_action);
+            browser.addMessageListener("ZM_SHOW_TRANSLATION", translate_word_action);
 
             browser.addMessageListener("close", function(data) {
                 if (zeeguu_open && !closingTimer) {
@@ -344,22 +338,6 @@ loadState(function() {
 
 function is_frameset() {
     return !$("body").length;
-}
-
-function selected_term(selection) {
-    if (!selection.baseNode || selection.baseNode.nodeType != 3) {
-        return null;
-    }
-    var term = selection.toString();
-    if (term.length < 1) {
-        return null;
-    }
-    var context = $(selection.baseNode.parentNode).text();
-    return {
-        term: term,
-        context: context,
-        url:this_url
-    };
 }
 
 function hide_zeeguu(callback) {
