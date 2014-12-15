@@ -9,6 +9,21 @@ var highlight_when_unhighlighting = false,
 tooltipVisible = false;
 
 
+var bubbleDOM = document.createElement('div');
+bubbleDOM.setAttribute('class', 'selection_bubble');
+document.body.appendChild(bubbleDOM);
+
+
+
+translate_selection = function(eventData) {
+    var selection = browser.getSelection();
+    var message = term_context_url_triple(selection);
+    if (message === null) {
+        return;
+    }
+    highlight_when_unhighlighting = true;
+    browser.sendMessage("ZM_SHOW_TRANSLATION", message);
+};
 
 /*
  This is the function in charge with highlighting the user's words
@@ -132,19 +147,9 @@ loadState(function() {
     // Any frame
     } else {
 
-        var translate_selection = function(eventData) {
-            var selection = browser.getSelection();
-            var message = term_context_url_triple(selection);
-            if (message === null) {
-                return;
-            }
-            highlight_when_unhighlighting = true;
-            browser.sendMessage("ZM_SHOW_TRANSLATION", message);
-        };
-
         $(document).mouseup(function(eventData) {
             if (state.selectionMode) {
-                translate_selection(eventData);
+//                translate_selection(eventData);
             }
         }).click(function() {
             if (zeeguu_active) {
@@ -152,7 +157,8 @@ loadState(function() {
             }
         }).dblclick(function(eventData) {
             if (state.fast) {
-                translate_selection(eventData);
+//                alert("yeye!")
+//                translate_selection(eventData);
             }
         });
 
@@ -183,8 +189,10 @@ loadState(function() {
         });
 
         function translate_word_action(data) {
+            bubbleDOM.style.visibility = 'hidden';
             dont_close = true;  // Abort the closing timer if it was started before this interaction
-            var url = browser.zeeguuUrl(data.term, data.url, data.context);
+            var selection = term_context_url_triple(browser.getSelection());
+            var url = browser.zeeguuUrl(selection.term, selection.url, selection.context);
             if (!is_frameset()) {
                 if ($("#zeeguu").size()) {
                     $("#zeeguu").attr("src", url);
@@ -217,30 +225,13 @@ loadState(function() {
 
         if (window.top == window.self) {
 
-            var translate_selection = function(eventData) {
-                var selection = browser.getSelection();
-                var message = term_context_url_triple(selection);
-                if (message === null) {
-                    return;
-                }
-                highlight_when_unhighlighting = true;
-                browser.sendMessage("ZM_SHOW_TRANSLATION", message);
-            };
 
 
-
-            // Add bubble to the top of the page.
-
-            var bubbleDOM = document.createElement('div');
-            bubbleDOM.setAttribute('class', 'selection_bubble');
-            document.body.appendChild(bubbleDOM);
-
-            // Let's listen to mouseup DOM events.
-            document.addEventListener('mouseup', function (e) {
+            function mouse_up_in_page(e) {
                 var word_to_lookup = window.getSelection().toString();
+                var interesting_selection = word_to_lookup.length > 0 && word_to_lookup.length < 64;
 
-
-                if (word_to_lookup.length > 0) {
+                if ((e.altKey && interesting_selection) || (state.fast && interesting_selection)) {
 
                     var message = term_context_url_triple(browser.getSelection());
                     renderBubble(e.pageX, e.pageY);
@@ -302,8 +293,8 @@ loadState(function() {
 
                             /*
 
-                                Until here, we've prepared our buttons...
-                                Now create the bubble.
+                             Until here, we've prepared our buttons...
+                             Now create the bubble.
                              */
 
                             bubbleDOM.innerHTML = word_to_lookup;
@@ -320,13 +311,19 @@ loadState(function() {
 
                 } else {
                     /*
-                    We have clicked somewhere and deselected the
-                    text. No reason for the translation to still
-                    be on.
+                     We have clicked somewhere and deselected the
+                     text. No reason for the translation to still
+                     be on.
                      */
                     bubbleDOM.style.visibility = 'hidden';
                 }
-            }, false);
+            }
+
+            // Add bubble to the top of the page.
+
+
+            // Let's listen to mouseup DOM events.
+            document.addEventListener('mouseup', mouse_up_in_page, false);
 
             // Move that bubble to the appropriate location.
             function renderBubble(mouseX, mouseY) {

@@ -116,7 +116,7 @@ chrome.extension.onMessage.addListener(function(message, sender) {
 // the translate message is sent to the content script...
 browser.contextMenu("translate", "Translate %s", "selection", function(info, tab) {
     chrome.tabs.sendMessage(tab.id, {
-        name: "translate",
+        name: "ZM_SHOW_TRANSLATION",
         term: info.selectionText,
         url: tab.url,
         context: "" //this is if we want to save the url of the page as context
