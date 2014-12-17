@@ -11,9 +11,9 @@
         "gui/img/loading.gif", 
         "lib/jquery/jquery.validate.js", 
         "lib/jquery/jquery.js", 
-        "lib/bootstrap/bootstrap.js",
+        "lib/bootstrap/bootstrap.js", 
         "lib/bootstrap/bootstrap.css"
-    ],
+    ], 
     "commands": {
         "translate": {
             "suggested_key": {
@@ -22,28 +22,22 @@
             "description": "Translate selected word"
         }
     }, 
-    "name": "Zeeguu", 
+    "description": "The web as your language textbook", 
     "icons": {
         "128": "logo/128x128.png", 
         "48": "logo/48x48.png", 
         "16": "logo/16x16.png"
     }, 
-    "manifest_version": 2, 
-    "description": "The web as your language textbook", 
-    "version": "1.272", 
-    "options_page": "gui/html/options.html",
-
-
     "background": {
         "scripts": [
-
             "lib/jquery/jquery.js", 
             "lib/browser.js", 
             "bg/js/bg.js"
         ]
-    },
-
-
+    }, 
+    "version": "1.273", 
+    "options_page": "gui/html/options.html", 
+    "manifest_version": 2, 
     "content_scripts": [
         {
             "matches": [
@@ -54,28 +48,26 @@
                 "inject/css/inject.css"
             ], 
             "js": [
-                "lib/jquery/jquery.js",
+                "lib/jquery/jquery.js", 
                 "lib/browser.js", 
-                "lib/zeeguu_api_interface.js",
+                "lib/zeeguu_api_interface.js", 
                 "inject/js/content_script.js"
             ]
         }
-    ],
-
-    
-    "browser_action": {
-        "default_icon": {
-            "19": "logo/19x19.png", 
-            "38": "logo/38x38.png"
-        }, 
-        "default_title": "Zeeguu", 
-        "default_popup": "gui/html/toolbar-popup.html"
-    },
-
+    ], 
     "permissions": [
         "storage", 
         "tabs", 
         "contextMenus", 
         "https://www.zeeguu.unibe.ch/"
-    ]
+    ], 
+    "browser_action": {
+        "default_popup": "gui/html/toolbar-popup.html", 
+        "default_icon": {
+            "19": "logo/19x19.png", 
+            "38": "logo/38x38.png"
+        }, 
+        "default_title": "Zeeguu"
+    }, 
+    "name": "Zeeguu"
 }
