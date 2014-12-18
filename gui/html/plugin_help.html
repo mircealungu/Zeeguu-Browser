@@ -18,7 +18,84 @@
         <!--~Version: 1.280~-->
         <!--<br/>-->
 
-        <h3>Overview</h3>
+        <h4>Disclaimer</h4>
+            <p>
+                This is partially a personal project,
+                partially a research project. Several people have
+                voluntarily contributed to bring it to the point where it is
+                good enough for you use and hopefully benefit from it.
+            </p>
+            <p>
+                However, it still a volunteering project, and nobody
+                works on it full-time. Thus if you
+                find problems with it be understanding. We are happy for feedback
+                and given that the project is open-source, you could also
+                become a contributor.
+            </p>
+
+        <h4>Is this you?</h4>
+            <p>
+                You are learning a new language and you are
+                making good progress. You achieved a good level
+                already, you know the basics of grammar,
+                and even dare to talk to your old neighbour about
+                the weather. However, approaching news articles, blogs,
+                emails, or the facebook wall of your friends who speak
+                that language is still far from being fun.
+
+                The main reason is that too often
+                you still encounter a word that you don't
+                understand. You wish that
+                you could accelerate the rate at which you acquire the
+                vocabulary of this new language.
+            </p>
+            <p>
+                You tried flash cards but they bore you. You tried
+                DuoLingo but you gave up. The first has the disadvantage
+                of being boring... words are out of context, and it bores
+                you to death. You don't do it anymore, not even when you
+                are on the toiet and forgot to bring a good book.
+                The second forces you to read texts which
+                are not interesting. You have no attachment to their
+                content.
+            </p>
+
+            <p>
+                However, you know that you remember something
+                better if you are emotionally involved, and you
+                can get yourself to read in the new language if you
+                are curious about the text. Thus, it would be cool if you could
+                study vocabulary in the context of texts that are
+                interesting to you: the facebook wall of your friends,
+                a newspaper in the language you are learning, or
+                maybe an interesting blog.
+            </p>
+            <p>
+                If you discovered yourself at least partially
+                in the previous lines, then please read on: this
+                project might be good for you.
+            </p>
+
+        <h4>Environmental Learning</h4>
+        <p>
+            Once one has passed a ceratin knowlege level in a foreign
+            language, he is ready for what is called environmental
+            learning. This is, learning things in their natural context.
+        </p>
+        <p>
+            A famous open source hacker, Richard Stallman, told the
+            story once of the way he learns a new language. Once he
+            has learned the basic hundred words, and a bit of grammar,
+            he immerses himself in reading children's books. Once
+            he graduates from that, he moves on to reading other
+            things that interest him.
+        </p>
+
+        <p>
+            The goal of Zeeguu, is to support you in accelerating
+            your vocabulary acquisition
+        </p>
+
         <p>
             The plugin provides you with translations for
         the words that you are looking up. It also automatically
@@ -34,6 +111,81 @@
                 plugin locally, and declared a langauge that you
                 are learning.
             </p>
+
+        <h4>Your Vocabulary Profile</h4>
+            <p>
+                At the center of all the apps in the Zeeguu
+                ecosystem lays your <em>vocabulary profile</em>.
+                That is, an active way of tracking and estimating
+                your current knowledge of the vocabulary of the
+                target language.
+            </p>
+
+            <p>
+                The profile contains all the words that you have
+                ever looked via this plugin or other apps in the
+                ecosystem. If for a given word you didn't like the
+                default translation, and uploaded a separate word
+                that is also stored.
+            </p>
+            <p>
+                One final aspect that is stored in your profile
+            is the context in which you looked up the words. In the
+            case of words that are looked up in web pages, the
+            context is the sentence in which the word was looked up,
+                together with the address of the page in which the word was found.
+            </p>
+
+
+        <h4>Why is the profile important?</h4>
+            <p>
+                The more precise the estimation of your current
+                knowledge of the vocabulary of the desired language is
+                available, of the words you learn, and the words that
+                you still don't know, and the context in which you
+                have already encountered those words in the past,
+                the easier is to achieved several awesome things.
+            </p>
+
+            <p>
+                Let us take several examples:
+            </p>
+
+            <p>
+                <ol>
+                    <li>
+                        If the relative importance of the words that you
+                        are learning, would be known, then rehearsal could
+                        prioritize those most important. Especially when you
+                        don't have too much time.
+                    </li>
+                    <li>
+                        As you are rehearsing the words that you are learning
+                        you could use the context in which you originally
+                        found them to make them fixate better.
+                    </li>
+                    <li>
+                        If the times when a word has been seen in the past
+                        are known, then the times when these words should
+                        be repeated can be targeted based on the well-known
+                        principle of spaced repetition.
+                    </li>
+                    <li>
+                        You could get recommendations of texts that are
+                        likely to be interesting for you and are of the
+                        appropriate difficulty.
+                    </li>
+                </ol>
+            </p>
+
+        <p>
+            Some of this work is already done, and some is still future work.
+            However, as you can probably imagine, a critical part of the system
+            is intercepting the words that you need translations for, and their
+            contexts.
+        </p>
+
+
 
         <h4>Translating Words in Pages</h4>
         <p>
@@ -62,32 +214,59 @@
 
 
 
-        <h4>Showing the Full Dictionary</h4>
+        <h4>External Dictionaries</h4>
         <p>
-            If for some reason you are not convinced of the translation,
-            or if you want more synonyms, and if you have alternative
-            dictionaries installed for your language (TODO: link to
-            section on installing dictionaries) you can click on the <b>More</b>
-            link. This will pop-up a dictionary frame as in the figure bellow:
+            Sometimes no good translation can be automatically suggested.
+            Sometimes the suggested translation does not feel good enough.
+            And sometimes you would like to know alternate translations of
+            the word.
+        </p>
+        <p>
+            In these cases, if an external dictionary exists for the pair of
+            languages that you are learning, and you are already speaking,
+            the plugin can display it. You click on the <b>More</b>
+            link and the external dictionary is displayed as in the example
+            bellow:
         </p>
 
-            <p class="centeredImage">
-                <img width="360px" src="../img/dictionary-frame-ann.png"/><br/>
+        <p class="centeredImage">
+            <img width="360px" src="../img/dictionary-frame-ann.png"/><br/>
+        </p>
+
+        <p>
+            Not all dictionaries can be embedded in the mini-window. If you have
+            a favorite one, and would like it added, please send us an email with
+            the link to it.
+        </p>
+
+
+        <h4>Being a good citizen: contributing translations</h4>
+            <p>
+                Since the original translation was not good enough, but
+                you found a good translation in the external dictionary,
+                you can upload the translation to the system. This is good
+                for you since next time you  will encounter the word, your
+                translation will be available witout requiring the external
+                dictionary anymore. And it is good for others, since in
+                some cases your translations would be made available also
+                for other users.
+            </p>
+
+
+            <p>
+                To contribute a translation, when the external dictionary
+                is displayed, you can type it in the Translation field it
+                gets automatically uploaded to your profile when you close
+                the external dictionary mini-window.
             </p>
 
             <p>
-        If in the full dictionary, you find a good translation,
-        you can type it in the Translation field and then click the little
-            cloud icon to the right to upload it to your profile. Next time
-            you encounter that word, your favorite translation will be available!
-            Cool, huh?
+                <b>ProTip</b>: you don't actually have to type the translation; it is
+                sufficient that you select the corresponding word in the dictionary
+                window and the translation box will be filled automatically. You either
+                    use the
             </p>
 
-            <p>
-            <b>ProTip</b>: you don't actually have to type the translation; it is
-            sufficient that you select the corresponding word in the dictionary
-            window and the translation box will be filled automatically).
-            </p>
 
         <h4>Your Words Highlighted</h4>
         <p>
@@ -103,36 +282,28 @@
 
 
 
-        <h4>The Toolbar</h4>
+        <h4>The Mini-Window</h4>
 
             <p>
                 The second way in which you can interact with the
-                Zeeguu plugin is via the Toolbar accessible when you
+                Zeeguu plugin is via its mini-window accessible when you
                 click the Zeeguu icon in the browser toolbar.
 
-                The figure bellow shows the toolbar. The first thing that
-                you should see is that the toolbar provides you with
-                a search box. You can thus search for words here, not only
-                by highlighting them in the page.
+                The figure bellow shows the mini-window which provides
+                you with two things.
+
+                <ol>
+                    <li>A "translate" edit box for quickly looking up definitions.
+                    </li>
+
+                    <li>
+                        A toolbar with six  action buttons described in the figure.
+                    </li>
+                </ol>
             </p>
 
             <p class="centeredImage">
-                <img width="200px" src="../img/fast-mode.png"/>
-            </p>
-
-            <p>
-
-            The toolbar also contains a series of action buttons.
-            In order from left to right, their associated actions
-            are:
-                <ol>
-                    <li>Display your word list</li>
-                    <li>Open the <em>Language Gym</em> with vocabulary exercises</li>
-                    <li>Temporarily disable links in current page. Useful for selecting text inside links</li>
-                    <li>Toggle <em>Fast Mode</em> in which you don't need to press Alt for translations</li>
-                    <li>Show the plugin settings page with info about user account, dictionaries, etc.</li>
-                    <li>Display this help page</li>
-                </ol>
+                <img width="360px" src="../img/mini-window-icons.png"/>
             </p>
 
 
