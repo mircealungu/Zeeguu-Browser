@@ -24,6 +24,7 @@ $(function() {
         $("#dict").val(state.dictUrl);
            load_dict_url($("#dict").val());
         $("#user_email").val(state.email);
+        $("")
     });
 
     $("#save").click(function() {

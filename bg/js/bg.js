@@ -1,4 +1,4 @@
-var PERSITENT_STATE_KEYS = ["dictUrl", "from", "to", "links", "fast", "session", "email"];
+var PERSITENT_STATE_KEYS = ["dictUrl", "from", "to", "links", "fast", "session", "email", "highlight"];
 //var API_URL = "http://localhost:8080/";  // This is also stored in lib/zeeguu_api_interface.js
 var API_URL = "https://www.zeeguu.unibe.ch/";  // This is also stored in lib/zeeguu_api_interface.js
 
@@ -98,10 +98,7 @@ browser.addMessageListener("get_user_words",
         });
 
     }
-//        getUserWords(state.session, function (user_words) {
-//            console.log("something works somewhere...")
-//        }
-    )
+)
 
 
 chrome.extension.onMessage.addListener(function(message, sender) {
