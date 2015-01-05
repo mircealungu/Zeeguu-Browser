@@ -39,6 +39,7 @@ function fillStateWithDefaults(state) {
             dictUrl: "http://{from}-{to}.syn.dict.cc/?s={query}",
             from: "de",
             to: "en",
+            highlight: false,
             session: null,
             links: false,
             fast: false,  // translate with double-click

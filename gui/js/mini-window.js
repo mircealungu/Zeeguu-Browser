@@ -16,6 +16,7 @@ $(function() {
         function set_the_help_for_buttons() {
             setHelp("#fast-mode", "Translate by double-clicking");
             setHelp("#selection-mode", "Disable page links for easier selection");
+            setHelp("#highlighting-mode", "Highlight the learned words");
             setHelp("#to-the-gym", "Practice at the Language Gym");
             setHelp("#to-the-word-list", "To your words list");
             setHelp("#options-btn", "Edit plugin options");
@@ -59,6 +60,14 @@ $(function() {
                     });
                     $(this).toggleClass("enabled", state.selectionMode);
                 });
+                $("#highlighting-mode").toggleClass("enabled", state.highlight).click(function () {
+                    state.highlight = !state.highlight;
+                    browser.sendMessage("update_state", {
+                        highlight: state.highlight
+                    });
+                    $(this).toggleClass("enabled", state.highlight);
+                });
+
                 $("#translate").keypress(function (e) {
                     if (e.which == 13) {  // The return key
                         translate($(this).val());

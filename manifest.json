@@ -7,7 +7,7 @@
         "gui/css/gui.css", 
         "gui/js/search_results.js", 
         "gui/js/login.js", 
-        "gui/js/toolbar-popup.js", 
+        "gui/js/mini-window.js",
         "gui/img/loading.gif", 
         "lib/jquery/jquery.validate.js", 
         "lib/jquery/jquery.js", 
