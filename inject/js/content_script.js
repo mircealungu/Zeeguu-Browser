@@ -226,12 +226,14 @@ loadState(function() {
         if (window.top == window.self) {
 
 
-
             function mouse_up_in_page(e) {
-                var word_to_lookup = window.getSelection().toString();
-                var interesting_selection = word_to_lookup.length > 0 && word_to_lookup.length < 64;
 
-                if ((e.altKey && interesting_selection) || (state.fast && interesting_selection)) {
+                var word_to_lookup = window.getSelection().toString();
+                var selection_is_interesting = word_to_lookup.trim().length > 0
+                                               && word_to_lookup.length < 64;
+
+                if ((e.altKey && selection_is_interesting)
+                    || (state.fast && selection_is_interesting)) {
 
                     var message = term_context_url_triple(browser.getSelection());
                     renderBubble(e.pageX, e.pageY);
@@ -316,14 +318,25 @@ loadState(function() {
                      be on.
                      */
                     bubbleDOM.style.visibility = 'hidden';
+                    bubbleDOM.innerHTML = '';
                 }
             }
 
-            // Add bubble to the top of the page.
-
+            /*
+            Before adding the delay:
+            - the translation would start popping up too
+            early while the user was in the process of double-clicking
+            - a selected word would be clicked, and it would still
+            be somehow selected on mouseUp. this would
+             */
+            function delayed_mouse_up(e) {
+                setTimeout(function(){
+                    mouse_up_in_page(e);
+                }, 50);
+            }
 
             // Let's listen to mouseup DOM events.
-            document.addEventListener('mouseup', mouse_up_in_page, false);
+            document.addEventListener('mouseup', delayed_mouse_up, false);
 
             // Move that bubble to the appropriate location.
             function renderBubble(mouseX, mouseY) {
