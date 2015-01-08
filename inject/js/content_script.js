@@ -459,4 +459,3 @@ browser.getSettings(["highlight"], function(state) {
     }
 
 });
-

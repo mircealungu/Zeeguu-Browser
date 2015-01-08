@@ -5,6 +5,8 @@ var API_URL = "https://www.zeeguu.unibe.ch/";  // This is also stored in lib/zee
 var zeeguu_window = null,
     state;
 
+var previous_url = [];
+
 function getState(callback) {
     if (state) {
         if (callback) {
@@ -133,3 +135,36 @@ getState(function(state) {
         }
     });
 });
+
+chrome.tabs.onUpdated.addListener (
+    function(tabId, changeInfo, tab) {
+
+        var fb_pattern = /facebook/i;
+
+        console.log(previous_url[tabId] + " ->>> " + changeInfo.url);
+        if (changeInfo.url) {
+
+            if (!previous_url[tabId])
+                previous_url[tabId] = "nothing";
+
+            if (changeInfo.url.match(fb_pattern) && !(previous_url[tabId].match(fb_pattern))) {
+                previous_url[tabId] = tab.url;
+                chrome.tabs.update({url: "https://www.zeeguu.unibe.ch/study_before_play"});
+            }
+        }
+
+
+    }
+);
+
+//chrome.webRequest.onBeforeRequest.addListener(
+//    function(details) {
+//        console.log ("window location:"+ document.title);
+//        if (details.url == "https://www.facebook.com/") {
+//            console.log("intercepting facebook called from... " + window.location);
+//            return {redirectUrl: "http://127.0.0.1:9000/before_facebook"};
+//        };
+//    },
+//    {urls: ["<all_urls>"]},
+//    ["blocking"]
+//);
