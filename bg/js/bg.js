@@ -153,7 +153,7 @@ chrome.tabs.onUpdated.addListener (
 
             if (new_web_address.match(fb_pattern) && !(previous_url[tabId].match(fb_pattern))) {
                 previous_url[tabId] = tab.url;
-                chrome.tabs.update({url: "http://127.0.0.1:8080/study_before_play?to="+encodeURIComponent(new_web_address)});
+                chrome.tabs.update({url: API_URL+"study_before_play?to="+encodeURIComponent(new_web_address)});
             }
         }
     }
@@ -169,7 +169,7 @@ wants to go back in, he might be anoyed.
 Still, better than having the extension be
 inconsistent.
  */
-chrome.tabs.onUpdated.addListener (
+chrome.tabs.onRemoved.addListener (
     function(tabId, removeInfo) {
         previous_url[tabId] = "nothing";
     }
