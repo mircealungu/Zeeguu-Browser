@@ -136,24 +136,42 @@ getState(function(state) {
     });
 });
 
+
+/*
+onUpdated gets fired when the user presses return
+in the address field of a tab
+ */
 chrome.tabs.onUpdated.addListener (
     function(tabId, changeInfo, tab) {
 
-        var fb_pattern = /facebook/i;
+        var fb_pattern = /^https:\/\/www.facebook.com/i;
+        var new_web_address = changeInfo.url;
 
-        console.log(previous_url[tabId] + " ->>> " + changeInfo.url);
-        if (changeInfo.url) {
-
+        if (new_web_address) {
             if (!previous_url[tabId])
                 previous_url[tabId] = "nothing";
 
-            if (changeInfo.url.match(fb_pattern) && !(previous_url[tabId].match(fb_pattern))) {
+            if (new_web_address.match(fb_pattern) && !(previous_url[tabId].match(fb_pattern))) {
                 previous_url[tabId] = tab.url;
-                chrome.tabs.update({url: "https://www.zeeguu.unibe.ch/study_before_play"});
+                chrome.tabs.update({url: "http://127.0.0.1:8080/study_before_play?to="+encodeURIComponent(new_web_address)});
             }
         }
+    }
+);
 
 
+/*
+Remove the history info from previous_url
+when a tab is closed. Although, I am not
+sure that this is really cool. After all,
+if the user was just on FB, got out and
+wants to go back in, he might be anoyed.
+Still, better than having the extension be
+inconsistent.
+ */
+chrome.tabs.onUpdated.addListener (
+    function(tabId, removeInfo) {
+        previous_url[tabId] = "nothing";
     }
 );
 
