@@ -35,8 +35,10 @@
     "background": {
         "scripts": [
             "lib/jquery/jquery.js", 
-            "lib/browser.js", 
-            "bg/js/bg.js"
+            "lib/browser.js",
+            "lib/zeeguu_api_interface.js",
+            "bg/js/bg.js",
+            "bg/js/work-before-play.js"
         ]
     }, 
     "content_scripts": [

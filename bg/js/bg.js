@@ -1,6 +1,7 @@
 var PERSITENT_PREFERENCES_KEYS = ["dictUrl", "from", "to", "links", "fast", "session", "email", "highlight", "work_before_play"];
-//var API_URL = "http://localhost:8080/";  // This is also stored in lib/zeeguu_api_interface.js
 var API_URL = "https://www.zeeguu.unibe.ch/";  // This is also stored in lib/zeeguu_api_interface.js
+//var API_URL = "http://localhost:8080/";  // This is also stored in lib/zeeguu_api_interface.js
+
 
 var zeeguu_window = null,
     state;
@@ -93,17 +94,6 @@ browser.addMessageListener("reset_state", function(message) {
     storeState();
 });
 
-browser.addMessageListener("get_user_words",
-    function(message, sender, response) {
-        $.get(API_URL + "user_words?session=" + state.session).done(function(data) {
-            response(data);
-        }).fail(function() {
-            callback(false);
-        });
-
-    }
-)
-
 
 chrome.extension.onMessage.addListener(function(message, sender) {
     if (message.name != "window" && message.name != "update_state" && message.name != "get_state") {
@@ -137,44 +127,3 @@ getState(function(state) {
     });
 });
 
-
-/*
-onUpdated gets fired when the user presses return
-in the address field of a tab
- */
-chrome.tabs.onUpdated.addListener (
-    function(tabId, changeInfo, tab) {
-        browser.ifPreference("work_before_play", function() {
-                var fb_pattern = /^https:\/\/www.facebook.com/i;
-                var new_web_address = changeInfo.url;
-
-                if (new_web_address) {
-                    if (!previous_url[tabId])
-                        previous_url[tabId] = "nothing";
-
-                    if (new_web_address.match(fb_pattern) && !(previous_url[tabId].match(fb_pattern))) {
-                        previous_url[tabId] = tab.url;
-                        chrome.tabs.update({url: API_URL + "study_before_play?to=" + encodeURIComponent(new_web_address)});
-                    }
-                }
-            })
-    }
-);
-
-
-/*
-Remove the history info from previous_url
-when a tab is closed. Although, I am not
-sure that this is really cool. After all,
-if the user was just on FB, got out and
-wants to go back in, he might be anoyed.
-Still, better than having the extension be
-inconsistent.
- */
-chrome.tabs.onRemoved.addListener (
-    function(tabId, removeInfo) {
-        browser.ifPreference("work_before_play", function() {
-            previous_url[tabId] = "nothing";
-        });
-    }
-);

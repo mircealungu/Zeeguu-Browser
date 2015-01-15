@@ -450,12 +450,13 @@ function toggle_selection_mode(new_selection_mode) {
     selection_mode = new_selection_mode;
 }
 
+loadState(function() {
+    browser.ifPreference("highlight", function () {
+            getUserWords(function (user_words) {
+                highlight_words(user_words)
+            })
+        }
+    );
+})
 
-browser.getSettings(["highlight"], function(state) {
-    if (state.highlight) {
-        browser.sendMessage("get_user_words", function (user_words) {
-            highlight_words(user_words)
-        })
-    }
 
-});
