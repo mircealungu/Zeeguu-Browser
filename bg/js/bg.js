@@ -144,19 +144,20 @@ in the address field of a tab
  */
 chrome.tabs.onUpdated.addListener (
     function(tabId, changeInfo, tab) {
+        browser.ifPreference("work_before_play", function() {
+                var fb_pattern = /^https:\/\/www.facebook.com/i;
+                var new_web_address = changeInfo.url;
 
-        var fb_pattern = /^https:\/\/www.facebook.com/i;
-        var new_web_address = changeInfo.url;
+                if (new_web_address) {
+                    if (!previous_url[tabId])
+                        previous_url[tabId] = "nothing";
 
-        if (new_web_address) {
-            if (!previous_url[tabId])
-                previous_url[tabId] = "nothing";
-
-            if (new_web_address.match(fb_pattern) && !(previous_url[tabId].match(fb_pattern))) {
-                previous_url[tabId] = tab.url;
-                chrome.tabs.update({url: API_URL+"study_before_play?to="+encodeURIComponent(new_web_address)});
-            }
-        }
+                    if (new_web_address.match(fb_pattern) && !(previous_url[tabId].match(fb_pattern))) {
+                        previous_url[tabId] = tab.url;
+                        chrome.tabs.update({url: API_URL + "study_before_play?to=" + encodeURIComponent(new_web_address)});
+                    }
+                }
+            })
     }
 );
 
@@ -172,18 +173,8 @@ inconsistent.
  */
 chrome.tabs.onRemoved.addListener (
     function(tabId, removeInfo) {
-        previous_url[tabId] = "nothing";
+        browser.ifPreference("work_before_play", function() {
+            previous_url[tabId] = "nothing";
+        });
     }
 );
-
-//chrome.webRequest.onBeforeRequest.addListener(
-//    function(details) {
-//        console.log ("window location:"+ document.title);
-//        if (details.url == "https://www.facebook.com/") {
-//            console.log("intercepting facebook called from... " + window.location);
-//            return {redirectUrl: "http://127.0.0.1:9000/before_facebook"};
-//        };
-//    },
-//    {urls: ["<all_urls>"]},
-//    ["blocking"]
-//);
