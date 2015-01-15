@@ -24,13 +24,15 @@ $(function() {
         $("#dict").val(state.dictUrl);
            load_dict_url($("#dict").val());
         $("#user_email").val(state.email);
+        $("#work_before_play").prop('checked', state.work_before_play);
         $("")
     });
 
     $("#save").click(function() {
         browser.sendMessage("update_state", {
             dictUrl: $("#dict").val(),
-            from: $("#from_lang").val()
+            from: $("#from_lang").val(),
+            work_before_play: $("#work_before_play").prop('checked')
         });
         $("#success").show();
         return false;

@@ -1,4 +1,4 @@
-var PERSITENT_STATE_KEYS = ["dictUrl", "from", "to", "links", "fast", "session", "email", "highlight"];
+var PERSITENT_PREFERENCES_KEYS = ["dictUrl", "from", "to", "links", "fast", "session", "email", "highlight", "work_before_play"];
 //var API_URL = "http://localhost:8080/";  // This is also stored in lib/zeeguu_api_interface.js
 var API_URL = "https://www.zeeguu.unibe.ch/";  // This is also stored in lib/zeeguu_api_interface.js
 
@@ -14,7 +14,7 @@ function getState(callback) {
         }
         return;
     }
-    browser.getSettings(PERSITENT_STATE_KEYS, function(items) {
+    browser.getSettings(PERSITENT_PREFERENCES_KEYS, function(items) {
         state = fillStateWithDefaults(items);
         if (callback) {
             callback(state);
@@ -25,7 +25,7 @@ function getState(callback) {
 function storeState() {
     var persitentState = {};
     $.each(state, function(i, v) {
-        if (PERSITENT_STATE_KEYS.indexOf(i) >= 0) {
+        if (PERSITENT_PREFERENCES_KEYS.indexOf(i) >= 0) {
             persitentState[i] = v;
         }
     });
@@ -45,7 +45,8 @@ function fillStateWithDefaults(state) {
             session: null,
             links: false,
             fast: false,  // translate with double-click
-            selectionMode: false
+            selectionMode: false,
+            work_before_play: true
     }, state);
 }
 

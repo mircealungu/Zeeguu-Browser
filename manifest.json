@@ -31,7 +31,7 @@
     "manifest_version": 2, 
     "name": "Zeeguu", 
     "version": "1.278", 
-    "options_page": "gui/html/options.html", 
+    "options_page": "gui/html/plugin-preferences.html",
     "background": {
         "scripts": [
             "lib/jquery/jquery.js", 

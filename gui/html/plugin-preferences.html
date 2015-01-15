@@ -9,7 +9,7 @@
         <script src="/lib/bootstrap/bootstrap.js"></script>
         <script src="/lib/browser.js"></script>
         <script src="/lib/zeeguu_api_interface.js"></script>
-        <script src="/gui/js/options.js"></script>
+        <script src="/gui/js/plugin-preferences.js"></script>
     </head>
 
     <body id="options">
@@ -45,15 +45,18 @@
                     <div class="control-group" id="dict_group" >
                       <label class="control-label">Choose a dictionary</label>
                       <div class="controls">
-                         <!--<input id="dict" name="dict" type="text" placeholder="http://{from}-{to}.syn.dict.cc/?s={query}" class="input-xlarge">-->
                           <select id="dict" name="dict">
                           </select>
                       </div>
                     </div>
 
-                    <div class="alert alert-success hide" id="success">
-                          Your preferences have been saved.
+                    <div class="control-group">
+                        <label class="control-label">Work Before Play: </label>
+                        <div class="controls">
+                            <input id="work_before_play" name="work_before_play" type="checkbox" class="input-xlarge">
+                        </div>
                     </div>
+
 
                     <div class="control-group">
                       <label class="control-label"></label>
@@ -63,6 +66,12 @@
                         <button id="logout" name="logout" class="btn btn-info">Logout</button>
                       </div>
                     </div>
+
+                    <div class="alert alert-success hide" id="success">
+                        Your preferences have been saved.
+                    </div>
+
+
                 </fieldset>
             </form>
             <div class="alert alert-warning">

@@ -77,7 +77,7 @@ $(function() {
                     translate($("#translate").val());
                 });
                 $("#options-btn").click(function () {
-                    browser.newTab("/gui/html/options.html");
+                    browser.newTab("/gui/html/plugin-preferences.html");
                 });
                 $("#to-the-gym").click(function () {
                     browser.newTab(API_URL + "recognize");

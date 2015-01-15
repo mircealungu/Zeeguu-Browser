@@ -30,7 +30,7 @@ gui/html/login.html -- login page
 
 Options
 ===
-gui/js/options.js -- javascript for the preferences panel. implements save,reset, load data
+gui/js/plugin-preferences.js -- javascript for the preferences panel. implements save,reset, load data
 gui/html/options.html -- chrome preferences panel
 
 Q: what is <fieldset>
@@ -99,7 +99,7 @@ A: seems to be defined in zeeguu_api_interface.js.
    -- the info seems to be transferred through window.location.search
    Q: what the hell is that?
    A:
-  -- options.js: initializes the values in the option fields
+  -- plugin-preferences.js: initializes the values in the option fields
   --
 
 
