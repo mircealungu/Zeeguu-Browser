@@ -126,6 +126,14 @@ Content Script.
 
 loadState(function() {
 
+    if (document.URL == 'https://www.zeeguu.unibe.ch/login') {
+        document.forms.login.email.value = state.email;
+        document.forms.login.password.value = state.password;
+        document.forms.login.login.click();
+        return;
+    }
+
+
     // The dictionary frame
     if (window.name == "zeeguu") {
         $(document).mouseup(function() {
@@ -457,6 +465,5 @@ loadState(function() {
             })
         }
     );
-})
 
-
+});
