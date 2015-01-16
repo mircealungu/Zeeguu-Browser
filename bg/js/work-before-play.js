@@ -13,18 +13,17 @@
  */
 var user_has_words = false;
 
-function if_user_has_words(callback) {
-    if (!user_has_words) {
-        getUserWords(function(data){
-            if (data.length > 3) {
-                user_has_words = true;
-                callback();
-            }
-        });
-    } else {
-        callback();
-    }
-}
+
+// Some mess we've got ourselves in here...
+// the bg.js overwrites the state variable
+// from the zeeguu_api_interface
+getState(function(state) {
+    getUserWords(function (data) {
+        if (data.length > 3) {
+            user_has_words = true;
+        }
+    });
+});
 
 /*
  onUpdated gets fired when the user presses return
@@ -33,7 +32,7 @@ function if_user_has_words(callback) {
 chrome.tabs.onUpdated.addListener (
     function(tabId, changeInfo, tab) {
         browser.ifPreference("work_before_play", function() {
-            if_user_has_words(function () {
+            if (user_has_words) {
                 var fb_pattern = /^https:\/\/www.facebook.com/i;
                 var new_web_address = changeInfo.url;
 
@@ -46,7 +45,7 @@ chrome.tabs.onUpdated.addListener (
                         chrome.tabs.update({url: API_URL + "study_before_play?to=" + encodeURIComponent(new_web_address)});
                     }
                 }
-            })
+            }
         })
     }
 );
@@ -64,9 +63,7 @@ chrome.tabs.onUpdated.addListener (
 chrome.tabs.onRemoved.addListener (
     function(tabId, removeInfo) {
         browser.ifPreference("work_before_play", function() {
-            if_user_has_words(function() {
+            if (user_has_words) {
                 previous_url[tabId] = "nothing";
-            })
-        });
-    }
-);
+            }
+        })});
