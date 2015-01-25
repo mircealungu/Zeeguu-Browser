@@ -1,17 +1,3 @@
-
-
-function load_dictionaries_select(language) {
-    var dict = $("#dict");
-    dict.empty();
-    $.each(dicts[language], function() {
-        dict.append($("<option />").val(this.url).text(this.name));
-    });
-}
-
-function load_dict_url(url) {
-    $("#dict_url").html(url);
-}
-
 $(function() {
     loadState(function() {
 
@@ -20,9 +6,7 @@ $(function() {
         }
 
         $("#from_lang").val(state.from);
-            load_dictionaries_select(state.from);
-        $("#dict").val(state.dictUrl);
-           load_dict_url($("#dict").val());
+        $("#base_language").val(state.base_language);
         $("#user_email").val(state.email);
         $("#work_before_play").prop('checked', state.work_before_play);
         $("")
@@ -30,8 +14,8 @@ $(function() {
 
     $("#save").click(function() {
         browser.sendMessage("update_state", {
-            dictUrl: $("#dict").val(),
             from: $("#from_lang").val(),
+            base_language: $("#base_language").val(),
             work_before_play: $("#work_before_play").prop('checked')
         });
         $("#success").show();
@@ -49,19 +33,11 @@ $(function() {
             session : null,
             email: '',
             from: '',
+            base_language: '',
             dictUrl: ''
         });
         browser.closeOptionsPage();
         return false;
-    });
-
-    $("#from_lang").change(function() {
-        load_dictionaries_select(this.value);
-        load_dict_url($("#dict").val());
-    } );
-
-    $("#dict").change( function () {
-        load_dict_url(this.value);
     });
 });
 
