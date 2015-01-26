@@ -276,6 +276,7 @@ loadState(function() {
 
                             var save = document.createElement('span');
 //                            save.style.cssText="float:left";
+//                            save.className= "translation-popup";
                             save.innerHTML = '<a href="javascript:void(0)"><i class="fa fa-cloud-upload"></i></a> ';
                             save.addEventListener('mouseup', function (e) {
                                 /*
@@ -295,7 +296,6 @@ loadState(function() {
                                     'window.postMessage('+JSON.stringify(message)+', "*");';
                                 document.body.appendChild(script);
                             });
-
 
                             var close = document.createElement('span');
                             close.innerHTML = " (close)";
@@ -319,8 +319,6 @@ loadState(function() {
                             translation_span.innerHTML = "<b>" + translation + "</b>";
 
                             bubbleDOM.appendChild(translation_span);
-
-
                             bubbleDOM.appendChild(save);
                             bubbleDOM.appendChild(more);
 
