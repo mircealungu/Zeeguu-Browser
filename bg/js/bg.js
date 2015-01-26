@@ -1,4 +1,4 @@
-var PERSITENT_PREFERENCES_KEYS = ["dictUrl", "from", "to", "links", "fast", "session", "email", "highlight", "work_before_play"];
+var PERSITENT_PREFERENCES_KEYS = ["dictUrl", "from", "base_language", "links", "fast", "session", "email", "highlight", "work_before_play"];
 var API_URL = "https://www.zeeguu.unibe.ch/";  // This is also stored in lib/zeeguu_api_interface.js
 //var API_URL = "http://localhost:8080/";  // This is also stored in lib/zeeguu_api_interface.js
 
@@ -41,7 +41,7 @@ function fillStateWithDefaults(state) {
     return $.extend({
             dictUrl: "http://{from}-{to}.syn.dict.cc/?s={query}",
             from: "de",
-            to: "en",
+            base_language: "en",
             highlight: false,
             session: null,
             links: false,
