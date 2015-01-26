@@ -12,7 +12,8 @@
         "lib/jquery/jquery.validate.js", 
         "lib/jquery/jquery.js", 
         "lib/bootstrap/bootstrap.js", 
-        "lib/bootstrap/bootstrap.css"
+        "lib/bootstrap/bootstrap.css",
+        "lib/fa-4.3/fonts/*"
     ], 
     "commands": {
         "translate": {
@@ -47,7 +48,8 @@
             ], 
             "all_frames": true, 
             "css": [
-                "inject/css/inject.css"
+                "inject/css/inject.css",
+                "lib/fa-4.3/css/font-awesome.min.css"
             ], 
             "js": [
                 "lib/jquery/jquery.js", 

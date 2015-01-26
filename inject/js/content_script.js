@@ -254,24 +254,29 @@ loadState(function() {
                         if (translation) {
 
                             var more = document.createElement('span');
-                            more.innerHTML = ' (<a href="javascript:void(0)">more</a>) ';
-                            more.addEventListener('mouseup', function (e) {
-                                /*
-                                 I guess here we must send a message from
-                                 the page that will be intercepted by the
-                                 plugin to open the full dictionary if one
-                                 exists...
-                                 */
+                            console.log(document.URL);
+                            if (document.URL.lastIndexOf("https", 0) != 0) {
+                                more.style.cssText = "margin-left: 16px; float: right; color: gray;";
+                                more.innerHTML = ' <a href="javascript:void(0)">...</a> ';
+                                more.addEventListener('mouseup', function (e) {
+                                    /*
+                                     I guess here we must send a message from
+                                     the page that will be intercepted by the
+                                     plugin to open the full dictionary if one
+                                     exists...
+                                     */
 
-                                var script = document.createElement("script");
-                                message.type = "PAGE_NEEDS_WORD_TRANSLATION";
+                                    var script = document.createElement("script");
+                                    message.type = "PAGE_NEEDS_WORD_TRANSLATION";
 
-                                script.innerHTML = 'window.postMessage('+JSON.stringify(message)+', "*");';
-                                document.body.appendChild(script);
-                            });
+                                    script.innerHTML = 'window.postMessage(' + JSON.stringify(message) + ', "*");';
+                                    document.body.appendChild(script);
+                                });
+                            }
 
                             var save = document.createElement('span');
-                            save.innerHTML = ' (<a href="javascript:void(0)">save</a>) ';
+//                            save.style.cssText="float:left";
+                            save.innerHTML = '<a href="javascript:void(0)"><i class="fa fa-cloud-upload"></i></a> ';
                             save.addEventListener('mouseup', function (e) {
                                 /*
                                  I guess here we must send a message from
@@ -307,9 +312,14 @@ loadState(function() {
                              Now create the bubble.
                              */
 
-                            bubbleDOM.innerHTML = word_to_lookup;
-                            bubbleDOM.innerHTML += "<br/>=</br>"+ translation;
-                            bubbleDOM.innerHTML += "<br/><br/>";
+                            bubbleDOM.innerHTML = "";
+
+                            var translation_span = document.createElement('div');
+                            translation_span.style.cssText="text-align: center; margin-bottom: 10px;"
+                            translation_span.innerHTML = "<b>" + translation + "</b>";
+
+                            bubbleDOM.appendChild(translation_span);
+
 
                             bubbleDOM.appendChild(save);
                             bubbleDOM.appendChild(more);
@@ -348,7 +358,7 @@ loadState(function() {
 
             // Move that bubble to the appropriate location.
             function renderBubble(mouseX, mouseY) {
-                bubbleDOM.innerHTML = "Translating...";
+                bubbleDOM.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
                 bubbleDOM.style.top = mouseY + 16 +  'px';
                 bubbleDOM.style.left = mouseX + 16 + 'px';
                 bubbleDOM.style.visibility = 'visible';
@@ -467,3 +477,10 @@ loadState(function() {
     );
 
 });
+
+var fa = document.createElement('style');
+fa.type = 'text/css';
+fa.textContent = '@font-face { font-family: FontAwesome; src: url("'
+    + chrome.extension.getURL('lib/fa-4.3/fonts/fontawesome-webfont.woff')
+    + '"); }';
+document.head.appendChild(fa);
