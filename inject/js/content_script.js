@@ -257,6 +257,7 @@ loadState(function() {
                             console.log(document.URL);
                             if (document.URL.lastIndexOf("https", 0) != 0) {
                                 more.style.cssText = "margin-left: 16px; float: right; color: gray;";
+                                more.className= "translation-popup-link";
                                 more.innerHTML = ' <a href="javascript:void(0)">...</a> ';
                                 more.addEventListener('mouseup', function (e) {
                                     /*
@@ -276,7 +277,7 @@ loadState(function() {
 
                             var save = document.createElement('span');
 //                            save.style.cssText="float:left";
-//                            save.className= "translation-popup";
+                            save.className= "translation-popup-link";
                             save.innerHTML = '<a href="javascript:void(0)"><i class="fa fa-cloud-upload"></i></a> ';
                             save.addEventListener('mouseup', function (e) {
                                 /*

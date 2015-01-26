@@ -64,17 +64,19 @@ a[data-zeeguu-href] {
 
 
 
-.translation-popup,
-.translation-popup a:link,
-.translation-popup a:visited,
-.translation-popup a:hover {
-    color: orange;
-
-    border-radius: 1px;
-    padding: 0 2px;
+.translation-popup-link,
+.translation-popup-link a:link,
+.translation-popup-link a:visited,
+.translation-popup-link a:hover {
+    color: lightseagreen;
+    /*color: #636363;*/
     margin: 0;
     /*text-decoration: underline;*/
     /* everything the same as the .zeeguu-highlight , only that
     in this case we have no border */
-    border: 0px solid rgba(21, 21, 21, 0.48);
+}
+
+.translation-popup-link a:hover {
+    text-decoration: underline;
+    color: #20B2DD;
 }
