@@ -14,6 +14,23 @@ bubbleDOM.setAttribute('class', 'selection_bubble');
 document.body.appendChild(bubbleDOM);
 
 
+// Test whether the page contains the language we
+// are learning
+var page_contains_learned_language = false;
+
+loadState(function() {
+//    var body = document.body;
+//    var textContent = body.textContent || body.innerText;
+    textContent = $("body").text();
+//    console.log(textContent);
+    guessLanguage.detect(textContent, function (language) {
+//        console.log(language);
+//        console.log(state.from);
+        page_contains_learned_language = language == state.from;
+    })
+});
+
+
 
 translate_selection = function(eventData) {
     var selection = browser.getSelection();
@@ -241,7 +258,7 @@ loadState(function() {
                                                && word_to_lookup.length < 64;
 
                 if ((e.altKey && selection_is_interesting)
-                    || (state.fast && selection_is_interesting)) {
+                    || (state.fast && selection_is_interesting && page_contains_learned_language)) {
 
                     var message = term_context_url_triple(browser.getSelection());
                     renderBubble(e.pageX, e.pageY);
@@ -478,3 +495,5 @@ fa.textContent = '@font-face { font-family: FontAwesome; src: url("'
     + chrome.extension.getURL('lib/fa-4.3/fonts/fontawesome-webfont.woff')
     + '"); }';
 document.head.appendChild(fa);
+
+

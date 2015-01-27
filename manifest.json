@@ -55,7 +55,9 @@
                 "lib/jquery/jquery.js", 
                 "lib/browser.js", 
                 "lib/zeeguu_api_interface.js", 
-                "inject/js/content_script.js"
+                "inject/js/content_script.js",
+                "lib/guessLanguage.js/lib/_languageData.js",
+                "lib/guessLanguage.js/lib/guessLanguage.js"
             ]
         }
     ], 
