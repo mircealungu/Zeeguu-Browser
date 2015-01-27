@@ -357,16 +357,11 @@ loadState(function() {
 
             // Move that bubble to the appropriate location.
             function renderBubble(mouseX, mouseY) {
-                bubbleDOM.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+                bubbleDOM.innerHTML = '<small><i class="fa fa-circle-o-notch fa-spin"></i></small>';
                 bubbleDOM.style.top = mouseY + 16 +  'px';
                 bubbleDOM.style.left = mouseX + 16 + 'px';
                 bubbleDOM.style.visibility = 'visible';
             }
-
-
-
-
-
 
             var closingTimer;
             var dont_close = false;
