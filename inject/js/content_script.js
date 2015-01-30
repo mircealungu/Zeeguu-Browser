@@ -3,9 +3,6 @@ var highlight_when_unhighlighting = false,
     zeeguu_active = false,
     selection_mode = false;
 
-var translationOverlay = document.createElement('div');
-translationOverlay.setAttribute('class', 'selection_bubble');
-document.body.appendChild(translationOverlay);
 
 
 // Test whether the page contains the language we
@@ -18,11 +15,6 @@ loadState(function() {
         page_contains_learned_language = language == state.from;
     })
 });
-
-
-
-
-
 
 /*
 
@@ -96,9 +88,6 @@ loadState(function() {
         });
 
 
-
-
-
         /************************************
 
          This is the  context of the
@@ -115,8 +104,15 @@ loadState(function() {
                 var selection_is_interesting = word_to_lookup.trim().length > 0
                                                && word_to_lookup.length < 64;
 
-                if ((e.altKey && selection_is_interesting)
-                    || (state.fast && selection_is_interesting && page_contains_learned_language)) {
+                /*
+                The zeeguu_active condition here is a bit sketchy
+                but I didn't find another way to make sure that the
+                translation overlay does not appear again after the
+                ext dict is displayed.
+                 */
+                if ((e.altKey && selection_is_interesting && zeeguu_active == false)
+                    || (state.fast && selection_is_interesting && page_contains_learned_language
+                        && zeeguu_active == false)) {
 
                     var message = term_context_url_triple(browser.getSelection());
                     renderBubble(e.pageX, e.pageY);

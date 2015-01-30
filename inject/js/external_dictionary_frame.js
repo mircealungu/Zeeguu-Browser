@@ -56,6 +56,7 @@ function close_external_dictionary(data) {
                 closingTimer = null;
                 animate_close_external_dictionary();
                 zeeguu_open = false;
+                zeeguu_active = false;
             }
         }, 200);
     }

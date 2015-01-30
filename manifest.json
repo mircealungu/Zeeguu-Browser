@@ -60,6 +60,7 @@
                 "inject/js/highlight_words.js",
                 "inject/js/extract-context.js",
                 "inject/js/link-enabling.js",
+                "inject/js/translation_overlay.js",
                 "inject/js/external_dictionary_frame.js",
                 "inject/js/content_script.js"
             ]
