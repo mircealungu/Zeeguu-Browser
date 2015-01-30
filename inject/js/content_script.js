@@ -6,9 +6,6 @@ var highlight_when_unhighlighting = false,
     zeeguu_active = false,
     selection_mode = false;
 
-tooltipVisible = false;
-
-
 var bubbleDOM = document.createElement('div');
 bubbleDOM.setAttribute('class', 'selection_bubble');
 document.body.appendChild(bubbleDOM);
@@ -19,54 +16,12 @@ document.body.appendChild(bubbleDOM);
 var page_contains_learned_language = false;
 
 loadState(function() {
-//    var body = document.body;
-//    var textContent = body.textContent || body.innerText;
     textContent = $("body").text();
-//    console.log(textContent);
     guessLanguage.detect(textContent, function (language) {
-//        console.log(language);
-//        console.log(state.from);
         page_contains_learned_language = language == state.from;
     })
 });
 
-
-
-translate_selection = function(eventData) {
-    var selection = browser.getSelection();
-    var message = term_context_url_triple(selection);
-    if (message === null) {
-        return;
-    }
-    highlight_when_unhighlighting = true;
-    browser.sendMessage("ZM_SHOW_TRANSLATION", message);
-};
-
-/*
- This is the function in charge with highlighting the user's words
- we put them between the zeeguu-visited links...
- */
-function highlight_words(words) {
-
-    var all = document.querySelectorAll('p');
-
-    for (var i=0, max=all.length; i < max; i++) {
-        var parent = all[i];
-
-        var textNode = parent.firstChild;
-        if (textNode != null)
-            /*
-            Here we used to have a test on textNode being of type text (3)
-            but it didn't work. so now we replace everything in all the children.
-            It seems to work for now.
-             */
-            for (j = 0; j < words.length; j++) {
-                var rgxp = new RegExp(' (' + words[j]+')( |,|[.])', 'gi');
-                var repl = ' <span class="zeeguu-visited" other="$1">$1$2</span> ';
-                parent.innerHTML = parent.innerHTML.replace(rgxp, repl);
-            }
-    }
-}
 
 
 
@@ -174,7 +129,6 @@ loadState(function() {
 
         $(document).mouseup(function(eventData) {
             if (state.selectionMode) {
-//                translate_selection(eventData);
             }
         }).click(function() {
             if (zeeguu_active) {
@@ -182,8 +136,6 @@ loadState(function() {
             }
         }).dblclick(function(eventData) {
             if (state.fast) {
-//                alert("yeye!")
-//                translate_selection(eventData);
             }
         });
 

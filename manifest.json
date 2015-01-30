@@ -53,11 +53,12 @@
             ], 
             "js": [
                 "lib/jquery/jquery.js", 
-                "lib/browser.js", 
-                "lib/zeeguu_api_interface.js", 
-                "inject/js/content_script.js",
+                "lib/browser.js",
                 "lib/guessLanguage.js/lib/_languageData.js",
-                "lib/guessLanguage.js/lib/guessLanguage.js"
+                "lib/guessLanguage.js/lib/guessLanguage.js",
+                "lib/zeeguu_api_interface.js",
+                "inject/js/highlight_words.js",
+                "inject/js/content_script.js"
             ]
         }
     ], 
