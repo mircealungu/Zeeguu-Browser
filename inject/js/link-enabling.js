@@ -13,3 +13,15 @@ function enable_links() {
         e.removeAttr("data-zeeguu-href");
     });
 }
+
+function toggle_selection_mode(new_selection_mode) {
+    if (selection_mode == new_selection_mode) {
+        return;
+    }
+    if (new_selection_mode) {
+        disable_links();
+    } else {
+        enable_links();
+    }
+    selection_mode = new_selection_mode;
+}

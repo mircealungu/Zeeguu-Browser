@@ -1,6 +1,3 @@
-var ANIMATION_SPEED = 100,
-    HEIGHT = 541,
-    WIDTH = 740;
 
 var highlight_when_unhighlighting = false,
     zeeguu_active = false,
@@ -25,29 +22,6 @@ loadState(function() {
 
 
 
-/*
-  This is required to populate the popup window
- */
-function term_context_url_triple(selection) {
-    if (!selection.baseNode || selection.baseNode.nodeType != 3) {
-        return null;
-    }
-
-    var term = selection.toString();
-    if (term.length < 1) {
-        return null;
-    }
-    var surroundingParagraph = $(selection.baseNode.parentNode).text();
-    var context = extract_context(surroundingParagraph, term);
-    var title = document.getElementsByTagName("title")[0].innerHTML;
-
-    return {
-        "term": term,
-        "context": context,
-        "url": document.URL,
-        "title": title
-    };
-}
 
 
 /*
@@ -92,13 +66,14 @@ Content Script.
 
 loadState(function() {
 
-    // The dictionary frame
-    {
-
         $(document).mouseup(function(eventData) {
             if (state.selectionMode) {
             }
         }).click(function() {
+            /*
+            closing the external dict if the user clicks
+            anywhere in the page
+             */
             if (zeeguu_active) {
                 browser.sendMessage("close");
             }
@@ -107,22 +82,10 @@ loadState(function() {
             }
         });
 
-        $(function() {
-            if (state.selectionMode) {
-                toggle_selection_mode(true);
-            }
-        });
+        if (state.selectionMode) {
+            toggle_selection_mode(true);
+        }
 
-        browser.addMessageListener("ZM_SHOW_TRANSLATION", function(data) {
-
-            zeeguu_active = true;
-            var selection = term_context_url_triple(browser.getSelection());
-
-            if (selection !== null) {
-                data.context = selection.context;
-                highlight_when_unhighlighting = true;
-            }
-        });
 
         addStateChangeListener("selectionMode", function(selectionMode) {
             toggle_selection_mode(selectionMode);
@@ -132,32 +95,8 @@ loadState(function() {
             unhighlight();
         });
 
-        function translate_word_action(data) {
-            translationOverlay.style.visibility = 'hidden';
-            dont_close = true;  // Abort the closing timer if it was started before this interaction
-            var selection = term_context_url_triple(browser.getSelection());
-            var url = browser.zeeguuUrl(selection.term, selection.url, selection.context);
-            if (!is_frameset()) {
-                if ($("#zeeguu").size()) {
-                    $("#zeeguu").attr("src", url);
-                } else {
-                    $("body").append('<iframe src="' + url + '" id="zeeguu" scrolling="no" />');
-                    $("#zeeguu").animate({bottom: "0px"}, ANIMATION_SPEED);
-                }
-            } else {
-                browser.sendMessage("window", {
-                    url: url
-                });
-            }
-            zeeguu_open = true;
-            browser.sendMessage("unhighlight");
-            browser.sendMessage("update_state", {
-                selectionMode: false
-            });
-            window.setTimeout(function() {
-                dont_close = true;  // Abort the closing timer if it was started after this interaction
-            }, 200);
-        };
+
+
 
 
         /************************************
@@ -298,24 +237,9 @@ loadState(function() {
                 translationOverlay.style.visibility = 'visible';
             }
 
-            var closingTimer;
-            var dont_close = false;
-            var zeeguu_open = false;
 
-            browser.addMessageListener("ZM_SHOW_TRANSLATION", translate_word_action);
-
-            browser.addMessageListener("close", function(data) {
-                if (zeeguu_open && !closingTimer) {
-                    dont_close = false;
-                    window.setTimeout(function() {
-                        if (!dont_close) {
-                            closingTimer = null;
-                            hide_zeeguu();
-                            zeeguu_open = false;
-                        }
-                    }, 200);
-                }
-            });
+            browser.addMessageListener("ZM_SHOW_TRANSLATION", show_external_dictionary);
+            browser.addMessageListener("close", close_external_dictionary);
 
             browser.addMessageListener("browser_action", function(data) {
                 toggleSelectionModeBox(!selection_mode);
@@ -324,26 +248,7 @@ loadState(function() {
                 });
             });
         }
-    }
 });
-
-function is_frameset() {
-    return !$("body").length;
-}
-
-function hide_zeeguu(callback) {
-    browser.sendMessage("unhighlight");
-    if (!is_frameset()) {
-        $("#zeeguu").animate({bottom: -HEIGHT}, ANIMATION_SPEED, function() {
-            $(this).detach();
-            if (callback) {
-                callback();
-            }
-        });
-    } else {
-        close_zeeguu_window();
-    }
-}
 
 function highlight() {
     highlight_when_unhighlighting = false;
@@ -377,17 +282,6 @@ function unhighlight() {
 //    });
 }
 
-function toggle_selection_mode(new_selection_mode) {
-    if (selection_mode == new_selection_mode) {
-        return;
-    }
-    if (new_selection_mode) {
-        disable_links();
-    } else {
-        enable_links();
-    }
-    selection_mode = new_selection_mode;
-}
 
 loadState(function() {
     browser.ifPreference("highlight", function () {
