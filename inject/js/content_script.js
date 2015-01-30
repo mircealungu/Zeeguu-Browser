@@ -37,14 +37,8 @@ function term_context_url_triple(selection) {
     if (term.length < 1) {
         return null;
     }
-    var context = $(selection.baseNode.parentNode).text();
-    try {
-        context = $.trim(context.match(/\(?[^\.!\?]+[\.!\?]\)?/g).filter(function (each) {
-            return each.indexOf(term) >= 0;
-        })[0])
-    } catch (e) {
-        context = "";
-    }
+    var surroundingParagraph = $(selection.baseNode.parentNode).text();
+    var context = extract_context(surroundingParagraph);
     var title = document.getElementsByTagName("title")[0].innerHTML;
 
     return {
