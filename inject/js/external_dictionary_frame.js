@@ -99,7 +99,7 @@ if (window.name == "zeeguu") {
         var selection = browser.getSelection();
         var message = term_context_url_triple(selection);
         if (message === null) return;
-        browser.sendMessage("contribute", message);
+        browser.sendMessage("UPDATE_TRANSLATION_FROM_SELECTION", message);
     });
 
     disable_links();

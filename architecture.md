@@ -52,7 +52,7 @@ Inject
 inject/js/content_script.js
 
 loadState prepares two situations. when in zeeguu dictionary frame then
- there is a message send of "contribute"
+ there is a message send of "UPDATE_TRANSLATION_FROM_SELECTION"
   when in any other frame the message send is "translate"...
   this seems to prepare a global state elsewhere
 

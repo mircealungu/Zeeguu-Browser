@@ -76,7 +76,7 @@ loadState(function() {
     }
 });
 
-browser.addMessageListener("contribute", function(message) {
+browser.addMessageListener("UPDATE_TRANSLATION_FROM_SELECTION", function(message) {
     if (contributed) {
         return;
     }
