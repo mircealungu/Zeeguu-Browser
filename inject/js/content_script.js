@@ -38,7 +38,7 @@ function term_context_url_triple(selection) {
         return null;
     }
     var surroundingParagraph = $(selection.baseNode.parentNode).text();
-    var context = extract_context(surroundingParagraph);
+    var context = extract_context(surroundingParagraph, term);
     var title = document.getElementsByTagName("title")[0].innerHTML;
 
     return {
@@ -137,8 +137,7 @@ loadState(function() {
             var selection = term_context_url_triple(browser.getSelection());
 
             if (selection !== null) {
-                // this is the magic regex for splitting in sentences which often works for english.
-                data.context = $.trim(selection.context.match(/\(?[^\.!\?]+[\.!\?]\)?/g).filter(function(each){return each.indexOf(data.term)>=0;})[0])
+                data.context = selection.context;
                 highlight_when_unhighlighting = true;
             }
         });
@@ -209,7 +208,6 @@ loadState(function() {
                         if (translation) {
 
                             var more = document.createElement('span');
-                            console.log(document.URL);
                             if (document.URL.lastIndexOf("https", 0) != 0) {
                                 more.style.cssText = "margin-left: 16px; float: right; color: gray;";
                                 more.className= "translation-popup-link";
