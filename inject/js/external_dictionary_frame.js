@@ -4,7 +4,6 @@ var ANIMATION_SPEED = 100,
 
 var closingTimer;
 var dont_close = false;
-var zeeguu_open = false;
 
 /*
  This is required to populate the external dictionary window
@@ -49,14 +48,13 @@ function animate_close_external_dictionary(callback) {
 }
 
 function close_external_dictionary(data) {
-    if (zeeguu_open && !closingTimer) {
+    if (external_dictionary_active && !closingTimer) {
         dont_close = false;
         window.setTimeout(function() {
             if (!dont_close) {
                 closingTimer = null;
                 animate_close_external_dictionary();
-                zeeguu_open = false;
-                zeeguu_active = false;
+                external_dictionary_active = false;
             }
         }, 200);
     }
@@ -79,8 +77,8 @@ function show_external_dictionary(data) {
             url: url
         });
     }
-    zeeguu_open = true;
-    zeeguu_active = true;
+
+    external_dictionary_active = true;
     browser.sendMessage("unhighlight");
     browser.sendMessage("update_state", {
         selectionMode: false
@@ -95,6 +93,7 @@ function show_external_dictionary(data) {
 
 
 // The dictionary frame
+// TODO: Why not have this behavior in the frame itself?
 if (window.name == "zeeguu") {
     $(document).mouseup(function () {
         var selection = browser.getSelection();

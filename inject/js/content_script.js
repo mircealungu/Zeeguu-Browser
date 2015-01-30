@@ -1,6 +1,6 @@
 
 var highlight_when_unhighlighting = false,
-    zeeguu_active = false,
+    external_dictionary_active = false,
     selection_mode = false;
 
 
@@ -66,7 +66,7 @@ loadState(function() {
             closing the external dict if the user clicks
             anywhere in the page
              */
-            if (zeeguu_active) {
+            if (external_dictionary_active) {
                 browser.sendMessage("close");
             }
         }).dblclick(function(eventData) {
@@ -105,14 +105,14 @@ loadState(function() {
                                                && word_to_lookup.length < 64;
 
                 /*
-                The zeeguu_active condition here is a bit sketchy
+                The external_dictionary_active condition here is a bit sketchy
                 but I didn't find another way to make sure that the
                 translation overlay does not appear again after the
                 ext dict is displayed.
                  */
-                if ((e.altKey && selection_is_interesting && zeeguu_active == false)
+                if ((e.altKey && selection_is_interesting && external_dictionary_active == false)
                     || (state.fast && selection_is_interesting && page_contains_learned_language
-                        && zeeguu_active == false)) {
+                        && external_dictionary_active == false)) {
 
                     var message = term_context_url_triple(browser.getSelection());
                     renderBubble(e.pageX, e.pageY);
