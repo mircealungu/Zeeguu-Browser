@@ -6,9 +6,9 @@ var highlight_when_unhighlighting = false,
     zeeguu_active = false,
     selection_mode = false;
 
-var bubbleDOM = document.createElement('div');
-bubbleDOM.setAttribute('class', 'selection_bubble');
-document.body.appendChild(bubbleDOM);
+var translationOverlay = document.createElement('div');
+translationOverlay.setAttribute('class', 'selection_bubble');
+document.body.appendChild(translationOverlay);
 
 
 // Test whether the page contains the language we
@@ -92,14 +92,6 @@ Content Script.
 
 loadState(function() {
 
-//    if (document.URL == 'https://www.zeeguu.unibe.ch/login') {
-//        document.forms.login.email.value = state.email;
-//        document.forms.login.password.value = state.password;
-//        document.forms.login.login.click();
-//        return;
-//    }
-
-
     // The dictionary frame
     if (window.name == "zeeguu") {
         $(document).mouseup(function() {
@@ -160,7 +152,7 @@ loadState(function() {
         });
 
         function translate_word_action(data) {
-            bubbleDOM.style.visibility = 'hidden';
+            translationOverlay.style.visibility = 'hidden';
             dont_close = true;  // Abort the closing timer if it was started before this interaction
             var selection = term_context_url_triple(browser.getSelection());
             var url = browser.zeeguuUrl(selection.term, selection.url, selection.context);
@@ -249,7 +241,7 @@ loadState(function() {
                                  plugin to open the full dictionary if one
                                  exists...
                                  */
-                                bubbleDOM.style.visibility = 'hidden';
+                                translationOverlay.style.visibility = 'hidden';
 
                                 var script = document.createElement("script");
                                 message.type = "PAGE_NEEDS_WORD_TO_BE_UPLOADED";
@@ -264,7 +256,7 @@ loadState(function() {
                             var close = document.createElement('span');
                             close.innerHTML = " (close)";
                             close.addEventListener('mousedown', function (e) {
-                                bubbleDOM.style.visibility = 'hidden';
+                                translationOverlay.style.visibility = 'hidden';
                             });
 
                             var ok = document.createElement('span');
@@ -276,15 +268,15 @@ loadState(function() {
                              Now create the bubble.
                              */
 
-                            bubbleDOM.innerHTML = "";
+                            translationOverlay.innerHTML = "";
 
                             var translation_span = document.createElement('div');
                             translation_span.style.cssText="text-align: center; margin-bottom: 10px;"
                             translation_span.innerHTML = "<b>" + translation + "</b>";
 
-                            bubbleDOM.appendChild(translation_span);
-                            bubbleDOM.appendChild(save);
-                            bubbleDOM.appendChild(more);
+                            translationOverlay.appendChild(translation_span);
+                            translationOverlay.appendChild(save);
+                            translationOverlay.appendChild(more);
 
 
                         }
@@ -297,8 +289,8 @@ loadState(function() {
                      text. No reason for the translation to still
                      be on.
                      */
-                    bubbleDOM.style.visibility = 'hidden';
-                    bubbleDOM.innerHTML = '';
+                    translationOverlay.style.visibility = 'hidden';
+                    translationOverlay.innerHTML = '';
                 }
             }
 
@@ -320,10 +312,10 @@ loadState(function() {
 
             // Move that bubble to the appropriate location.
             function renderBubble(mouseX, mouseY) {
-                bubbleDOM.innerHTML = '<small><i class="fa fa-circle-o-notch fa-spin"></i></small>';
-                bubbleDOM.style.top = mouseY + 16 +  'px';
-                bubbleDOM.style.left = mouseX + 16 + 'px';
-                bubbleDOM.style.visibility = 'visible';
+                translationOverlay.innerHTML = '<small><i class="fa fa-circle-o-notch fa-spin"></i></small>';
+                translationOverlay.style.top = mouseY + 16 +  'px';
+                translationOverlay.style.left = mouseX + 16 + 'px';
+                translationOverlay.style.visibility = 'visible';
             }
 
             var closingTimer;
