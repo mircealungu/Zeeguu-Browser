@@ -58,6 +58,9 @@
                 "lib/guessLanguage.js/lib/guessLanguage.js",
                 "lib/zeeguu_api_interface.js",
                 "inject/js/highlight_words.js",
+                "inject/js/extract-context.js",
+                "inject/js/link-enabling.js",
+                "inject/js/external_dictionary_frame.js",
                 "inject/js/content_script.js"
             ]
         }

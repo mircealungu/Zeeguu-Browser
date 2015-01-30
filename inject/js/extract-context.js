@@ -7,7 +7,6 @@ function extract_context (surrounding_paragraph, term) {
             return eachSentence.indexOf(term) >= 0;
         })[0])
     } catch (e) {
-        context = "";
     }
     return context;
 }

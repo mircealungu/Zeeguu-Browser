@@ -93,25 +93,7 @@ Content Script.
 loadState(function() {
 
     // The dictionary frame
-    if (window.name == "zeeguu") {
-        $(document).mouseup(function() {
-            var selection = browser.getSelection();
-            var message = term_context_url_triple(selection);
-            if (message === null) {
-                return;
-            }
-            browser.sendMessage("contribute", message);
-        });
-
-        addStateChangeListener("links", function(links) {
-            toggle_selection_mode(!links);
-        });
-
-        toggle_selection_mode(!state.links);
-
-
-    // Any frame
-    } else {
+    {
 
         $(document).mouseup(function(eventData) {
             if (state.selectionMode) {
@@ -400,17 +382,9 @@ function toggle_selection_mode(new_selection_mode) {
         return;
     }
     if (new_selection_mode) {
-        $("a").each(function(i, e) {
-            e = $(e);
-            e.attr("data-zeeguu-href", e.attr("href"));
-            e.removeAttr("href");
-        });
+        disable_links();
     } else {
-        $("a").each(function(i, e) {
-            e = $(e);
-            e.attr("href", e.attr("data-zeeguu-href"));
-            e.removeAttr("data-zeeguu-href");
-        });
+        enable_links();
     }
     selection_mode = new_selection_mode;
 }
