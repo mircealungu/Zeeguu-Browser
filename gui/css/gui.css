@@ -106,7 +106,7 @@ a:hover, a:active, a:focus {
 }
 
 
-/* Popup */
+/* Popup toolbar */
 
 #popup {
     width: 248px;
@@ -146,24 +146,24 @@ a:hover, a:active, a:focus {
         /*color: red;*/
     }
 
-        #popup .btn:hover i
-        {
+    #popup .btn:hover i
+    {
 
-        }
-        #popup .btn.active i
-        {
-            color: #08c;
-            /*color: red;*/
-        }
+    }
+    #popup .btn.active i
+    {
+        color: #08c;
+        /*color: red;*/
+    }
 
     #selection-mode .btn.active i,
     #selection-mode  a:active {
         color: gold;
     }
 
-        #popup .btn {
-            color: #494949;
-        }
+    #popup .btn {
+        color: #494949;
+    }
 
 
     #popup p {

@@ -1,18 +1,18 @@
 {
     "web_accessible_resources": [
-        "gui/html/ext_dict.html",
+        "gui/html/ext_dict.html", 
         "gui/html/login.html", 
         "gui/html/error.html", 
         "gui/html/toolbar-popup.html", 
         "gui/css/gui.css", 
-        "gui/js/ext_dict.js",
+        "gui/js/ext_dict.js", 
         "gui/js/login.js", 
-        "gui/js/toolbar-popup.js",
+        "gui/js/toolbar-popup.js", 
         "gui/img/loading.gif", 
         "lib/jquery/jquery.validate.js", 
         "lib/jquery/jquery.js", 
         "lib/bootstrap/bootstrap.js", 
-        "lib/bootstrap/bootstrap.css",
+        "lib/bootstrap/bootstrap.css", 
         "lib/fa-4.3/fonts/*"
     ], 
     "commands": {
@@ -23,7 +23,7 @@
             "description": "Translate selected word"
         }
     }, 
-    "name": "Zeeguu", 
+    "description": "The web as your language textbook", 
     "icons": {
         "128": "logo/128x128.png", 
         "48": "logo/48x48.png", 
@@ -32,13 +32,13 @@
     "background": {
         "scripts": [
             "lib/jquery/jquery.js", 
-            "lib/browser.js",
-            "lib/zeeguu_api_interface.js",
-            "bg/js/bg.js",
+            "lib/browser.js", 
+            "lib/zeeguu_api_interface.js", 
+            "bg/js/bg.js", 
             "bg/js/work-before-play.js"
         ]
     }, 
-    "version": "1.279", 
+    "version": "1.281", 
     "options_page": "gui/html/plugin-preferences.html", 
     "manifest_version": 2, 
     "content_scripts": [
@@ -48,21 +48,21 @@
             ], 
             "all_frames": true, 
             "css": [
-                "inject/css/inject.css",
+                "inject/css/inject.css", 
                 "lib/fa-4.3/css/font-awesome.min.css"
             ], 
             "js": [
                 "lib/jquery/jquery.js", 
-                "lib/browser.js",
-                "lib/guessLanguage.js/lib/_languageData.js",
-                "lib/guessLanguage.js/lib/guessLanguage.js",
-                "lib/zeeguu_api_interface.js",
-                "inject/js/highlight_words.js",
-                "inject/js/extract-context.js",
-                "inject/js/link-enabling.js",
-                "inject/js/translation_overlay.js",
-                "inject/js/ext_dict_operation.js",
-                "inject/js/font-awesome.js",
+                "lib/browser.js", 
+                "lib/guessLanguage.js/lib/_languageData.js", 
+                "lib/guessLanguage.js/lib/guessLanguage.js", 
+                "lib/zeeguu_api_interface.js", 
+                "inject/js/highlight_words.js", 
+                "inject/js/extract-context.js", 
+                "inject/js/link-enabling.js", 
+                "inject/js/translation_overlay.js", 
+                "inject/js/ext_dict_operation.js", 
+                "inject/js/font-awesome.js", 
                 "inject/js/content_script.js"
             ]
         }
@@ -74,12 +74,12 @@
         "https://www.zeeguu.unibe.ch/"
     ], 
     "browser_action": {
-        "default_popup": "gui/html/toolbar-popup.html", 
         "default_icon": {
             "19": "logo/19x19.png", 
             "38": "logo/38x38.png"
         }, 
-        "default_title": "Zeeguu"
+        "default_title": "Zeeguu", 
+        "default_popup": "gui/html/toolbar-popup.html"
     }, 
-    "description": "The web as your language textbook"
+    "name": "Zeeguu"
 }
