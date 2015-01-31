@@ -86,7 +86,8 @@ loadState(function() {
             }, 50);
         }
 
-        // Mouse up is when the user might have finished selecting a word in page
+        // Mouse up is when we test whether
+        // the user might have finished selecting a word in page
         document.addEventListener('mouseup', delayed_mouse_up, false);
 
         browser.addMessageListener("ZM_SHOW_TRANSLATION", show_external_dictionary);
