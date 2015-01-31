@@ -23,3 +23,30 @@ function highlight_words(words) {
             }
     }
 }
+
+function unhighlight_words() {
+    $(".zeeguu-visited").addClass("zeeguu-remove");
+    $(".zeeguu-remove").each(function() {
+        var parent = this.parentNode,
+            lastChild = this.lastChild,
+            nextlastChild;
+        parent.replaceChild(lastChild, this);
+        while(this.lastChild) {
+            nextlastChild = this.lastChild;
+            parent.insertBefore(nextlastChild, lastChild);
+            lastChild = nextlastChild;
+        }
+        parent.normalize();
+    });
+}
+
+
+function change_highlight_of_page(highlight) {
+    if (highlight) {
+        getUserWords(function (user_words) {
+            highlight_words(user_words)
+        });
+    } else {
+        unhighlight_words();
+    }
+}

@@ -14,7 +14,7 @@ function enable_links() {
     });
 }
 
-function toggle_selection_mode(new_selection_mode) {
+function update_link_state(new_selection_mode) {
     if (selection_mode == new_selection_mode) {
         return;
     }

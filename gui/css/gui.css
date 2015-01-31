@@ -119,10 +119,6 @@ a:hover, a:active, a:focus {
         color: #333;
     }
 
-        #popup a:hover, #popup a:focus, #popup a:active, #popup a.enabled {
-            text-decoration: none;
-            color: #08c;
-        }
 
     #popup .input-prepend {
         margin-bottom: 4px;
@@ -140,9 +136,30 @@ a:hover, a:active, a:focus {
             /*width: 79px;*/
         /*}*/
 
-        #popup .btn:hover i, #popup .btn.enabled i {
-            color: #08c;
+    #popup a:hover {
+
+    }
+
+    #popup a:active, #popup a.enabled {
+        text-decoration: none;
+        color: #08c;
+        color: red;
+    }
+
+        #popup .btn:hover i
+        {
+            
         }
+        #popup .btn.active i
+        {
+            color: #08c;
+            color: red;
+        }
+
+        #popup .btn {
+            color: #636363;
+        }
+
 
     #popup p {
         margin: 2px 1px;

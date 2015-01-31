@@ -45,24 +45,23 @@ loadState(function() {
 
     $(document).click(function () {
         /* closing the external dict if the user clicks anywhere in page */
-        if (external_dictionary_active) {
-            browser.sendMessage("close");
-        }
+        if (external_dictionary_active) browser.sendMessage("close");
     });
 
-    if (state.selectionMode) {
-        toggle_selection_mode(true);
-    }
+    if (state.selectionMode) disable_links();
 
-    if (state.highlight) {
-        getUserWords(function (user_words) {
+    if (state.highlight) getUserWords(function (user_words) {
             highlight_words(user_words)
-        })
-    }
+        });
 
     addStateChangeListener("selectionMode", function (selectionMode) {
-        toggle_selection_mode(selectionMode);
+        update_link_state(selectionMode);
     });
+
+    addStateChangeListener("highlight", function (highlight) {
+        change_highlight_of_page(highlight);
+    });
+
 
     browser.addMessageListener("unhighlight", function (data) {
         unhighlight();
