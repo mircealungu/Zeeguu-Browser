@@ -143,21 +143,26 @@ a:hover, a:active, a:focus {
     #popup a:active, #popup a.enabled {
         text-decoration: none;
         color: #08c;
-        color: red;
+        /*color: red;*/
     }
 
         #popup .btn:hover i
         {
-            
+
         }
         #popup .btn.active i
         {
             color: #08c;
-            color: red;
+            /*color: red;*/
         }
 
+    #selection-mode .btn.active i,
+    #selection-mode  a:active {
+        color: gold;
+    }
+
         #popup .btn {
-            color: #636363;
+            color: #494949;
         }
 
 

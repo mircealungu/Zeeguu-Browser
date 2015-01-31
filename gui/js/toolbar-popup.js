@@ -16,11 +16,11 @@ $(function() {
         function set_the_help_for_buttons() {
             setHelp("#fast-mode", "Translate by double-clicking");
             setHelp("#selection-mode", "Disable page links for easier selection");
-            setHelp("#highlighting-mode", "Highlight the learned words");
+            setHelp("#highlighting-mode", "Highlight in page all the learned words");
             setHelp("#to-the-gym", "Practice at the Language Gym");
             setHelp("#to-the-word-list", "To your words list");
             setHelp("#options-btn", "Edit plugin options");
-            setHelp("#to-the-help-page", "Email us a question about Zeeguu");
+            setHelp("#to-the-help-page", "Learn more about the Zeeguu extension");
         }
 
 
