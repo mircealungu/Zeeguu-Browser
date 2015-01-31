@@ -1,11 +1,11 @@
 {
     "web_accessible_resources": [
-        "gui/html/search_results.html", 
+        "gui/html/ext_dict.html",
         "gui/html/login.html", 
         "gui/html/error.html", 
         "gui/html/toolbar-popup.html", 
         "gui/css/gui.css", 
-        "gui/js/search_results.js", 
+        "gui/js/ext_dict.js",
         "gui/js/login.js", 
         "gui/js/mini-window.js", 
         "gui/img/loading.gif", 
@@ -61,7 +61,7 @@
                 "inject/js/extract-context.js",
                 "inject/js/link-enabling.js",
                 "inject/js/translation_overlay.js",
-                "inject/js/external_dictionary_frame.js",
+                "inject/js/ext_dict_operation.js",
                 "inject/js/content_script.js"
             ]
         }

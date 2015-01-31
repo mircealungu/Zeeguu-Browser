@@ -42,7 +42,7 @@ $(function() {
                     $("#login-error").show();
                 } else {
                     if (window.location.search)
-                        window.location = "search_results.html" + window.location.search;
+                        window.location = "ext_dict.html" + window.location.search;
                     else
                         window.location = "toolbar-popup.html";
                     browser.sendMessage("update_state", {
@@ -61,7 +61,7 @@ $(function() {
                 if(!result) {
                     $("#register-error").show();
                 } else {
-                    window.location = "search_results.html" + window.location.search;
+                    window.location = "ext_dict.html" + window.location.search;
                 }
             });
         }

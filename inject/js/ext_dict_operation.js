@@ -92,14 +92,18 @@ function show_external_dictionary(data) {
 
 
 
-// The dictionary frame
-// TODO: Why not have this behavior in the frame itself?
+/*
+ This is the code that gets injected in the external dictionary frame.
+ The only way for that frame to communicate with the parent frame is
+ via sending EXDICT_UPDATE_TRANSLATION_FROM_SELECTION. The message is
+ caught by the ext_dict_frame
+  */
 if (window.name == "zeeguu") {
     $(document).mouseup(function () {
         var selection = browser.getSelection();
         var message = term_context_url_triple(selection);
         if (message === null) return;
-        browser.sendMessage("UPDATE_TRANSLATION_FROM_SELECTION", message);
+        browser.sendMessage("EXDICT_UPDATE_TRANSLATION_FROM_SELECTION", message);
     });
 
     disable_links();

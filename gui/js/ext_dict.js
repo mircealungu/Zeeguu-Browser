@@ -76,7 +76,7 @@ loadState(function() {
     }
 });
 
-browser.addMessageListener("UPDATE_TRANSLATION_FROM_SELECTION", function(message) {
+browser.addMessageListener("EXDICT_UPDATE_TRANSLATION_FROM_SELECTION", function(message) {
     if (contributed) {
         return;
     }
@@ -109,6 +109,8 @@ function contributeAction() {
 }
 
 $(function() {
+
+
     $("#contribute-btn").click(contributeAction);
 
 
