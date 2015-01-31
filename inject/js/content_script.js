@@ -12,110 +12,94 @@ This event listener is run in the context of the
 Content Script.
 
  */
-    var port = chrome.runtime.connect();
-    window.addEventListener("message", function(event) {
-        // We only accept messages from ourselves
-        if (event.source != window)
-            return;
+var port = chrome.runtime.connect();
+window.addEventListener("message", function(event) {
+    // We only accept messages from ourselves
+    if (event.source != window)
+        return;
 
-        if (event.data.type) {
-            if (event.data.type == "PAGE_NEEDS_WORD_TRANSLATION") {
-                message = {
-                    url: event.data.url,
-                    context: event.data.context,
-                    term: event.data.term
-                };
-                browser.sendMessage("ZM_SHOW_TRANSLATION", message);
-            }
-            if (event.data.type == "PAGE_NEEDS_WORD_TO_BE_UPLOADED") {
-                contribute_with_context(
-                        event.data.term,
-                        event.data.url,
-                        event.data.context,
-                        event.data.translation,
-                        event.data.title);
-                highlight_words([event.data.term]);
-            }
+    if (event.data.type) {
+        if (event.data.type == "PAGE_NEEDS_WORD_TRANSLATION") {
+            message = {
+                url: event.data.url,
+                context: event.data.context,
+                term: event.data.term
+            };
+            browser.sendMessage("ZM_SHOW_TRANSLATION", message);
         }
+        if (event.data.type == "PAGE_NEEDS_WORD_TO_BE_UPLOADED") {
+            contribute_with_context(
+                    event.data.term,
+                    event.data.url,
+                    event.data.context,
+                    event.data.translation,
+                    event.data.title);
+            highlight_words([event.data.term]);
+        }
+    }
 
-    }, false);
+}, false);
 
 
 loadState(function() {
 
-        $(document).mouseup(function(eventData) {
-            if (state.selectionMode) {
-            }
-        }).click(function() {
-            /*
-            closing the external dict if the user clicks
-            anywhere in the page
-             */
-            if (external_dictionary_active) {
-                browser.sendMessage("close");
-            }
-        }).dblclick(function(eventData) {
-            if (state.fast) {
-            }
-        });
+    $(document).click(function () {
+        /* closing the external dict if the user clicks anywhere in page */
+        if (external_dictionary_active) {
+            browser.sendMessage("close");
+        }
+    });
 
-        if (state.selectionMode) {
-            toggle_selection_mode(true);
+    if (state.selectionMode) {
+        toggle_selection_mode(true);
+    }
+
+    if (state.highlight) {
+        getUserWords(function (user_words) {
+            highlight_words(user_words)
+        })
+    }
+
+    addStateChangeListener("selectionMode", function (selectionMode) {
+        toggle_selection_mode(selectionMode);
+    });
+
+    browser.addMessageListener("unhighlight", function (data) {
+        unhighlight();
+    });
+
+    /************************************
+     This is the  context of the original page.
+     *************************************/
+
+    if (window.top == window.self) {
+
+        /*
+         Before adding the delay:
+         - the translation would start popping up too
+         early while the user was in the process of double-clicking
+         - a selected word would be clicked, and it would still
+         be somehow selected on mouseUp. this would
+         */
+        function delayed_mouse_up(e) {
+            setTimeout(function () {
+                mouse_up_in_page(e, external_dictionary_active);
+            }, 50);
         }
 
+        // Mouse up is when the user might have finished selecting a word in page
+        document.addEventListener('mouseup', delayed_mouse_up, false);
 
-        addStateChangeListener("selectionMode", function(selectionMode) {
-            toggle_selection_mode(selectionMode);
-        });
+        browser.addMessageListener("ZM_SHOW_TRANSLATION", show_external_dictionary);
+        browser.addMessageListener("close", close_external_dictionary);
 
-        browser.addMessageListener("unhighlight", function(data) {
-            unhighlight();
-        });
-
-
-        /************************************
-
-         This is the  context of the
-         original page.
-
-        *************************************/
-
-        if (window.top == window.self) {
-
-            /*
-            Before adding the delay:
-            - the translation would start popping up too
-            early while the user was in the process of double-clicking
-            - a selected word would be clicked, and it would still
-            be somehow selected on mouseUp. this would
-             */
-            function delayed_mouse_up(e) {
-                setTimeout(function(){
-                    mouse_up_in_page(e,external_dictionary_active);
-                }, 50);
-            }
-
-            // Let's listen to mouseup DOM events.
-            document.addEventListener('mouseup', delayed_mouse_up, false);
-
-            browser.addMessageListener("ZM_SHOW_TRANSLATION", show_external_dictionary);
-            browser.addMessageListener("close", close_external_dictionary);
-
-            browser.addMessageListener("browser_action", function(data) {
-                toggleSelectionModeBox(!selection_mode);
-                browser.sendMessage("selection_mode", {
-                    enabled: !selection_mode
-                });
+        browser.addMessageListener("browser_action", function (data) {
+            toggleSelectionModeBox(!selection_mode);
+            browser.sendMessage("selection_mode", {
+                enabled: !selection_mode
             });
-        };
-
-    browser.ifPreference("highlight", function () {
-            getUserWords(function (user_words) {
-                highlight_words(user_words)
-            })
-        }
-    );
-
+        });
+    }
 });
 
 function highlight() {
@@ -150,12 +134,5 @@ function unhighlight() {
 //    });
 }
 
-
-var fa = document.createElement('style');
-fa.type = 'text/css';
-fa.textContent = '@font-face { font-family: FontAwesome; src: url("'
-    + chrome.extension.getURL('lib/fa-4.3/fonts/fontawesome-webfont.woff')
-    + '"); }';
-document.head.appendChild(fa);
-
+injectFontAwesomeToHeadOf(document);
 

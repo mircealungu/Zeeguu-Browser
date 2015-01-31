@@ -62,6 +62,7 @@
                 "inject/js/link-enabling.js",
                 "inject/js/translation_overlay.js",
                 "inject/js/ext_dict_operation.js",
+                "inject/js/font-awesome.js",
                 "inject/js/content_script.js"
             ]
         }
