@@ -21,8 +21,6 @@ function reloadDictionaries() {
                     dictUrl: dict.url
                 });
                 setTimeout(function() {redisplaySearchResults()}, 300);
-
-
             })
         }
     });
@@ -80,7 +78,7 @@ browser.addMessageListener("EXDICT_UPDATE_TRANSLATION_FROM_SELECTION", function(
     if (contributed) {
         return;
     }
-    $("#contribute-text").val(message.term);
+    $("#contribute-text").val(message.new_translation);
 });
 
 addStateChangeListener("links", function(links) {

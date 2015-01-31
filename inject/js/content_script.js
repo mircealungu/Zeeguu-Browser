@@ -114,7 +114,7 @@ loadState(function() {
                     || (state.fast && selection_is_interesting && page_contains_learned_language
                         && external_dictionary_active == false)) {
 
-                    var message = term_context_url_triple(browser.getSelection());
+                    var message = extract_contribution_from_page(browser.getSelection());
                     renderBubble(e.pageX, e.pageY);
 
                     /*

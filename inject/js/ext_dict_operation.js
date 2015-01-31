@@ -6,9 +6,12 @@ var closingTimer;
 var dont_close = false;
 
 /*
- This is required to populate the external dictionary window
+ Given a selection, it prepares everything that
+ can be extracted from the current page to prepare
+ a contribution. All that will be missing after this
+ will be the actual translation
  */
-function term_context_url_triple(selection) {
+function extract_contribution_from_page(selection) {
     if (!selection.baseNode || selection.baseNode.nodeType != 3) {
         return null;
     }
@@ -63,7 +66,7 @@ function close_external_dictionary(data) {
 function show_external_dictionary(data) {
     translationOverlay.style.visibility = 'hidden';
     dont_close = true;  // Abort the closing timer if it was started before this interaction
-    var selection = term_context_url_triple(browser.getSelection());
+    var selection = extract_contribution_from_page(browser.getSelection());
     var url = browser.zeeguuUrl(selection.term, selection.url, selection.context);
     if (!is_frameset()) {
         if ($("#zeeguu").size()) {
@@ -94,16 +97,21 @@ function show_external_dictionary(data) {
 
 /*
  This is the code that gets injected in the external dictionary frame.
+ It adds a handler for a selection, event, which will update the
+ translation on the page.
+
  The only way for that frame to communicate with the parent frame is
  via sending EXDICT_UPDATE_TRANSLATION_FROM_SELECTION. The message is
  caught by the ext_dict_frame
   */
 if (window.name == "zeeguu") {
+
     $(document).mouseup(function () {
-        var selection = browser.getSelection();
-        var message = term_context_url_triple(selection);
-        if (message === null) return;
-        browser.sendMessage("EXDICT_UPDATE_TRANSLATION_FROM_SELECTION", message);
+        browser.withSelectedTextDo(function (selection) {
+            browser.sendMessage(
+                "EXDICT_UPDATE_TRANSLATION_FROM_SELECTION",
+                {"new_translation": selection});
+        });
     });
 
     disable_links();
