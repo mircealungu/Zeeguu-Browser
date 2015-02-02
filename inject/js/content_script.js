@@ -17,10 +17,9 @@ loadState(function() {
         if (!is_domain_allowed(url, state.whitelisted_domains)) {
             /*
              This domain is not whitelisted.
-             Change the color of the icon to gray and update the popup
+             Change the color of the icon to gray,
+             and don't inject anything else in the page.
              */
-            console.log(url);
-            console.log(get_domain_from_url(url) + " is not whitelisted");
             browser.sendMessage("disable_icon");
         }
         else {
