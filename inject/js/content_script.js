@@ -1,5 +1,4 @@
-var highlight_when_unhighlighting = false,
-    external_dictionary_active = false,
+var external_dictionary_active = false,
     selection_mode = false;
 
 /*
@@ -45,7 +44,7 @@ loadState(function() {
 
     $(document).click(function () {
         /* closing the external dict if the user clicks anywhere in page */
-        if (external_dictionary_active) browser.sendMessage("close");
+        if (external_dictionary_active) browser.sendMessage("ZM_CLOSE_EXT_DICT");
     });
 
     if (state.selectionMode) disable_links();
@@ -86,14 +85,7 @@ loadState(function() {
         document.addEventListener('mouseup', delayed_mouse_up, false);
 
         browser.addMessageListener("ZM_SHOW_TRANSLATION", show_external_dictionary);
-        browser.addMessageListener("close", close_external_dictionary);
-
-        browser.addMessageListener("browser_action", function (data) {
-            toggleSelectionModeBox(!selection_mode);
-            browser.sendMessage("selection_mode", {
-                enabled: !selection_mode
-            });
-        });
+        browser.addMessageListener("ZM_CLOSE_EXT_DICT", close_external_dictionary);
     }
 
     /*

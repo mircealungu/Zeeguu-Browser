@@ -77,7 +77,7 @@ function contributeAction() {
     $("#contribute-btn").addClass("disabled");
     contributed = true;
 
-    browser.sendMessage("close");
+    browser.sendMessage("ZM_CLOSE_EXT_DICT");
 
 }
 
@@ -107,7 +107,7 @@ $(function() {
     });
 
     $("#close-popup-button").click(function() {
-        browser.sendMessage("close");
+        browser.sendMessage("ZM_CLOSE_EXT_DICT");
     });
 
     $("#contribute-text").focus();
