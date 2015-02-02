@@ -51,8 +51,13 @@ browser.addMessageListener("reset_state", function(message) {
 
 
 chrome.extension.onMessage.addListener(function(message, sender) {
-    if (message.name != "window" && message.name != "update_state" && message.name != "get_state") {
-        chrome.tabs.sendMessage(sender.tab.id, message);
+//    if (message.name != "window" && message.name != "update_state" && message.name != "get_state" && message.name != "get_current_url") {
+    if (sender) {
+        if (sender.tab) {
+            if (sender.tab.id) {
+                chrome.tabs.sendMessage(sender.tab.id, message);
+            }
+        }
     }
 });
 
@@ -76,5 +81,19 @@ chrome.commands.onCommand.addListener(function(command) {
 browser.addMessageListener("get_current_url", function(message, data, callback) {
     chrome.tabs.getSelected(null,function(tab) {
         callback(tab.url);
+    });
+}, true);
+
+browser.addMessageListener("whitelist_current_url", function(message, data, callback) {
+    chrome.tabs.getSelected(null,function(tab) {
+        state.whitelisted_domains.push(get_domain_from_url(tab.url));
+        storeState();
+    });
+}, true);
+
+browser.addMessageListener("unwhitelist_current_url", function(message, data, callback) {
+    chrome.tabs.getSelected(null,function(tab) {
+        state.whitelisted_domains.splice(state.whitelisted_domains.indexOf((get_domain_from_url(tab.url))), 1 );
+        storeState();
     });
 }, true);

@@ -10,6 +10,11 @@ $(function() {
         $("#user_email").val(state.email);
         $("#work_before_play").prop('checked', state.work_before_play);
         $("")
+
+        state.whitelisted_domains.map(function(domain) {
+            $("#whitelisted_domains").append(new Option(domain, domain));
+        });
+
     });
 
     $("#save").click(function() {
