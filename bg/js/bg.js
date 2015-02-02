@@ -1,4 +1,3 @@
-var PERSITENT_PREFERENCES_KEYS = ["dictUrl", "from", "base_language", "links", "fast", "session", "email", "highlight", "work_before_play"];
 var API_URL = "https://www.zeeguu.unibe.ch/";  // This is also stored in lib/zeeguu_api_interface.js
 //var API_URL = "http://localhost:8080/";  // This is also stored in lib/zeeguu_api_interface.js
 
@@ -8,48 +7,6 @@ var zeeguu_window = null,
 
 var previous_url = [];
 
-function getState(callback) {
-    if (state) {
-        if (callback) {
-            callback(state);
-        }
-        return;
-    }
-    browser.getSettings(PERSITENT_PREFERENCES_KEYS, function(items) {
-        state = fillStateWithDefaults(items);
-        if (callback) {
-            callback(state);
-        }
-    });
-}
-
-function storeState() {
-    var persitentState = {};
-    $.each(state, function(i, v) {
-        if (PERSITENT_PREFERENCES_KEYS.indexOf(i) >= 0) {
-            persitentState[i] = v;
-        }
-    });
-    browser.setSettings(persitentState);
-    console.log(persitentState);
-    browser.broadcast("state", {
-        state: state
-    });
-}
-
-function fillStateWithDefaults(state) {
-    return $.extend({
-            dictUrl: "http://{from}-{to}.syn.dict.cc/?s={query}",
-            from: "de",
-            base_language: "en",
-            highlight: false,
-            session: null,
-            links: false,
-            fast: false,  // translate with double-click
-            selectionMode: false,
-            work_before_play: true
-    }, state);
-}
 
 function validateSession(sessionID, callback) {
     $.get(API_URL + "validate?session=" + sessionID).done(function(data) {
@@ -81,14 +38,12 @@ browser.addMessageListener("get_state", function(message, sender, response) {
 }, true);
 
 browser.addMessageListener("update_state", function(message) {
-    console.log(message);
     $.extend(true, state, message);
     browser.setToolbarBadge(state.selectionMode ? "!" : "");
     storeState();
 });
 
 browser.addMessageListener("reset_state", function(message) {
-    console.log(message);
     state = fillStateWithDefaults({});
     browser.setToolbarBadge(state.selectionMode ? "!" : "");
     storeState();
@@ -117,13 +72,3 @@ browser.contextMenu("translate", "Translate %s", "selection", function(info, tab
 chrome.commands.onCommand.addListener(function(command) {
   console.log('Command:', command);
 });
-
-getState(function(state) {
-    validateSession(state.session, function(valid) {
-        if (!valid) {
-            state.session = null;
-            storeState();
-        }
-    });
-});
-

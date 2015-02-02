@@ -33,7 +33,8 @@
         "scripts": [
             "lib/jquery/jquery.js", 
             "lib/browser.js", 
-            "lib/zeeguu_api_interface.js", 
+            "lib/zeeguu_api_interface.js",
+            "bg/js/extension-state.js",
             "bg/js/bg.js", 
             "bg/js/work-before-play.js"
         ]
