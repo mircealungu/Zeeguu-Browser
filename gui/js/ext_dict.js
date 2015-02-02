@@ -28,22 +28,6 @@ function reloadDictionaries() {
 function redisplaySearchResults() {
     log_search($("#contribute-from").val())
     $("#dictframe").attr("src",translationURL($("#contribute-from").val()));
-
-//    $(document).ready(function(){
-//        var myIFrame = document.getElementById("#dictframe");
-//        $(myIFrame.contentWindow.document).ready(function(){
-//            $(this).find("a").attr("href", '#');
-//        });
-//
-//    })
-
-//    setTimeout(function() {
-//        $('#dictframe').contents().find('a').click(function(event) {
-//            alert("demo only");
-//            event.preventDefault();
-//        });
-//    }, 1000);
-
     reloadDictionaries();
 }
 
@@ -51,24 +35,15 @@ loadState(function() {
     if (!is_logged_in()) {
         window.location = "login.html" + window.location.search;
     } else {
-        var query = decodeURIComponent(window.location.search);
-        var first_space_pos = query.indexOf(" ");
-        if (first_space_pos < 0) {
+        var message = browser.zeeguuDecodeURL(window.location.search);
+        if (message == null) {
             window.location = "error.html";
             return;
         }
-        term = query.substr(1, first_space_pos - 1);
-        var second_space_pos = query.indexOf(" ", first_space_pos+1);
-        url = query.substr(first_space_pos+1, second_space_pos - first_space_pos - 1);
-        context = query.substr(second_space_pos + 1);
-        $("#zeeguu").append('<iframe id="dictframe" src="' + translationURL(term) + '" name="zeeguu" />');
-        log_search(term);
-        if (!state.links) {
-            $("#toggle-links").addClass("enabled");
-        }
-        $("#contribute-from").val(term);
-        $("#contribute-url").text(url);
-        $("#contribute-context").val(context);
+        $("#zeeguu").append('<iframe id="dictframe" src="' + translationURL(message.term) + '" name="zeeguu" />');
+        $("#contribute-from").val(message.term);
+        $("#contribute-url").text(message.url);
+        $("#contribute-context").val(message.context);
 
         reloadDictionaries();
     }

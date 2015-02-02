@@ -20,7 +20,7 @@ $(function() {
             setHelp("#to-the-gym", "Practice at the Language Gym");
             setHelp("#to-the-word-list", "To your words list");
             setHelp("#options-btn", "Edit plugin options");
-            setHelp("#to-the-help-page", "Learn more about the Zeeguu extension");
+            setHelp("#to-the-help-page", "Learn more about Zeeguu");
         }
 
 
@@ -41,7 +41,7 @@ $(function() {
                     /* Helper function */
                     function translate(term) {
                         if (term.length > 0) {
-                            window.location = browser.zeeguuUrl(term);
+                            window.location = browser.zeeguuEncodeUrl(term);
                         }
                     }
 
