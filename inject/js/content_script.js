@@ -21,8 +21,10 @@ loadState(function() {
              */
             console.log(url);
             console.log(get_domain_from_url(url) + " is not whitelisted");
+            browser.sendMessage("disable_icon");
         }
         else {
+            browser.sendMessage("enable_icon");
 
             var port = chrome.runtime.connect();
             window.addEventListener("message", function (event) {

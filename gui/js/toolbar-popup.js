@@ -53,11 +53,13 @@ $(function() {
         $("#page-not-yet-whitelisted").click(function () {
             browser.sendMessage("whitelist_current_url", {}, null);
             enable_toolbar_actions();
+            browser.sendMessage("enable_icon");
         });
 
         $("#unwhitelist").click(function () {
             browser.sendMessage("unwhitelist_current_url", {}, null);
             disable_toolbar_actions();
+            browser.sendMessage("disable_icon");
         });
 
 

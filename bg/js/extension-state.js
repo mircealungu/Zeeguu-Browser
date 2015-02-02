@@ -35,7 +35,6 @@ function storeState() {
         }
     });
     browser.setSettings(persitentState);
-    console.log(persitentState);
     browser.broadcast("state", {
         state: state
     });

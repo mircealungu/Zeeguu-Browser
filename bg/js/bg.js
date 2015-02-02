@@ -75,7 +75,7 @@ browser.contextMenu("translate", "Translate %s", "selection", function(info, tab
 });
 
 chrome.commands.onCommand.addListener(function(command) {
-  console.log('Command:', command);
+//  console.log('Command:', command);
 });
 
 browser.addMessageListener("get_current_url", function(message, data, callback) {
@@ -97,3 +97,22 @@ browser.addMessageListener("unwhitelist_current_url", function(message, data, ca
         storeState();
     });
 }, true);
+
+browser.addMessageListener("disable_icon", function(message, data, callback) {
+    chrome.browserAction.setIcon({path: "/logo/48x48-bw.png"});
+}, true);
+
+browser.addMessageListener("enable_icon", function(message, data, callback) {
+    chrome.browserAction.setIcon({path: "/logo/48x48.png"});
+}, true);
+
+chrome.tabs.onActivated.addListener(function(activeInfo) {
+    chrome.tabs.getSelected(null,function(tab) {
+        var url = tab.url;
+        if (!is_domain_allowed(url, state.whitelisted_domains)) {
+            browser.sendMessage("disable_icon");
+        } else {
+            browser.sendMessage("enable_icon");
+        }
+    });
+});
