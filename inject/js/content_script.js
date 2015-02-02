@@ -67,22 +67,22 @@ loadState(function() {
 
     if (window.top == window.self) {
 
-        /*
-         Before adding the delay:
-         - the translation would start popping up too
-         early while the user was in the process of double-clicking
-         - a selected word would be clicked, and it would still
-         be somehow selected on mouseUp. this would
-         */
-        function delayed_mouse_up(e) {
-            setTimeout(function () {
-                mouse_up_in_page(e, external_dictionary_active);
-            }, 50);
-        }
+
 
         // Mouse up is when we test whether
         // the user might have finished selecting a word in page
-        document.addEventListener('mouseup', delayed_mouse_up, false);
+        document.addEventListener('mouseup', function (e) {
+            /*
+             Before adding the delay:
+             - the translation would start popping up too
+             early while the user was in the process of double-clicking
+             - a selected word would be clicked, and it would still
+             be somehow selected on mouseUp. this would
+             */
+            setTimeout(function () {
+                mouse_up_in_page(e, external_dictionary_active);
+            }, 50)
+        }, false);
 
         browser.addMessageListener("ZM_SHOW_TRANSLATION", show_external_dictionary);
         browser.addMessageListener("ZM_CLOSE_EXT_DICT", close_external_dictionary);
