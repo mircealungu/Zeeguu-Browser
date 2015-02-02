@@ -1,3 +1,5 @@
+/*jslint browser: true*/
+
 var external_dictionary_active = false,
     selection_mode = false;
 
@@ -9,17 +11,16 @@ plugin to show up with the translation.
 
 This event listener is run in the context of the
 Content Script.
-
  */
+
 var port = chrome.runtime.connect();
 window.addEventListener("message", function(event) {
     // We only accept messages from ourselves
-    if (event.source != window)
-        return;
+    if (event.source !== window) {return; }
 
     if (event.data.type) {
         if (event.data.type == "PAGE_NEEDS_WORD_TRANSLATION") {
-            message = {
+            var message = {
                 url: event.data.url,
                 context: event.data.context,
                 term: event.data.term
