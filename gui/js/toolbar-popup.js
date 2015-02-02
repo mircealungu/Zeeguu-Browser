@@ -21,6 +21,16 @@ $(function() {
             setHelp("#to-the-word-list", "To your words list");
             setHelp("#options-btn", "Edit plugin options");
             setHelp("#to-the-help-page", "Learn more about Zeeguu");
+            setHelp("#page-not-whitelisted", "Enable Zeeguu for the current website");
+
+        }
+
+        function disable_all_buttons() {
+            var buttons = ["#fast-mode", ".sep", "#selection-mode", "#highlighting-mode", "#to-the-gym", "#to-the-word-list",
+                "#options-btn", "#to-the-help-page"];
+            buttons.map(function(button_id) {
+                $(button_id).hide();
+            });
         }
 
 
@@ -91,8 +101,14 @@ $(function() {
             }
         
         /* Main action of load State */
-        set_the_help_for_buttons();
         redirect_to_login_if_needed();
+        set_the_help_for_buttons();
         associate_behavior_with_buttons();
+        browser.sendMessage("get_current_url", function (url) {
+
+            if (!is_domain_allowed(url, state.whitelisted_domains)) {
+                disable_all_buttons();
+            }
+        });
     });
 });

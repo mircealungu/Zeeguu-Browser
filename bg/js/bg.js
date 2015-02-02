@@ -72,3 +72,9 @@ browser.contextMenu("translate", "Translate %s", "selection", function(info, tab
 chrome.commands.onCommand.addListener(function(command) {
   console.log('Command:', command);
 });
+
+browser.addMessageListener("get_current_url", function(message, data, callback) {
+    chrome.tabs.getSelected(null,function(tab) {
+        callback(tab.url);
+    });
+}, true);

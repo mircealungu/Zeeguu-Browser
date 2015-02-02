@@ -9,7 +9,8 @@ var PERSITENT_PREFERENCES_KEYS = ["dictUrl",
     "session",
     "email",
     "highlight",
-    "work_before_play"];
+    "work_before_play",
+    "whitelisted_domains"];
 
 function getState(callback) {
     if (state) {
@@ -50,7 +51,8 @@ function fillStateWithDefaults(state) {
         links: false,
         fast: false,  // translate with double-click
         selectionMode: false,
-        work_before_play: true
+        work_before_play: true,
+        whitelisted_domains: ["https://www.zeeguu.unibe.ch"]
     }, state);
 }
 

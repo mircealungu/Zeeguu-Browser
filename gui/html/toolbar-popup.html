@@ -9,6 +9,7 @@
         <script src="/lib/bootstrap/bootstrap.js"></script>
         <script src="/lib/browser.js"></script>
         <script src="/lib/zeeguu_api_interface.js"></script>
+        <script src="/inject/js/whitelisted_domains.js"></script>
         <script src="/gui/js/toolbar-popup.js"></script>
     </head>
     <body id="popup">
@@ -17,14 +18,15 @@
                 <a href="#" class="add-on" id="translate-btn"><i class="fa fa-search"></i></a>
                 <input type="search" name="translate" id="translate" placeholder="Translate" tabindex="1" />
             </div>
-
+            <a class="btn" href="#" id="page-not-whitelisted"><i class="fa fa-toggle-off"></i></a>
+            <span class="sep">|</span>
             <a class="btn" href="#" id="to-the-word-list"><i class="fa fa-list"></i></a>
-            |
+            <span class="sep">|</span>
             <a class="btn" href="#" id="selection-mode"><i class="fa fa-chain-broken"></i></a>
             <a class="btn" href="#" id="fast-mode"><i class="fa fa-bolt"></i></a>
             <a class="btn btn-default" href="#" id="highlighting-mode"><i class="fa fa-pencil"></i></a>
             <a class="btn" href="#" id="options-btn"><i class="fa fa-cogs"></i></a>
-            |
+            <span class="sep">|</span>
             <a class="btn" href="#" id="to-the-help-page"><i class="fa fa-question"></i></a>
 
             <p class="muted" id="help">Type in a word to translate</p>
