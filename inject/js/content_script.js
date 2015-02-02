@@ -62,11 +62,6 @@ loadState(function() {
         change_highlight_of_page(highlight);
     });
 
-
-    browser.addMessageListener("unhighlight", function (data) {
-        unhighlight();
-    });
-
     /************************************
      This is the  context of the original page.
      *************************************/
@@ -100,39 +95,13 @@ loadState(function() {
             });
         });
     }
+
+    /*
+    Font awesome is needed for the icons in the translation overlay
+     */
+    injectFontAwesomeToHeadOf(document);
 });
 
-function highlight() {
-    highlight_when_unhighlighting = false;
-    var span = document.createElement("span");
-    span.className = "zeeguu-highlight";
 
-    try {
-        browser.getSelection().getRangeAt(0).surroundContents(span);
-    } catch (e) {
 
-    }
-}
-
-function unhighlight() {
-//    $(".zeeguu-highlight").addClass("zeeguu-remove");
-    $(".zeeguu-highlight").addClass("zeeguu-visited");
-    if (highlight_when_unhighlighting) {
-        highlight();
-    }
-//    $(".zeeguu-remove").each(function() {
-//        var parent = this.parentNode,
-//            lastChild = this.lastChild,
-//            nextlastChild;
-//        parent.replaceChild(lastChild, this);
-//        while(this.lastChild) {
-//            nextlastChild = this.lastChild;
-//            parent.insertBefore(nextlastChild, lastChild);
-//            lastChild = nextlastChild;
-//        }
-//        parent.normalize();
-//    });
-}
-
-injectFontAwesomeToHeadOf(document);
 
