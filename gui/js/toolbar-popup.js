@@ -8,7 +8,8 @@ $(function() {
     var originalHelp = $("#help").text();
     var toolbar_actions = ["#fast-mode", ".sep", "#selection-mode", "#highlighting-mode",
         "#to-the-gym", "#to-the-word-list",
-        "#options-btn", "#to-the-help-page",
+//        "#options-btn",
+//        "#to-the-help-page",
         "#unwhitelist"
 //        , "#translate-btn", "#translate"
     ];
@@ -28,10 +29,16 @@ $(function() {
         setHelp("#highlighting-mode", "Highlight in page all the learned words");
         setHelp("#to-the-gym", "Practice at the Language Gym");
         setHelp("#to-the-word-list", "To your words list");
-        setHelp("#options-btn", "Edit plugin options");
+        setHelp("#options-btn", "Zeeguu options");
         setHelp("#to-the-help-page", "Learn more about Zeeguu");
-        setHelp("#page-not-yet-whitelisted", "Enable Zeeguu for this website");
-        setHelp("#unwhitelist", "Disable Zeeguu for this website");
+        browser.sendMessage("get_current_url", {}, function(url) {
+            setHelp("#page-not-yet-whitelisted", "Enable for " + get_domain_from_url(url));
+        });
+
+        browser.sendMessage("get_current_url", {}, function(url) {
+            setHelp("#unwhitelist", "Disable for " + get_domain_from_url(url));
+        });
+
 
     }
 
@@ -39,6 +46,7 @@ $(function() {
         toolbar_actions.map(function (button_id) {
             $(button_id).hide();
         });
+        $("#page-not-yet-whitelisted").show();
     }
 
     function enable_toolbar_actions() {

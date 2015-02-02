@@ -11,6 +11,7 @@ plugin to show up with the translation.
 This event listener is run in the context of the
 Content Script.
  */
+
 loadState(function() {
     browser.sendMessage("get_current_url", function (url) {
 
@@ -23,6 +24,7 @@ loadState(function() {
             browser.sendMessage("disable_icon");
         }
         else {
+
             browser.sendMessage("enable_icon");
 
             var port = chrome.runtime.connect();
@@ -55,61 +57,55 @@ loadState(function() {
             }, false);
 
 
-            loadState(function () {
+            /************************************
+             This is the  context of the original page.
+             *************************************/
 
-                /************************************
-                 This is the  context of the original page.
-                 *************************************/
+            if (window.top == window.self) {
 
-                if (window.top == window.self) {
+                $(document).click(function () {
+                    /* closing the external dict if the user clicks anywhere in page */
+                    if (external_dictionary_active) browser.sendMessage("ZM_CLOSE_EXT_DICT");
+                });
 
-                    $(document).click(function () {
-                        /* closing the external dict if the user clicks anywhere in page */
-                        if (external_dictionary_active) browser.sendMessage("ZM_CLOSE_EXT_DICT");
-                    });
-
-                    // Mouse up is when we test whether
-                    // the user might have finished selecting a word in page
-                    document.addEventListener('mouseup', function (e) {
-                        /*
-                         Before adding the delay:
-                         - the translation would start popping up too
-                         early while the user was in the process of double-clicking
-                         - a selected word would be clicked, and it would still
-                         be somehow selected on mouseUp. this would
-                         */
-                        setTimeout(function () {
-                            mouse_up_in_page(e, external_dictionary_active);
-                        }, 50)
-                    }, false);
-
-                    browser.addMessageListener("ZM_SHOW_TRANSLATION", show_external_dictionary);
-                    browser.addMessageListener("ZM_CLOSE_EXT_DICT", close_external_dictionary);
-
-
-                    if (state.selectionMode) disable_links();
-
-                    if (state.highlight) getUserWords(function (user_words) {
-                        highlight_words(user_words)
-                    });
-
-                    addStateChangeListener("selectionMode", function (selectionMode) {
-                        update_link_state(selectionMode);
-                    });
-
-                    addStateChangeListener("highlight", function (highlight) {
-                        change_highlight_of_page(highlight);
-                    });
-
+                // Mouse up is when we test whether
+                // the user might have finished selecting a word in page
+                document.addEventListener('mouseup', function (e) {
                     /*
-                     Font awesome is needed for the icons in the translation overlay
+                     Before adding the delay:
+                     - the translation would start popping up too
+                     early while the user was in the process of double-clicking
+                     - a selected word would be clicked, and it would still
+                     be somehow selected on mouseUp. this would
                      */
-                    injectFontAwesomeToHeadOf(document);
-                }
+                    setTimeout(function () {
+                        mouse_up_in_page(e, external_dictionary_active);
+                    }, 50)
+                }, false);
+
+                browser.addMessageListener("ZM_SHOW_TRANSLATION", show_external_dictionary);
+                browser.addMessageListener("ZM_CLOSE_EXT_DICT", close_external_dictionary);
 
 
-            });
+                if (state.selectionMode) disable_links();
+
+                if (state.highlight) getUserWords(function (user_words) {
+                    highlight_words(user_words)
+                });
+
+                addStateChangeListener("selectionMode", function (selectionMode) {
+                    update_link_state(selectionMode);
+                });
+
+                addStateChangeListener("highlight", function (highlight) {
+                    change_highlight_of_page(highlight);
+                });
+
+                /*
+                 Font awesome is needed for the icons in the translation overlay
+                 */
+                injectFontAwesomeToHeadOf(document);
+            }
         }
 
-    });
-});
+    });});

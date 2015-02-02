@@ -51,7 +51,7 @@ function fillStateWithDefaults(state) {
         fast: false,  // translate with double-click
         selectionMode: false,
         work_before_play: true,
-        whitelisted_domains: ["https://www.zeeguu.unibe.ch"]
+        whitelisted_domains: []
     }, state);
 }
 

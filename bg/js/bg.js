@@ -88,6 +88,7 @@ browser.addMessageListener("whitelist_current_url", function(message, data, call
     chrome.tabs.getSelected(null,function(tab) {
         state.whitelisted_domains.push(get_domain_from_url(tab.url));
         storeState();
+        chrome.tabs.reload(tab.id);
     });
 }, true);
 
@@ -95,6 +96,7 @@ browser.addMessageListener("unwhitelist_current_url", function(message, data, ca
     chrome.tabs.getSelected(null,function(tab) {
         state.whitelisted_domains.splice(state.whitelisted_domains.indexOf((get_domain_from_url(tab.url))), 1 );
         storeState();
+        chrome.tabs.reload(tab.id);
     });
 }, true);
 
@@ -115,4 +117,9 @@ chrome.tabs.onActivated.addListener(function(activeInfo) {
             browser.sendMessage("enable_icon");
         }
     });
+});
+
+chrome.browserAction.onClicked.addListener(function(activeTab) {
+    console.log("running....");
+    chrome.tabs.executeScript(null, {file: "content.js"});
 });
