@@ -42,32 +42,16 @@ window.addEventListener("message", function(event) {
 
 loadState(function() {
 
-    $(document).click(function () {
-        /* closing the external dict if the user clicks anywhere in page */
-        if (external_dictionary_active) browser.sendMessage("ZM_CLOSE_EXT_DICT");
-    });
-
-    if (state.selectionMode) disable_links();
-
-    if (state.highlight) getUserWords(function (user_words) {
-            highlight_words(user_words)
-        });
-
-    addStateChangeListener("selectionMode", function (selectionMode) {
-        update_link_state(selectionMode);
-    });
-
-    addStateChangeListener("highlight", function (highlight) {
-        change_highlight_of_page(highlight);
-    });
-
     /************************************
      This is the  context of the original page.
      *************************************/
 
     if (window.top == window.self) {
 
-
+        $(document).click(function () {
+            /* closing the external dict if the user clicks anywhere in page */
+            if (external_dictionary_active) browser.sendMessage("ZM_CLOSE_EXT_DICT");
+        });
 
         // Mouse up is when we test whether
         // the user might have finished selecting a word in page
@@ -86,12 +70,29 @@ loadState(function() {
 
         browser.addMessageListener("ZM_SHOW_TRANSLATION", show_external_dictionary);
         browser.addMessageListener("ZM_CLOSE_EXT_DICT", close_external_dictionary);
+
+
+        if (state.selectionMode) disable_links();
+
+        if (state.highlight) getUserWords(function (user_words) {
+            highlight_words(user_words)
+        });
+
+        addStateChangeListener("selectionMode", function (selectionMode) {
+            update_link_state(selectionMode);
+        });
+
+        addStateChangeListener("highlight", function (highlight) {
+            change_highlight_of_page(highlight);
+        });
+
+        /*
+         Font awesome is needed for the icons in the translation overlay
+         */
+        injectFontAwesomeToHeadOf(document);
     }
 
-    /*
-    Font awesome is needed for the icons in the translation overlay
-     */
-    injectFontAwesomeToHeadOf(document);
+
 });
 
 
