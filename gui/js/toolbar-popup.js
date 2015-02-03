@@ -7,7 +7,8 @@ $(function() {
 
     var originalHelp = $("#help").text();
     var toolbar_actions = ["#fast-mode", ".sep", "#selection-mode", "#highlighting-mode",
-        "#to-the-gym", "#to-the-word-list",
+// //        "#to-the-gym",
+//        "#to-the-word-list",
 //        "#options-btn",
 //        "#to-the-help-page",
         "#unwhitelist"
@@ -134,7 +135,6 @@ $(function() {
          very popup
          */
         if (!state.session) {
-            console.log("should redirect!!!");
             window.location = "login.html";
         } else {
 
