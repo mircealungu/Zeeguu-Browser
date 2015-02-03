@@ -33,11 +33,11 @@ $(function() {
         setHelp("#options-btn", "Zeeguu options");
         setHelp("#to-the-help-page", "Learn more about Zeeguu");
         browser.sendMessage("get_current_url", {}, function(url) {
-            setHelp("#page-not-yet-whitelisted", "Enable for " + get_domain_from_url(url));
+            setHelp("#page-not-yet-whitelisted", "Activate the extension for " + get_domain_from_url(url));
         });
 
         browser.sendMessage("get_current_url", {}, function(url) {
-            setHelp("#unwhitelist", "Disable for " + get_domain_from_url(url));
+            setHelp("#unwhitelist", "Activate the extension for " + get_domain_from_url(url));
         });
 
 
