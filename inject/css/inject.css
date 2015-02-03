@@ -58,17 +58,17 @@ a[data-zeeguu-href] {
     top: 0;
     left: 0;
     padding: 8px;
-    background:-webkit-gradient(linear, left top, left bottom, from(#F0DE7D), to(#d0e9c6));
+    background:-webkit-gradient(linear, left top, left bottom, from(#F0DE7D), to(#F0DE7D));
     z-index: 500 !important;
 }
 
 
 
-.translation-popup-link,
-.translation-popup-link a:link,
-.translation-popup-link a:visited,
-.translation-popup-link a:hover {
-    color: lightseagreen;
+.translation-popup-bookmark,
+.translation-popup-bookmark a:link,
+.translation-popup-bookmark a:visited,
+.translation-popup-bookmark a:hover {
+    color: crimson;
     /*color: #636363;*/
     margin: 0;
     /*text-decoration: underline;*/
@@ -76,7 +76,16 @@ a[data-zeeguu-href] {
     in this case we have no border */
 }
 
-.translation-popup-link a:hover {
-    text-decoration: underline;
-    color: #20B2DD;
+.translation-popup-more,
+.translation-popup-more a:link,
+.translation-popup-more a:visited,
+.translation-popup-more a:hover {
+    color: darkgray;
+    /*color: #636363;*/
+    margin: 0;
+    text-decoration: none;
+    /* everything the same as the .zeeguu-highlight , only that
+    in this case we have no border */
 }
+
+
