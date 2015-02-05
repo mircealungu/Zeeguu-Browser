@@ -18,10 +18,20 @@ $(function() {
     });
 
     $("#save").click(function() {
+        var newDict = state.dictUrl;
+        if (state.from !== $("#from_lang").val())
+        {
+            /*
+            The from language has changed. Must change the dictionary too
+             */
+            newDict = default_dict($("#from_lang").val());
+        };
+        
         browser.sendMessage("update_state", {
             from: $("#from_lang").val(),
             base_language: $("#base_language").val(),
-            work_before_play: $("#work_before_play").prop('checked')
+            work_before_play: $("#work_before_play").prop('checked'),
+            dictUrl: newDict
         });
         $("#success").show();
         return false;
