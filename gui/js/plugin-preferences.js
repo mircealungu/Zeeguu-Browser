@@ -23,10 +23,11 @@ $(function() {
         {
             /*
             The from language has changed. Must change the dictionary too
+            TODO: the dictionaries should be indexed by both learned and native language...
              */
             newDict = default_dict($("#from_lang").val());
         };
-        
+
         browser.sendMessage("update_state", {
             from: $("#from_lang").val(),
             base_language: $("#base_language").val(),
