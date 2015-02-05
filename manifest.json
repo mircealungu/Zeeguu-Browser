@@ -1,11 +1,11 @@
 {
     "web_accessible_resources": [
-        "gui/html/ext_dict.html", 
+        "gui/html/ext_dict_frame.html",
         "gui/html/login.html", 
         "gui/html/error.html", 
         "gui/html/toolbar-popup.html", 
         "gui/css/gui.css", 
-        "gui/js/ext_dict.js", 
+        "gui/js/ext_dict_frame.js",
         "gui/js/login.js", 
         "gui/js/toolbar-popup.js", 
         "gui/img/loading.gif", 
