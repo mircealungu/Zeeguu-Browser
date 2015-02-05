@@ -56,10 +56,6 @@ browser.contextMenu("translate", "Translate %s", "selection", function(info, tab
     });
 });
 
-chrome.commands.onCommand.addListener(function(command) {
-//  console.log('Command:', command);
-});
-
 browser.addMessageListener("get_current_url", function(message, data, callback) {
     chrome.tabs.getSelected(null,function(tab) {
         callback(tab.url);
@@ -90,7 +86,12 @@ browser.addMessageListener("enable_icon", function(message, data, callback) {
     chrome.browserAction.setIcon({path: "/logo/48x48.png"});
 }, true);
 
+/*
+When switching tabs, we must activate or deactivate the extension
+depending on the url of the tab.
+ */
 chrome.tabs.onActivated.addListener(function(activeInfo) {
+//    console.log("tab activated!");
     chrome.tabs.getSelected(null,function(tab) {
         var url = tab.url;
         if (!is_domain_allowed(url, state.whitelisted_domains)) {
@@ -99,9 +100,4 @@ chrome.tabs.onActivated.addListener(function(activeInfo) {
             browser.sendMessage("enable_icon");
         }
     });
-});
-
-chrome.browserAction.onClicked.addListener(function(activeTab) {
-    console.log("running....");
-    chrome.tabs.executeScript(null, {file: "content.js"});
 });
