@@ -36,15 +36,16 @@ loadState(function() {
         window.location = "login.html" + window.location.search;
     } else {
         var message = browser.zeeguuDecodeURL(window.location.search);
+        console.log(message);
         if (message == null) {
             window.location = "error.html";
             return;
         }
         $("#zeeguu").append('<iframe id="dictframe" src="' + translationURL(message.term) + '" name="zeeguu" />');
         $("#contribute-from").val(message.term);
-        $("#contribute-url").text(message.url);
+        $("#contribute-url").val(message.url);
+        $("#contribute-title").val(message.title);
         $("#contribute-context").val(message.context);
-
         reloadDictionaries();
     }
 });
@@ -67,12 +68,14 @@ function contributeAction() {
     var translation_in_window = $("#contribute-text").val();
     var term_in_window = $("#contribute-from").val();
     var context_in_window = $("#contribute-context").val();
+    var url = $("#contribute-url").val();
+    var title = $("#contribute-title").val();
+
 
     if (translation_in_window.length === 0) {
         return;
     }
-    contribute_with_context(term_in_window, url, context_in_window, translation_in_window, document.title);
-    //contribute(term, translation);
+    contribute_with_context(term_in_window, url, context_in_window, translation_in_window, title);
     $("#contribute-text").val("Word & example uploaded!").prop("disabled", true).addClass("success");
     $("#contribute-btn").addClass("disabled");
     contributed = true;

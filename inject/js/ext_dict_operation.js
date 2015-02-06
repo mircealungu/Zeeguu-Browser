@@ -66,7 +66,7 @@ function show_external_dictionary(data) {
     translationOverlay.style.visibility = 'hidden';
     dont_close = true;  // Abort the closing timer if it was started before this interaction
     var selection = extract_contribution_from_page(browser.getSelection());
-    var url = browser.zeeguuEncodeUrl(selection.term, selection.url, selection.context);
+    var url = browser.zeeguuEncodeUrl(selection.term, selection.url, selection.context, selection.title);
     if (!is_frameset()) {
         if ($("#zeeguu").size()) {
             $("#zeeguu").attr("src", url);
