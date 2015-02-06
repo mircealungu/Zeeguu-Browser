@@ -1,9 +1,7 @@
-var API_URL = "https://www.zeeguu.unibe.ch/";  // This is also stored in lib/zeeguu_api_interface.js
-//var API_URL = "http://localhost:8080/";  // This is also stored in lib/zeeguu_api_interface.js
-
-
 var zeeguu_window = null,
     state;
+
+var API_URL = browser.API_URL();
 
 var previous_url = [];
 
