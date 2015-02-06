@@ -29,24 +29,6 @@ browser.addMessageListener("window", function(message, sender) {
   });
 });
 
-browser.addMessageListener("get_state", function(message, sender, response) {
-    getState(function(state) {
-        response(state);
-    });
-}, true);
-
-browser.addMessageListener("update_state", function(message) {
-    $.extend(true, state, message);
-    browser.setToolbarBadge(state.selectionMode ? "!" : "");
-    storeState();
-});
-
-browser.addMessageListener("reset_state", function(message) {
-    state = fillStateWithDefaults({});
-    browser.setToolbarBadge(state.selectionMode ? "!" : "");
-    storeState();
-});
-
 
 chrome.extension.onMessage.addListener(function(message, sender) {
 //    if (message.name != "window" && message.name != "update_state" && message.name != "get_state" && message.name != "get_current_url") {
