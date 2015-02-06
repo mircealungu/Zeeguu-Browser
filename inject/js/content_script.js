@@ -13,6 +13,9 @@ Content Script.
  */
 
 loadState(function() {
+
+
+
     browser.sendMessage("get_current_url", function (url) {
 
         if (!is_domain_allowed(url, state.whitelisted_domains)) {
@@ -82,6 +85,12 @@ loadState(function() {
                         mouse_up_in_page(e, external_dictionary_active);
                     }, 50)
                 }, false);
+
+                browser.addMessageListener("ZM_SHOW_TRANSLATION_OVERLAY", function(message) {
+                    coords = browser.getSelectionCoordinates();
+                    showTranslationOverlay(coords.left, coords.top, message.term);
+                });
+
 
                 browser.addMessageListener("ZM_SHOW_TRANSLATION", show_external_dictionary);
                 browser.addMessageListener("ZM_CLOSE_EXT_DICT", close_external_dictionary);

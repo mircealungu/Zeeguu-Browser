@@ -45,12 +45,13 @@ chrome.extension.onMessage.addListener(function(message, sender) {
 
 // N.B. callback will be called with info and the tab in which the menu has been activated
 // the translate message is sent to the content script...
-browser.contextMenu("translate", "Translate %s", "selection", function(info, tab) {
+browser.contextMenu("translate", "Translate '%s'", "selection", function(info, tab) {
+
+    var message = {content: info.selectionText};
+
     chrome.tabs.sendMessage(tab.id, {
-        name: "ZM_SHOW_TRANSLATION",
-        term: info.selectionText,
-        url: tab.url,
-        context: "" //this is if we want to save the url of the page as context
+        name: "ZM_SHOW_TRANSLATION_OVERLAY",
+        term: info.selectionText
     });
 });
 
