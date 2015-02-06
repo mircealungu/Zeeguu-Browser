@@ -12,7 +12,7 @@
         "lib/jquery/jquery.validate.js", 
         "lib/jquery/jquery.js", 
         "lib/bootstrap/bootstrap.js", 
-        "lib/bootstrap/bootstrap.css", 
+        "lib/bootstrap/bootstrap.css",
         "lib/fa-4.3/fonts/*"
     ], 
     "commands": {
@@ -35,12 +35,12 @@
     "options_page": "gui/html/plugin-preferences.html", 
     "background": {
         "scripts": [
-            "lib/jquery/jquery.js", 
-            "lib/browser.js", 
+            "lib/jquery/jquery.js",
+            "lib/browser.js",
             "lib/zeeguu_api_interface.js", 
             "bg/js/extension-state.js", 
-            "inject/js/whitelisted_domains.js", 
-            "bg/js/bg.js", 
+            "inject/js/whitelisted_domains.js",
+            "bg/js/bg.js",
             "bg/js/work-before-play.js"
         ]
     }, 
@@ -55,10 +55,8 @@
                 "lib/fa-4.3/css/font-awesome.min.css"
             ], 
             "js": [
-                "lib/jquery/jquery.js", 
-                "lib/browser.js", 
-                "lib/guessLanguage.js/lib/_languageData.js", 
-                "lib/guessLanguage.js/lib/guessLanguage.js", 
+                "lib/jquery/jquery.js",
+                "lib/browser.js",
                 "lib/zeeguu_api_interface.js", 
                 "inject/js/whitelisted_domains.js", 
                 "inject/js/highlight_words.js", 
@@ -83,6 +81,7 @@
         "storage", 
         "tabs", 
         "contextMenus", 
-        "https://www.zeeguu.unibe.ch/"
+        "https://www.zeeguu.unibe.ch/",
+        "http://127.0.0.1:8080/"
     ]
 }
