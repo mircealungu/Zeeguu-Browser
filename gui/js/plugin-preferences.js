@@ -4,12 +4,11 @@ $(function() {
         if (!state.email) {
             $("#top-search-box").hide()
         }
-
+        console.log(state);
         $("#from_lang").val(state.from);
         $("#base_language").val(state.base_language);
         $("#user_email").val(state.email);
         $("#work_before_play").prop('checked', state.work_before_play);
-        $("")
 
         state.whitelisted_domains.map(function(domain) {
             $("#whitelisted_domains").append(new Option(domain, domain));
