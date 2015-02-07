@@ -21,7 +21,7 @@ $(function() {
         var from_changed = state.from !== $("#from_lang").val();
         var base_changed = state.from !== $("#base_language").val();
         if (from_changed || base_changed) {
-            newDict = default_dict_url($("#from_lang").val(), $("#base_language"));
+            newDict = default_dict_url($("#from_lang").val(), $("#base_language").val());
         };
 
         browser.sendMessage("update_state", {

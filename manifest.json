@@ -5,7 +5,7 @@
         "gui/html/error.html", 
         "gui/html/toolbar-popup.html", 
         "gui/css/gui.css", 
-        "gui/js/ext_dict_frame.js",
+        "gui/js/ext_dict_frame.js", 
         "gui/js/login.js", 
         "gui/js/toolbar-popup.js", 
         "gui/img/loading.gif", 
@@ -23,17 +23,20 @@
             "description": "Translate selected word"
         }
     }, 
-    "description": "The web as your language textbook", 
+    "name": "Zeeguu", 
     "icons": {
         "128": "logo/128x128.png", 
         "48": "logo/48x48.png", 
         "16": "logo/16x16.png"
     }, 
+    "manifest_version": 2, 
+    "description": "The web as your language textbook", 
+    "version": "1.292", 
+    "options_page": "gui/html/plugin-preferences.html", 
     "background": {
         "scripts": [
             "lib/jquery/jquery.js",
-            "lib/dictionaries.js",
-            "lib/browser.js",
+            "lib/browser.js", 
             "lib/zeeguu_api_interface.js", 
             "bg/js/extension-state.js", 
             "inject/js/whitelisted_domains.js", 
@@ -41,9 +44,6 @@
             "bg/js/work-before-play.js"
         ]
     }, 
-    "version": "1.289", 
-    "options_page": "gui/html/plugin-preferences.html", 
-    "manifest_version": 2, 
     "content_scripts": [
         {
             "matches": [
@@ -56,8 +56,7 @@
             ], 
             "js": [
                 "lib/jquery/jquery.js",
-                "lib/dictionaries.js",
-                "lib/browser.js",
+                "lib/browser.js", 
                 "lib/zeeguu_api_interface.js", 
                 "inject/js/whitelisted_domains.js", 
                 "inject/js/highlight_words.js", 
@@ -70,13 +69,6 @@
             ]
         }
     ], 
-    "permissions": [
-        "storage", 
-        "tabs", 
-        "contextMenus", 
-        "https://www.zeeguu.unibe.ch/", 
-        "http://127.0.0.1:8080/"
-    ], 
     "browser_action": {
         "default_title": "Zeeguu", 
         "default_popup": "gui/html/toolbar-popup.html", 
@@ -85,5 +77,11 @@
             "38": "logo/38x38.png"
         }
     }, 
-    "name": "Zeeguu"
+    "permissions": [
+        "storage", 
+        "tabs", 
+        "contextMenus", 
+        "https://www.zeeguu.unibe.ch/", 
+        "http://127.0.0.1:8080/"
+    ]
 }
