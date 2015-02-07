@@ -18,13 +18,10 @@ $(function() {
 
     $("#save").click(function() {
         var newDict = state.dictUrl;
-        if (state.from !== $("#from_lang").val())
-        {
-            /*
-            The from language has changed. Must change the dictionary too
-            TODO: the dictionaries should be indexed by both learned and native language...
-             */
-            newDict = default_dict($("#from_lang").val());
+        var from_changed = state.from !== $("#from_lang").val();
+        var base_changed = state.from !== $("#base_language").val();
+        if (from_changed || base_changed) {
+            newDict = default_dict_url($("#from_lang").val(), $("#base_language"));
         };
 
         browser.sendMessage("update_state", {

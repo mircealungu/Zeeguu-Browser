@@ -9,7 +9,7 @@ function reloadDictionaries() {
     $("#dictionaries").html("| ");
 
     id = 0;
-    allDictsForLanguage(state.from).forEach(function(dict) {
+    allDictsForLanguage(state.from, state.base_language).forEach(function(dict) {
         id = id + 1;
         if (state.dictUrl == dict.url) {
             $("#dictionaries").append('<a class="selected_dict" id="dict'+id +'" href="#">' + dict.name + '</b></span> | ')

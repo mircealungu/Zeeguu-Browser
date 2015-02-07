@@ -5,7 +5,7 @@
         "gui/html/error.html", 
         "gui/html/toolbar-popup.html", 
         "gui/css/gui.css", 
-        "gui/js/ext_dict_frame.js", 
+        "gui/js/ext_dict_frame.js",
         "gui/js/login.js", 
         "gui/js/toolbar-popup.js", 
         "gui/img/loading.gif", 
@@ -31,8 +31,9 @@
     }, 
     "background": {
         "scripts": [
-            "lib/jquery/jquery.js", 
-            "lib/browser.js", 
+            "lib/jquery/jquery.js",
+            "lib/dictionaries.js",
+            "lib/browser.js",
             "lib/zeeguu_api_interface.js", 
             "bg/js/extension-state.js", 
             "inject/js/whitelisted_domains.js", 
@@ -54,8 +55,9 @@
                 "lib/fa-4.3/css/font-awesome.min.css"
             ], 
             "js": [
-                "lib/jquery/jquery.js", 
-                "lib/browser.js", 
+                "lib/jquery/jquery.js",
+                "lib/dictionaries.js",
+                "lib/browser.js",
                 "lib/zeeguu_api_interface.js", 
                 "inject/js/whitelisted_domains.js", 
                 "inject/js/highlight_words.js", 
