@@ -16,41 +16,54 @@ $(function() {
 
     });
 
-    function success_message(message) {
-        $("#success").innerHTML = message;
-        $("#success").show().delay(1000).fadeOut();
+    function flash_success_message() {
+        $("#error").hide();
+        $("#success").show().fadeOut(50).fadeIn(50);
+    }
+    function flash_warning_message(message) {
+        $("#success").hide();
+        $("#error").html(message);
+        $("#error").show().fadeOut(50).fadeIn(500);
     }
 
-    var from_lang_update = function() {
-        var newDict = default_dict_url($("#from_lang").val(), $("#base_language").val());
-        browser.sendMessage("update_state", {
-            from: $("#from_lang").val()
-//            ,dictUrl: newDict
-        });
-
-        success_message("Well done!");
+    var from_lang__change = function() {
+        try {
+            var newDict = default_dict_url($("#from_lang").val(), $("#base_language").val());
+            browser.sendMessage("update_state", {
+                from: $("#from_lang").val(),
+                dictUrl: newDict
+            });
+            flash_success_message();
+        } catch (err) {
+            flash_warning_message("Seems like this language combination is not supported");
+        }
     };
 
-    $("#from_lang").change(from_lang_update);
+    var base_lang__change = function() {
+        try {
 
-    $("#save").click(function() {
-        var newDict = state.dictUrl;
-        console.log($("#base_language").val());
-        var from_changed = (state.from !== $("#from_lang").val());
-        var base_changed = (state.base_language !== $("#base_language").val());
-        if (from_changed || base_changed) {
-            newDict = default_dict_url($("#from_lang").val(), $("#base_language").val());
-        };
+            var newDict = default_dict_url($("#from_lang").val(), $("#base_language").val());
+            browser.sendMessage("update_state", {
+                base_language: $("#base_language").val(),
+                dictUrl: newDict
+            });
+            flash_success_message();
+        } catch (err) {
+            flash_warning_message("Seems like this language combination is not supported");
+        }
+    };
 
+    var work_before_play__change = function() {
         browser.sendMessage("update_state", {
-            from: $("#from_lang").val(),
-            base_language: $("#base_language").val(),
-            work_before_play: $("#work_before_play").prop('checked'),
-            dictUrl: newDict
-        });
-        $("#success").show();
-        return false;
-    });
+            work_before_play: $("#work_before_play").val() });
+        flash_success_message();
+    };
+
+
+    $("#from_lang").change(from_lang__change);
+    $("#base_language").change(base_lang__change);
+    $("#work_before_play").change(work_before_play__change);
+
 
     $("#logout").click(function() {
         browser.sendMessage("update_state", {

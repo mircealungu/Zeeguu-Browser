@@ -3,7 +3,7 @@
     <head>
         <title>Zee Guu Preferences</title>
         <link rel="stylesheet" href="/lib/bootstrap/bootstrap.css" />
-        <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.css" />
+        <link rel="stylesheet" href="/lib/fa-4.3/css/font-awesome.css" />
         <link rel="stylesheet" href="/gui/css/gui.css" />
         <script src="/lib/jquery/jquery.js"></script>
         <script src="/lib/bootstrap/bootstrap.js"></script>
@@ -19,10 +19,16 @@
                 <fielsdset>
 
 
+                    <div class="alert alert-success hide" id="success">
+                        Your preferences have been saved.
+                    </div>
+                    <div class="alert alert-warning hide" id="error">
+                        Something went wrong.
+                    </div>
 
 
                     <div class="control-group">
-                        <label class="control-label">The language you are learning</label>
+                        <label class="control-label">Learned language</label>
 
                         <div class="controls">
                             <select autofocus id="from_lang" required name="from_lang">
@@ -32,14 +38,14 @@
                                 <option value="el">Greek</option>
                                 <!--<option value="it">Italian</option>-->
                                 <option value="no">Norwegian</option>
-                                <!--<option value="es">Spanish</option>-->
+                                <option value="es">Spanish</option>
                             </select>
 
                         </div>
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label">In what language do you prefer translations?</label>
+                        <label class="control-label">Native language</label>
 
                         <div class="controls">
                             <select autofocus id="base_language" required name="base_language">
@@ -52,7 +58,7 @@
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label">Work Before Play: </label>
+                        <label class="control-label">Enable Work Before Play: </label>
                         <div class="controls">
                             <input id="work_before_play" name="work_before_play" type="checkbox" class="input-xlarge">
                         </div>
@@ -60,7 +66,7 @@
 
 
                     <div class="control-group">
-                        <label class="control-label">Whitelisted Domains: </label>
+                        <label class="control-label">Domains on which the plugin is active: </label>
                         <div class="controls">
                             <select size="5" autofocus id="whitelisted_domains" name="whitelisted_domains">
                             </select>
@@ -73,27 +79,23 @@
                         <label class="control-label">Logged in as: </label>
                         <div class="controls">
                             <input disabled id="user_email" name="user_email" type="text" placeholder="..." class="input-xlarge">
+                            <button id="logout" name="logout" class="btn btn-info"><i class="fa fa-sign-out"></i></button>
                         </div>
                     </div>
 
                     <div class="control-group">
                         <label class="control-label"></label>
                         <div class="controls">
-                            <button id="logout" name="logout" class="btn btn-info">Logout</button>
                         </div>
                     </div>
 
 
-                    <div class="alert alert-success hide" id="success">
-                        Your preferences have been saved.
-                    </div>
 
 
                 </fieldset>
             </form>
-            <div class="alert alert-warning">
-              Report bugs or suggest features on <a href="https://github.com/mircealungu/Zeeguu-Browser/">GitHub</a>
-            </div>
+
+            <!---->
         </div>
     </body>
 </html>
