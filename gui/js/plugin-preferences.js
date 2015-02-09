@@ -16,10 +16,28 @@ $(function() {
 
     });
 
+    function success_message(message) {
+        $("#success").innerHTML = message;
+        $("#success").show().delay(1000).fadeOut();
+    }
+
+    var from_lang_update = function() {
+        var newDict = default_dict_url($("#from_lang").val(), $("#base_language").val());
+        browser.sendMessage("update_state", {
+            from: $("#from_lang").val()
+//            ,dictUrl: newDict
+        });
+
+        success_message("Well done!");
+    };
+
+    $("#from_lang").change(from_lang_update);
+
     $("#save").click(function() {
         var newDict = state.dictUrl;
-        var from_changed = state.from !== $("#from_lang").val();
-        var base_changed = state.from !== $("#base_language").val();
+        console.log($("#base_language").val());
+        var from_changed = (state.from !== $("#from_lang").val());
+        var base_changed = (state.base_language !== $("#base_language").val());
         if (from_changed || base_changed) {
             newDict = default_dict_url($("#from_lang").val(), $("#base_language").val());
         };
@@ -30,12 +48,6 @@ $(function() {
             work_before_play: $("#work_before_play").prop('checked'),
             dictUrl: newDict
         });
-        $("#success").show();
-        return false;
-    });
-
-    $("#reset").click(function() {
-        browser.sendMessage("reset_state");
         $("#success").show();
         return false;
     });

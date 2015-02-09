@@ -38,6 +38,7 @@ function storeState() {
     browser.broadcast("state", {
         state: state
     });
+    console.log(state);
 }
 
 function fillStateWithDefaults(state) {
