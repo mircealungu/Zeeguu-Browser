@@ -45,15 +45,15 @@ chrome.extension.onMessage.addListener(function(message, sender) {
 
 // N.B. callback will be called with info and the tab in which the menu has been activated
 // the translate message is sent to the content script...
-browser.contextMenu("translate", "Translate '%s'", "selection", function(info, tab) {
-
-    var message = {content: info.selectionText};
-
-    chrome.tabs.sendMessage(tab.id, {
-        name: "ZM_SHOW_TRANSLATION_OVERLAY",
-        term: info.selectionText
-    });
-});
+//browser.contextMenu("translate", "Translate '%s'", "selection", function(info, tab) {
+//
+//    var message = {content: info.selectionText};
+//
+//    chrome.tabs.sendMessage(tab.id, {
+//        name: "ZM_SHOW_TRANSLATION_OVERLAY",
+//        term: info.selectionText
+//    });
+//});
 
 browser.addMessageListener("get_current_url", function(message, data, callback) {
     chrome.tabs.getSelected(null,function(tab) {
