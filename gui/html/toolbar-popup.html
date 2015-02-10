@@ -13,25 +13,34 @@
         <script src="/gui/js/toolbar-popup.js"></script>
     </head>
     <body id="popup">
-        <div id="top_search_box">
+        <div id="top_search_box" >
             <div class="input-prepend">
                 <a href="#" class="add-on" id="translate-btn"><i class="fa fa-search"></i></a>
                 <input type="search" name="translate" id="translate" placeholder="Translate" tabindex="1" />
             </div>
 
-            <a class="" href="#" id="page-not-yet-whitelisted"><i class="fa fa-toggle-off"></i></a>
-            <a class="enabled" href="#" id="unwhitelist"><i class="fa fa-toggle-on"></i></a>
 
-            <a class="btn hidden" href="#" id="to-the-word-list"><i class="fa fa-list"></i></a>
+            <div>
+            <a style="color: darkred" class="btn" href="#" id="page-not-yet-whitelisted"><i class="fa fa-toggle-off"></i></a>
+            <a class="btn enabled" href="#" id="unwhitelist"><i class="fa fa-toggle-on"></i></a>
+
             <!--<span class="sep hidden">|</span>-->
-            <a class="btn hidden" href="#" id="selection-mode"><i class="fa fa-chain-broken"></i></a>
+            <!--<span class="sep hidden">|</span>-->
+            <!--<a class="btn hidden" href="#" id="selection-mode"><i class="fa fa-chain-broken"></i></a>-->
             <a class="btn hidden" href="#" id="fast-mode"><i class="fa fa-bolt"></i></a>
             <a class="btn btn-default hidden" href="#" id="highlighting-mode"><i class="fa fa-pencil"></i></a>
-            <a class="btn hidden" href="#" id="options-btn"><i class="fa fa-cogs"></i></a>
-            <!--<span class="sep hidden">|</span>-->
-            <a class="btn hidden" href="#" id="to-the-help-page"><i class="fa fa-question"></i></a>
 
 
+
+
+            <a style="float:right; margin-left: 2px;" class="btn hidden" href="#" id="to-the-help-page"><i class="fa fa-question"></i></a>
+            <a style="float:right; margin-left: 2px;"  class="btn hidden" href="#" id="options-btn"><i class="fa fa-cogs"></i></a>
+            <a style="float: right; margin-left: 4px; " class="btn hidden" href="#" id="to-the-word-list"><i class="fa fa-book"></i></a>
+
+            <!--<a style="margin-left: 10px; margin-right: 14px;" class="btn hidden" href="#" id="to-the-word-list"><i class="fa fa-book"></i></a>-->
+
+
+            </div>
             <p class="muted" id="help">Type in a word to translate</p>
         </div>
     </body>

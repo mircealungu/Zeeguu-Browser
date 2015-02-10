@@ -29,15 +29,15 @@ $(function() {
         setHelp("#selection-mode", "Disable page links for easier selection");
         setHelp("#highlighting-mode", "Highlight the words being learned ");
         setHelp("#to-the-gym", "Practice at the Language Gym");
-        setHelp("#to-the-word-list", "Go to your words list");
+        setHelp("#to-the-word-list", "Your phrase book");
         setHelp("#options-btn", "Your preferences (languages, etc.)");
-        setHelp("#to-the-help-page", "Help");
+        setHelp("#to-the-help-page", "A brief help page");
         browser.sendMessage("get_current_url", {}, function(url) {
-            setHelp("#page-not-yet-whitelisted", "Activate the extension for " + get_domain_from_url(url));
+            setHelp("#page-not-yet-whitelisted", "Activate translations in pages from " + get_domain_from_url(url));
         });
 
         browser.sendMessage("get_current_url", {}, function(url) {
-            setHelp("#unwhitelist", "Activate the extension for " + get_domain_from_url(url));
+            setHelp("#unwhitelist", "Deactivate translations in pages from " + get_domain_from_url(url));
         });
 
 
