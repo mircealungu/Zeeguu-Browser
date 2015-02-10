@@ -54,8 +54,9 @@ $(function() {
     };
 
     var work_before_play__change = function() {
+        var wbp = $("#work_before_play").is(':checked');
         browser.sendMessage("update_state", {
-            work_before_play: $("#work_before_play").val() });
+            work_before_play: wbp });
         flash_success_message();
     };
 
