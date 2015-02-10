@@ -30,8 +30,8 @@ $(function() {
         setHelp("#highlighting-mode", "Highlight your words in pages");
         setHelp("#to-the-gym", "Practice at the Language Gym");
         setHelp("#to-the-word-list", "Open your phrase book");
-        setHelp("#options-btn", "Modify preferences");
-        setHelp("#to-the-help-page", "Learn more");
+        setHelp("#options-btn", "Configure your preferences");
+        setHelp("#to-the-help-page", "Learn how to use the extension");
         browser.sendMessage("get_current_url", {}, function(url) {
             setHelp("#page-not-yet-whitelisted", "Activate translations on this site (" + get_domain_from_url(url)+")");
         });
