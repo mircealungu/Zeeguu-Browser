@@ -30,8 +30,8 @@ $(function() {
         setHelp("#highlighting-mode", "Highlight the words being learned ");
         setHelp("#to-the-gym", "Practice at the Language Gym");
         setHelp("#to-the-word-list", "Go to your words list");
-        setHelp("#options-btn", "Zeeguu preferences (languages, etc.)");
-        setHelp("#to-the-help-page", "Learn more about Zeeguu");
+        setHelp("#options-btn", "Your preferences (languages, etc.)");
+        setHelp("#to-the-help-page", "Help");
         browser.sendMessage("get_current_url", {}, function(url) {
             setHelp("#page-not-yet-whitelisted", "Activate the extension for " + get_domain_from_url(url));
         });
