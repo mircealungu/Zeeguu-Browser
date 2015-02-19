@@ -2,7 +2,6 @@ var ANIMATION_SPEED = 100,
     HEIGHT = 541,
     WIDTH = 740;
 
-var closingTimer;
 var dont_close = false;
 
 /*
@@ -44,17 +43,14 @@ function animate_close_external_dictionary(callback) {
                 callback();
             }
         });
-    } else {
-        close_zeeguu_window();
     }
 }
 
 function close_external_dictionary(data) {
-    if (external_dictionary_active && !closingTimer) {
+    if (external_dictionary_active) {
         dont_close = false;
         window.setTimeout(function() {
             if (!dont_close) {
-                closingTimer = null;
                 animate_close_external_dictionary();
                 external_dictionary_active = false;
             }
