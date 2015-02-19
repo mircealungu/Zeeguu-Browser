@@ -50,6 +50,10 @@ loadState(function() {
     }
 });
 
+browser.addMessageListener("ZM_CLOSE_EXT_DICT", function(data) {
+    window.close();
+});
+
 browser.addMessageListener("EXDICT_UPDATE_TRANSLATION_FROM_SELECTION", function(message) {
     if (contributed) {
         return;
