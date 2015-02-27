@@ -27,7 +27,8 @@ function showTranslationOverlay(pageX, pageY, word_to_lookup) {
             if (document.URL.lastIndexOf("https", 0) != 0) {
                 more.style.cssText = "font-size: 10px; padding-left: 0px; clear:both; float: left; color: gray;";
                 more.className= "translation-popup-more";
-                more.innerHTML = ' <a href="javascript:void(0)"><i class="fa fa-pencil"></i>Wrong?</a> ';
+                more.innerHTML = ' <a href="javascript:void(0)">More...</a> ';
+//                <i class="fa fa-pencil"></i>
                 more.addEventListener('mouseup', function (ev) {
                     /*
                      I guess here we must send a message from
