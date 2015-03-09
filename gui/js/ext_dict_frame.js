@@ -32,6 +32,7 @@ function redisplaySearchResults() {
 }
 
 loadState(function() {
+
     if (!is_logged_in()) {
         window.location = "login.html" + window.location.search;
     } else {
@@ -48,6 +49,8 @@ loadState(function() {
         $("#contribute-context").val(message.context);
         reloadDictionaries();
     }
+
+
 });
 
 browser.addMessageListener("ZM_CLOSE_EXT_DICT", function(data) {
@@ -118,4 +121,14 @@ $(function() {
     });
 
     $("#contribute-text").focus();
+
+    $("#contribute-btn").hover(
+        function() {
+            $(this).find($(".fa")).removeClass('fa-bookmark-o').addClass('fa-bookmark');
+        },
+        function () {
+            $(this).find($(".fa")).removeClass('fa-bookmark').addClass('fa-bookmark-o');
+        }
+    );
+
 });
