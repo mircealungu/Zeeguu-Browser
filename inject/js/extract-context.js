@@ -1,3 +1,10 @@
+/*
+This returns the first sentence in the paragraph that
+matches the required term. This is not perfect, but
+it is probably happening very rarely, and even when
+it happens, for the user, the context is still
+interesting.
+ */
 function extract_context (surrounding_paragraph, term) {
     var context = "";
     try {

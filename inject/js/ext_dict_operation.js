@@ -2,6 +2,9 @@ var ANIMATION_SPEED = 100,
     HEIGHT = 541,
     WIDTH = 740;
 
+var DOM_TEXT_NODE_TYPE = 3;
+// http://www.w3schools.com/jsref/prop_node_nodetype.asp
+
 var dont_close = false;
 
 /*
@@ -11,7 +14,7 @@ var dont_close = false;
  will be the actual translation
  */
 function extract_contribution_from_page(selection) {
-    if (!selection.baseNode || selection.baseNode.nodeType != 3) {
+    if (!selection.baseNode || selection.baseNode.nodeType != DOM_TEXT_NODE_TYPE) {
         return null;
     }
 
