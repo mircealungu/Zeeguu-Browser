@@ -4,7 +4,7 @@
  */
 function highlight_words(words) {
 
-    var all = document.querySelectorAll('p');
+    var all = $("p, h1, h2, h3, h4, h5, h6");
 
     for (var i=0, max=all.length; i < max; i++) {
         var parent = all[i];
@@ -15,13 +15,19 @@ function highlight_words(words) {
          Here we used to have a test on textNode being of type text (3)
          but it didn't work. so now we replace everything in all the children.
          It seems to work for now.
+
+         . between [] is a character not a meta-character
+         http://stackoverflow.com/a/10398011/1200070
+
          */
             for (j = 0; j < words.length; j++) {
-                var rgxp = new RegExp(' (' + words[j]+')( |,|[.])', 'gi');
-                var repl = ' <span class="zeeguu-visited" other="$1">$1$2</span> ';
+                var rgxp = new RegExp('(\\s|"|>)?(' + words[j]+')(\\s|,|<|"|[.])?', 'gi');
+                var repl = '$1<span class="zeeguu-visited" other="$2">$2</span>$3';
                 parent.innerHTML = parent.innerHTML.replace(rgxp, repl);
             }
     }
+
+
 }
 
 function unhighlight_words() {
