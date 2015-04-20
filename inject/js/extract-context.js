@@ -1,11 +1,9 @@
 /*
 This returns the first sentence in the paragraph that
 matches the required term. This is not perfect, but
-it is probably happening very rarely, and even when
-it happens, for the user, the context is still
-interesting.
-
-
+it is probably happening very rarely, that the user
+searches for a later occurrence of a word in a text
+than the first one!
  */
 
 // TODO:
@@ -33,7 +31,7 @@ function extract_context (surrounding_paragraph, term) {
         };
 
         var symbolic_regex = "((%notEOS%*)(%BOW%)+(%TERM%)((%EOS%)|((%EOW%)(%notEOS%|$)*(%EOS%))))";
-        
+
         var substituted_regex = symbolic_regex.replace(/%\w+%/g, function (each_match) {
             return replacements[each_match] || each_match;
         });
