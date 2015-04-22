@@ -18,11 +18,19 @@ function extract_contribution_from_page(selection) {
         return null;
     }
 
-    var term = selection.toString();
+    var term = selection.toString().trim();
+
     if (term.length < 1) {
         return null;
     }
-    var surroundingParagraph = $(selection.baseNode.parentNode).text();
+    var surroundingParagraph = $(selection.baseNode.parentNode);
+    var r = new RegExp("\\w*" + term + "\\w*", "g");
+    var terms = surroundingParagraph.text().match(r);
+
+    console.log(terms.length);
+    term = terms[0];
+    console.log(term)
+
     var context = extract_context(surroundingParagraph, term);
     var title = document.getElementsByTagName("title")[0].innerHTML;
 

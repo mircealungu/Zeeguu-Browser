@@ -20,6 +20,8 @@ than the first one!
 
 
 function extract_context (surrounding_paragraph, term) {
+    surrounding_paragraph.children("script").remove(); /* Some websites, like derbund.ch have scripts inside paragraphs!!! */
+    var paragraph_text =surrounding_paragraph.text();
     var context = "";
     try {
         var replacements = {
@@ -39,7 +41,7 @@ function extract_context (surrounding_paragraph, term) {
         var sentenceRegEx =  new RegExp(substituted_regex, "gi");
 
 
-        context = $.trim(surrounding_paragraph.match(sentenceRegEx)[0]);
+        context = $.trim(paragraph_text.match(sentenceRegEx)[0]);
     } catch (e) {
     }
     console.log(context);
