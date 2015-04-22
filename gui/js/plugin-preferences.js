@@ -9,6 +9,8 @@ $(function() {
         $("#base_language").val(state.base_language);
         $("#user_email").val(state.email);
         $("#work_before_play").prop('checked', state.work_before_play);
+        $("#work_before_twitter").prop('checked', state.work_before_twitter);
+        $("#work_before_gmail").prop('checked', state.work_before_gmail);
 
         state.whitelisted_domains.map(function(domain) {
             $("#whitelisted_domains").append(new Option(domain, domain));
@@ -54,16 +56,31 @@ $(function() {
     };
 
     var work_before_play__change = function() {
-        var wbp = $("#work_before_play").is(':checked');
+        var status = $("#work_before_play").is(':checked');
         browser.sendMessage("update_state", {
-            work_before_play: wbp });
+            work_before_play: status });
         flash_success_message();
     };
 
+    var work_before_twitter__change = function() {
+        var status = $("#work_before_twitter").is(':checked');
+        browser.sendMessage("update_state", {
+            work_before_twitter: status });
+        flash_success_message();
+    };
+
+    var work_before_gmail__change = function() {
+        var status = $("#work_before_gmail").is(':checked');
+        browser.sendMessage("update_state", {
+            work_before_gmail: status });
+        flash_success_message();
+    };
 
     $("#from_lang").change(from_lang__change);
     $("#base_language").change(base_lang__change);
     $("#work_before_play").change(work_before_play__change);
+    $("#work_before_twitter").change(work_before_twitter__change);
+    $("#work_before_gmail").change(work_before_gmail__change);
 
 
     $("#logout").click(function() {

@@ -10,6 +10,8 @@ var PERSITENT_PREFERENCES_KEYS = ["dictUrl",
     "email",
     "highlight",
     "work_before_play",
+    "work_before_twitter",
+    "work_before_gmail",
     "whitelisted_domains"];
 
 function getState(callback) {
@@ -52,6 +54,8 @@ function fillStateWithDefaults(state) {
         fast: false,  // translate with double-click
         selectionMode: false,
         work_before_play: true,
+        work_before_twitter: true,
+        work_before_gmail: false,
         whitelisted_domains: []
     }, state);
 }

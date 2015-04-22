@@ -25,28 +25,33 @@ getState(function(state) {
     });
 });
 
+
+function redirect_if_preference_is_set(changeInfo,tabId,tab,site_pattern, preference) {
+    browser.ifPreference(preference, function () {
+        if (user_has_words) {
+            var new_web_address = changeInfo.url;
+
+            if (new_web_address) {
+                if (!previous_url[tabId])
+                    previous_url[tabId] = "nothing";
+
+                if (new_web_address.match(site_pattern) && !(previous_url[tabId].match(site_pattern))) {
+                    previous_url[tabId] = tab.url;
+                    chrome.tabs.update({url: API_URL + "study_before_play?to=" + encodeURIComponent(new_web_address)});
+                }
+            }
+        }
+    })
+}
 /*
  onUpdated gets fired when the user presses return
  in the address field of a tab
  */
 chrome.tabs.onUpdated.addListener (
     function(tabId, changeInfo, tab) {
-        browser.ifPreference("work_before_play", function() {
-            if (user_has_words) {
-                var fb_pattern = /^https:\/\/www.facebook.com/i;
-                var new_web_address = changeInfo.url;
-
-                if (new_web_address) {
-                    if (!previous_url[tabId])
-                        previous_url[tabId] = "nothing";
-
-                    if (new_web_address.match(fb_pattern) && !(previous_url[tabId].match(fb_pattern))) {
-                        previous_url[tabId] = tab.url;
-                        chrome.tabs.update({url: API_URL + "study_before_play?to=" + encodeURIComponent(new_web_address)});
-                    }
-                }
-            }
-        })
+        redirect_if_preference_is_set(changeInfo,tabId,tab,/^https:\/\/www.facebook.com/i,"work_before_play");
+        redirect_if_preference_is_set(changeInfo,tabId,tab,/^https:\/\/twitter.com/i,"work_before_twitter");
+        redirect_if_preference_is_set(changeInfo,tabId,tab,/^https:\/\/mail.google.*/i,"work_before_gmail");
     }
 );
 
