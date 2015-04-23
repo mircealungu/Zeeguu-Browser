@@ -24,21 +24,61 @@ function extract_contribution_from_page(selection) {
         return null;
     }
     var surroundingParagraph = $(selection.baseNode.parentNode);
+
+//    console.log("...::: class name: " + surroundingParagraph.attr("class"));
+//    console.log("...::::>>> Surrounding par" + surroundingParagraph.text());
     var r = new RegExp("\\w*" + term + "\\w*", "g");
     var terms = surroundingParagraph.text().match(r);
 
-    console.log(terms.length);
+    if (!terms) {
+        /*
+         We have an exceptional case here...
+
+         When the selection spans multiple words, and the first word
+         is inside of a .zeeguu-visited tag (that is when the words
+         are visited), then the parent of the selection is only
+         the content of said tag. As a result, we can not extend the
+         selection beyond the borders of that tag... we miss the context
+
+         In the future we should restart the search for extension, and
+         context beyond the  zeeguu-visited node.
+         */
+
+//        console.dir(surroundingParagraph);
+        surroundingParagraph = surroundingParagraph.parent();
+//        console.log("trying to find the context in the parent of the original parent...");
+        terms = surroundingParagraph.text().match(r);
+    }
+
+
+    if (!terms) {
+        /*
+        If we still didn't get anything, then we're in an unforseen
+        case. Better return than throw an exception.
+         */
+        return {
+            "term": "",
+            "context": "",
+            "url": document.URL,
+            "title": document.title
+        };
+
+
+    }
+
+    /*
+    We only take the first match for now...
+     */
     term = terms[0];
-    console.log(term)
+//    console.log("..::: First match after extension: " + term);
 
     var context = extract_context(surroundingParagraph, term);
-    var title = document.getElementsByTagName("title")[0].innerHTML;
 
     return {
         "term": term,
         "context": context,
         "url": document.URL,
-        "title": title
+        "title": document.title
     };
 }
 
