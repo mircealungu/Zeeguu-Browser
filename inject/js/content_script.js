@@ -53,7 +53,7 @@ loadState(function() {
                             event.data.context,
                             event.data.translation,
                             event.data.title);
-                        highlight_words([event.data.term]);
+                        highlight_words_in_page([event.data.term]);
                     }
                 }
 
@@ -99,7 +99,7 @@ loadState(function() {
                 if (state.selectionMode) disable_links();
 
                 if (state.highlight) getUserWords(function (user_words) {
-                    highlight_words(user_words)
+                    highlight_words_in_page(user_words)
                 });
 
                 addStateChangeListener("selectionMode", function (selectionMode) {
