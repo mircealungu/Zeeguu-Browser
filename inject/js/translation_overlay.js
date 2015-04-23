@@ -14,6 +14,7 @@ function renderBubble(mouseX, mouseY) {
 
 function showTranslationOverlay(pageX, pageY, word_to_lookup) {
     var message = extract_contribution_from_page(browser.getSelection());
+    var expanded_selection = message.term;
     renderBubble(pageX, pageY);
 
     /*
@@ -110,7 +111,7 @@ function showTranslationOverlay(pageX, pageY, word_to_lookup) {
 
         }
     }
-    get_translation_from_db(word_to_lookup, update_bubble_with_translation);
+    get_translation_from_the_server(expanded_selection, update_bubble_with_translation);
 }
 
 function mouse_up_in_page(e, external_dictionary_active) {
