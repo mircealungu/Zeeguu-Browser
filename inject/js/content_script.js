@@ -47,7 +47,7 @@ loadState(function() {
                         browser.sendMessage("ZM_SHOW_TRANSLATION", message);
                     }
                     if (event.data.type == "PAGE_NEEDS_WORD_TO_BE_UPLOADED") {
-                        contribute_with_context(
+                        bookmark_with_context(
                             event.data.term,
                             event.data.url,
                             event.data.context,
