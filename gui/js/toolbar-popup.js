@@ -118,7 +118,7 @@ $(function() {
                 browser.newTab(API_URL + "recognize");
             });
             $("#to-the-word-list").click(function () {
-                browser.newTab(API_URL + "contributions");
+                browser.newTab(API_URL + "bookmarks");
             });
             $("#to-the-help-page").click(function () {
                 browser.newTab("/gui/html/plugin_help.html");
