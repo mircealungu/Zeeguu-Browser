@@ -4,7 +4,7 @@ $(function() {
         if (!state.email) {
             $("#top-search-box").hide()
         }
-        console.log(state);
+
         $("#from_lang").val(state.from);
         $("#base_language").val(state.base_language);
         $("#user_email").val(state.email);

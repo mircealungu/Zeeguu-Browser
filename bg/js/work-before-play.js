@@ -37,7 +37,24 @@ function redirect_if_preference_is_set(changeInfo,tabId,tab,site_pattern, prefer
 
                 if (new_web_address.match(site_pattern) && !(previous_url[tabId].match(site_pattern))) {
                     previous_url[tabId] = tab.url;
-                    chrome.tabs.update({url: API_URL + "study_before_play?to=" + encodeURIComponent(new_web_address)});
+                    $.get(API_URL+"/logged_in").done(function(data) {
+                        if (data == "YES") {
+                            chrome.tabs.update({url: API_URL + "study_before_play?to=" + encodeURIComponent(new_web_address)});
+                        } else {
+                            chrome.tabs.update({url: "/gui/html/logging_in.html"});
+                            /*
+                            Must login first...
+                             */
+                            $.post(API_URL+"login",{
+                                email: state.email,
+                                password: state.password,
+                                login: "1"
+                            }).done(function(data){
+                                chrome.tabs.update({url: API_URL + "study_before_play?to=" + encodeURIComponent(new_web_address)});
+                            })
+                        }
+                    });
+
                 }
             }
         }
