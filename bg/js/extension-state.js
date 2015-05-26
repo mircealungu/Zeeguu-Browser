@@ -53,8 +53,8 @@ function fillStateWithDefaults(state) {
         links: false,
         fast: false,  // translate with double-click
         selectionMode: false,
-        work_before_play: true,
-        work_before_twitter: true,
+        work_before_play: false,
+        work_before_twitter: false,
         work_before_gmail: false,
         whitelisted_domains: []
     }, state);
