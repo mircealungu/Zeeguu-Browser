@@ -23,16 +23,12 @@
             "description": "Translate selected word"
         }
     }, 
-    "description": "The web as your language textbook", 
+    "name": "Zeeguu", 
     "icons": {
         "128": "logo/128x128.png", 
         "48": "logo/48x48.png", 
         "16": "logo/16x16.png"
     }, 
-    "manifest_version": 2, 
-    "name": "Zeeguu", 
-    "version": "1.302", 
-    "options_page": "gui/html/plugin-preferences.html", 
     "background": {
         "scripts": [
             "lib/jquery/jquery.js", 
@@ -44,6 +40,9 @@
             "bg/js/work-before-play.js"
         ]
     }, 
+    "version": "1.303", 
+    "options_page": "gui/html/plugin-preferences.html", 
+    "manifest_version": 2, 
     "content_scripts": [
         {
             "matches": [
@@ -59,9 +58,9 @@
                 "lib/browser.js", 
                 "lib/zeeguu_api_interface.js", 
                 "inject/js/whitelisted_domains.js", 
-                "commonJS/highlight_words.js",
-                "commonJS/extract_context.js",
-                "commonJS/text_selection.js",
+                "commonJS/highlight_words.js", 
+                "commonJS/extract_context.js", 
+                "commonJS/text_selection.js", 
                 "inject/js/link-enabling.js", 
                 "inject/js/translation_overlay.js", 
                 "inject/js/ext_dict_operation.js", 
@@ -70,19 +69,20 @@
             ]
         }
     ], 
-    "browser_action": {
-        "default_icon": {
-            "19": "logo/19x19.png", 
-            "38": "logo/38x38.png"
-        }, 
-        "default_title": "Zeeguu", 
-        "default_popup": "gui/html/toolbar-popup.html"
-    }, 
     "permissions": [
         "storage", 
         "tabs", 
         "contextMenus", 
         "https://www.zeeguu.unibe.ch/", 
         "http://127.0.0.1:8080/"
-    ]
+    ], 
+    "browser_action": {
+        "default_popup": "gui/html/toolbar-popup.html", 
+        "default_icon": {
+            "19": "logo/19x19.png", 
+            "38": "logo/38x38.png"
+        }, 
+        "default_title": "Zeeguu"
+    }, 
+    "description": "The web as your language textbook"
 }
