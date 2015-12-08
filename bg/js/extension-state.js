@@ -51,7 +51,7 @@ function fillStateWithDefaults(state) {
         highlight: false,
         session: null,
         links: false,
-        fast: false,  // translate with double-click
+        fast: true,  // translate with double-click
         selectionMode: false,
         work_before_play: false,
         work_before_twitter: false,
