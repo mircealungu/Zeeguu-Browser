@@ -22,6 +22,14 @@ function showTranslationOverlay(pageX, pageY, word_to_lookup) {
      a translation from the DB
      */
     function update_bubble_with_translation(translation) {
+
+        // Sometimes translation is a dict of the form {bookmark_id: 1, translation: "lala"}
+//        console.log(translation);
+        if (translation["translation"]) {
+            translation = translation [ "translation"];
+        }
+//        console.log(translation);
+
         if (translation) {
 
             var more = document.createElement('div');
@@ -111,7 +119,8 @@ function showTranslationOverlay(pageX, pageY, word_to_lookup) {
 
         }
     }
-    get_translation_from_the_server(expanded_selection, update_bubble_with_translation);
+    get_translation_from_the_server(expanded_selection,
+            message.url, message.context, message.title, update_bubble_with_translation);
 }
 
 function mouse_up_in_page(e, external_dictionary_active) {

@@ -7,8 +7,8 @@ $(function() {
 
     var originalHelp = $("#help").text();
     var toolbar_actions = ["#fast-mode", ".sep", "#selection-mode", "#highlighting-mode",
-// //        "#to-the-gym",
-//        "#to-the-word-list",
+//        "#to-the-gym",
+//         "#to-the-word-list",
 //        "#options-btn",
 //        "#to-the-help-page",
         "#unwhitelist"
@@ -59,6 +59,8 @@ $(function() {
 
 
     loadState(function () {
+        console.log("loading state function...");
+
         $("#page-not-yet-whitelisted").click(function () {
             browser.sendMessage("whitelist_current_url", {}, null);
             enable_toolbar_actions();
@@ -79,6 +81,8 @@ $(function() {
                     window.location = browser.zeeguuEncodeUrl(term);
                 }
             }
+
+            console.log("associating behavior with buttons");
 
 
             $("#fast-mode").toggleClass("enabled", state.fast).click(function () {
@@ -115,10 +119,10 @@ $(function() {
                 browser.newTab("/gui/html/plugin-preferences.html");
             });
             $("#to-the-gym").click(function () {
-                browser.newTab(API_URL + "recognize");
+                browser.newTab(browser.WEB_URL() + "exercises");
             });
             $("#to-the-word-list").click(function () {
-                browser.newTab(API_URL + "bookmarks");
+                browser.newTab(browser.WEB_URL() + "bookmarks");
             });
             $("#to-the-help-page").click(function () {
                 browser.newTab("/gui/html/plugin_help.html");
@@ -137,8 +141,6 @@ $(function() {
         if (!state.session) {
             window.location = "login.html";
         } else {
-
-
             set_the_help_for_buttons();
             associate_behavior_with_buttons();
             browser.sendMessage("get_current_url", function (url) {
